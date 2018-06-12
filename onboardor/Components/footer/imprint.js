@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 import PageContent from '../shared/pageContent';
-import styles from './imprint.less';
+import styles from './imprint.scss';
 
 const Imprint = () => (
   <PageContent>

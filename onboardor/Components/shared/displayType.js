@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import sizes from './sizes';
+import {
+  breakpointMobile,
+  breakpointTablet,
+} from '../styles/sizes';
 
 class DisplayType extends React.Component {
   state = {
@@ -18,11 +21,11 @@ class DisplayType extends React.Component {
   }
 
   getDisplayType = (windowWidth) => {
-    if (windowWidth < sizes.breakpointMobile.value) {
+    if (windowWidth < breakpointMobile.value) {
       return 'mobile';
     }
 
-    if (windowWidth < sizes.breakpointTablet.value) {
+    if (windowWidth < breakpointTablet.value) {
       return 'tablet';
     }
 

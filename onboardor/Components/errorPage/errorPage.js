@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 
-import styles from './errorPage.less';
+import styles from './errorPage.scss';
 
 const ErrorPage = ({ status, error }) => (
   <div className={styles.errorPage}>

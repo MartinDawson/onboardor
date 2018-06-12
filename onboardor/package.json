@@ -1,8 +1,8 @@
 {
   "name": "onboardor",
   "version": "1.0.0",
-  "description": "Fitness planner recommender",
-  "author": "Martin Dawson <onboardor@info.com>",
+  "description": "Helps companies create a good on-boarding experience for their developers.",
+  "author": "Martin Dawson <u1356770@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/MartinDawson/onboardor.git"
@@ -10,7 +10,16 @@
   "bugs": {
     "url": "https://github.com/MartinDawson/onboardor/issues"
   },
-  "keywords": [],
+  "keywords": [
+    "onboard",
+    "developers",
+    "onboardor",
+    "companies",
+    "software",
+    "software developers",
+    "engineers",
+    "onboardor.com"
+  ],
   "homepage": "https://github.com/MartinDawson/onboardor",
   "license": "UNLICENSED",
   "scripts": {
@@ -22,7 +31,7 @@
     "relay-compiler": "relay-compiler --src ./components --schema schema.graphql",
     "relay-compiler:watch": "npm run relay-compiler -- --watch",
     "get-schema": "graphql get-schema dev",
-    "lint": "eslint --fix --ext .js components",
+    "lint": "eslint --fix --ext .js Components",
     "clean": "rimraf ./wwwroot/build",
     "build-client": "webpack",
     "build": "run-s clean build-client"
@@ -74,12 +83,11 @@
     "graphql": "^0.13.2",
     "html-webpack-plugin": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",
-    "less": "^2.3.1",
-    "less-loader": "^4.0.4",
     "npm-run-all": "^4.1.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "pluralize": "^7.0.0",
     "postcss-loader": "^2.0.6",
+    "postcss-simple-vars": "^4.1.0",
     "prop-types": "^15.5.8",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",

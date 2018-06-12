@@ -10,12 +10,16 @@ namespace Onboardor.Data
 {
     public static class Seeder
     {
+        private static IHostingEnvironment _env;
+
         public static async Task<IWebHost> SeedData(this IWebHost webHost)
         {
             using (var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope())
             {
                 using (var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
                 {
+                    _env = scope.ServiceProvider.GetRequiredService<IHostingEnvironment>();
+
                     if (_env.IsDevelopment())
                     {
                         await context.Database.MigrateAsync();

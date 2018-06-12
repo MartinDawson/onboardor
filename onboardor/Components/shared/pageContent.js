@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './pageContent.less';
+import styles from './pageContent.scss';
 
 const PageContent = ({ children }) => (
   <div className={styles.pageContent}>

@@ -21,7 +21,9 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.AspNetCore.Http;
-using Onboardor.Kestrel;
+using Onboardor.Data;
+using Onboardor.Components.graphQl;
+using Onboardor.Components.GraphQl;
 
 namespace Onboardor
 {

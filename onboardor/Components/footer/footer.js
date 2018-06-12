@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'found';
 
-import styles from './footer.less';
+import styles from './footer.scss';
 
 const Footer = () => (
   <div className={styles.footer}>

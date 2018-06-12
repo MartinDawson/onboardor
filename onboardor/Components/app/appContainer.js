@@ -3,6 +3,6 @@ import ReactDOM from 'react-dom';
 import 'isomorphic-fetch';
 
 import App from './app';
-import './app.less';
+import './app.scss';
 
 ReactDOM.render(<App />, document.getElementById('app'));

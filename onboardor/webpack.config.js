@@ -69,38 +69,16 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.(css|less)$/,
-        include: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [{
-            loader: 'css-loader',
-            options: {
-              importLoaders: 2,
-            },
-          }, {
-            loader: 'postcss-loader',
-            options: {
-              config: {
-                path: path.resolve(__dirname, 'postcss.config.js'),
-              },
-            },
-          }, {
-            loader: 'less-loader',
-          }],
-        }),
-      },
-      {
-        test: /\.(css|less)$/,
+        test: /\.s?css$/,
         exclude: /node_modules/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [{
             loader: 'css-loader',
             options: {
-              importLoaders: 2,
+              importLoaders: 1,
               modules: true,
-              localIdentName: '[path][name]__[local]--[hash:base64:5]',
+              localIdentName: isInProduction ? '[hash:base64:5]' : '[path][name]__[local]',
             },
           }, {
             loader: 'postcss-loader',
@@ -109,8 +87,6 @@ module.exports = {
                 path: path.resolve(__dirname, 'postcss.config.js'),
               },
             },
-          }, {
-            loader: 'less-loader',
           }],
         }),
       },

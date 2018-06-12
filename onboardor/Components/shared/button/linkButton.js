@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'found';
 
-import styles from './button.less';
+import styles from './button.scss';
 
-const LinkButton = ({ children, styleName, className, ...props }) => (
+const LinkButton = ({
+  children, styleName, className, ...props
+}) => (
   <Link {...props} className={classnames(styles.button, styles[styleName], className)}>
     {children}
   </Link>

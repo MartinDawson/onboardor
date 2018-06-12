@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'found';
 
-import styles from './primaryLayout.less';
+import styles from './primaryLayout.scss';
 import PrimaryLayoutErrorBoundary from './primaryLayoutErrorBoundary';
 import Footer from '../../footer/footer';
 
@@ -12,9 +12,8 @@ const PrimaryLayout = ({
   <PrimaryLayoutErrorBoundary className={styles.primaryLayout}>
     <div className={styles.wrap}>
       <div className={styles.main}>
-        <Link to="/" className={styles.appName}>
+        <Link to="/">
           Onboardor
-          <div className={styles.betaLabel}>beta</div>
         </Link>
         {children}
       </div>
