@@ -9,14 +9,14 @@ const Button = ({
 }) => (
   <button
     {...props}
-    className={classnames(styles.button, styleName && styles[styleName], className)}
+    className={classnames(styles.button, styles[styleName], className)}
   >
     {children}
   </button>
 );
 
 Button.defaultProps = {
-  styleName: null,
+  styleName: 'primary',
   className: null,
 };
 

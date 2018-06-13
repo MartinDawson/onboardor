@@ -4,31 +4,29 @@
     padding: 20px;
     border-radius: 5px;
     min-height: 75vh;
+}
 
-    h1 {
+    .Components-shared-pageContent__pageContent h1 {
         font-size: 1.7em;
         margin-top: 10px;
     }
 
-    p {
+    .Components-shared-pageContent__pageContent p {
         letter-spacing: 0.06em;
         line-height: 1.3em;
     }
-}
-.Components-footer-imprint__imprintContent {
-  > h1 {
+.Components-footer-imprint__imprintContent > h1 {
     margin-bottom: 40px;
   }
-
-  > div {
+  .Components-footer-imprint__imprintContent > div {
     font-size: 18px;
     margin: 10px 0px;
   }
-}
 .Components-errorPage-errorPage__errorPage {
     width: 40%;
+}
 
-    h1 {
+    .Components-errorPage-errorPage__errorPage h1 {
         font-size: 60px;
         margin: 0px 0px;
         letter-spacing: 0.06em;
@@ -36,21 +34,20 @@
         margin-bottom: 25px;
     }
 
-    .Components-errorPage-errorPage__error {
+    .Components-errorPage-errorPage__errorPage .Components-errorPage-errorPage__error {
         text-align: center;
         font-size: 25px;
     }
 
-    blockquote {
+    .Components-errorPage-errorPage__errorPage blockquote {
         margin: 60px 0px;
         text-align: center;
     }
 
-    .Components-errorPage-errorPage__error {
+    .Components-errorPage-errorPage__errorPage .Components-errorPage-errorPage__error {
         letter-spacing: 0.06em;
         line-height: 1.3em;
     }
-}
 .Components-layouts-primaryLayout-primaryLayout__primaryLayout {
   height: 100%;
 }
@@ -75,12 +72,46 @@
   justify-content: center;
   align-items: center;
   display: flex;
+}
 
-  > a {
+  .Components-footer-footer__footer > a {
     margin: 10px;
   }
+.Components-shared-Validation-validationError__error {
+  color: red;
 }
-body {
+
+.Components-shared-Validation-validationError__error::before {
+  content: "\2022   ";
+  margin-right: 6px;
+  color: red;
+}
+.Components-shared-Validation-validationErrors__errors {
+  margin-top: 8px;
+}
+.Components-shared-inputs-validationField__hasError .Components-shared-inputs-validationField__validationField {
+  border: 1px solid red;
+}
+  
+.Components-shared-inputs-validationField__hasError .Components-shared-inputs-validationField__validationField:after {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(165, 56, 96, 0.1);
+  pointer-events: none;
+}
+
+.Components-shared-inputs-validationField__validationField {
+  border: 1px solid transparent;
+  position: relative;
+}
+.Components-shared-button-spinnerButton__spinnerIcon {
+    width: 24px;
+    height: 24px;
+}body {
   min-height: 100%;
   height: 100%;
   margin: 0;

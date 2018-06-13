@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'found';
 
 import styles from './primaryLayout.scss';
 import PrimaryLayoutErrorBoundary from './primaryLayoutErrorBoundary';
@@ -12,9 +11,6 @@ const PrimaryLayout = ({
   <PrimaryLayoutErrorBoundary className={styles.primaryLayout}>
     <div className={styles.wrap}>
       <div className={styles.main}>
-        <Link to="/">
-          Onboardor
-        </Link>
         {children}
       </div>
     </div>
