@@ -1,15 +1,23 @@
 import React from 'react';
 
 import SubscribeMailingList from '../shared/form/subscribeMailingListContainer';
+import styles from './landingPage.scss';
 
 const LandingPage = () => (
-  <div>
-    Make the process of onboarding your new developers easy.
+  <div className={styles.landingPage}>
+    <div className={styles.capture}>
+      Make the process of onboarding your new developers easy.
+    </div>
 
-    Join our early sign up list and we&apos;ll give your company a free sixth month subscription.
-    Coming this August.
+    <div className={styles.joinContainer}>
+      <div className={styles.join}>
+        Join our beta sign up list and we&apos;ll give your team a <span>free sixth month subscription!</span>
+      </div>
 
-    <SubscribeMailingList />
+      <SubscribeMailingList />
+
+      <div className={styles.coming}>Coming this August.</div>
+    </div>
   </div>
 );
 

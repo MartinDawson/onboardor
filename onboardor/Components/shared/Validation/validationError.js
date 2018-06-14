@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './validationError.scss';
 
-const Error = ({ error }) => (
+const ValidationError = ({ error }) => (
   error && (
     <span className={styles.error}>
       {error}
@@ -11,12 +11,12 @@ const Error = ({ error }) => (
   )
 );
 
-Error.defaultProps = {
+ValidationError.defaultProps = {
   error: null,
 };
 
-Error.propTypes = {
+ValidationError.propTypes = {
   error: PropTypes.string,
 };
 
-export default Error;
+export default ValidationError;

@@ -10,6 +10,8 @@ body {
 
 button {
   cursor: pointer;
+  border: none;
+  background-color: transparent;
 }
 
 textarea, input, button { outline: none; }
@@ -17,6 +19,12 @@ textarea, input, button { outline: none; }
 a {
   text-decoration: none;
   color: #393939;
+}
+
+button, input, optgroup, select, textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
 }
 
 ul, ol {
@@ -30,4 +38,8 @@ html {
 
 html {
   font-family: 'Montserrat', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }

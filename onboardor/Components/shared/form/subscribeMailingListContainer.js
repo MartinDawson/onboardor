@@ -2,9 +2,10 @@ import { compose, withHandlers } from 'recompose';
 import { reduxForm, SubmissionError } from 'redux-form';
 
 import SubscribeMailingList from './subscribeMailingList';
+import subscribeMailingListMutation from './subscribeMailingListMutation';
 
 const handlers = {
-  onSubmit: () => input => SubscribeMailingList(input)
+  onSubmit: () => input => subscribeMailingListMutation(input)
     .catch((error) => {
       throw new SubmissionError(error);
     }),

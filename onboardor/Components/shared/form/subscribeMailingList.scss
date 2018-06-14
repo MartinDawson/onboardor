@@ -1,0 +1,15 @@
+.email {
+  position: relative;
+
+  input[type="email"] {
+    padding-right: 8.1em;
+  }
+
+  > button {
+    position: absolute;
+    border-radius: 0;
+    padding: 0.8em 1em;
+    right: 2px;
+    top: 2px;
+  }
+}

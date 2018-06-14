@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ValidationError from './validationError';
 import styles from './validationErrors.scss';
 
-const Errors = ({ errors }) => (
+const ValidationErrors = ({ errors }) => (
   errors.length ? (
     <div className={styles.errors}>
       {errors.map(error => <ValidationError key={error} error={error} />)}
@@ -12,12 +12,12 @@ const Errors = ({ errors }) => (
   ) : null
 );
 
-Errors.defaultProps = {
+ValidationErrors.defaultProps = {
   errors: [],
 };
 
-Errors.propTypes = {
+ValidationErrors.propTypes = {
   errors: PropTypes.arrayOf(PropTypes.string.isRequired),
 };
 
-export default Errors;
+export default ValidationErrors;

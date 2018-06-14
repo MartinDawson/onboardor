@@ -3,7 +3,7 @@ import { createMutation } from 'relay-compose';
 
 const mutation = graphql`
   mutation subscribeMailingListMutation(
-    $input: SubscribeMailingList!
+    $input: SubscribeMailingListInput!
   ) {
     subscribeMailingList(input: $input) {
       clientMutationId
