@@ -33,7 +33,7 @@ bld/
 .vs/
 
 # Build files
-onboardr/wwwroot/build
+**/wwwroot/build
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
