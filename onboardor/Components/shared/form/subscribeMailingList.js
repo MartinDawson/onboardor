@@ -7,10 +7,11 @@ import FormSpinnerButton from '../button/formSpinnerButtonContainer';
 import styles from './subscribeMailingList.scss';
 
 const SubscribeMailingList = ({
+  className,
   handleSubmit,
   form,
 }) => (
-  <form onSubmit={handleSubmit} action="">
+  <form className={className} onSubmit={handleSubmit} action="">
     <div className={styles.email}>
       <FieldInput
         name="email"
@@ -21,7 +22,7 @@ const SubscribeMailingList = ({
         required
       />
       <FormSpinnerButton formName={form}>
-        JOIN LIST
+        Join List
       </FormSpinnerButton>
     </div>
     <InvisibleRecpatcha
@@ -31,9 +32,14 @@ const SubscribeMailingList = ({
   </form>
 );
 
+SubscribeMailingList.defaultProps = {
+  className: null,
+};
+
 SubscribeMailingList.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   form: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 export default SubscribeMailingList;

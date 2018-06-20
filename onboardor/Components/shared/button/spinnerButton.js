@@ -1,8 +1,8 @@
 import React from 'react';
 
-import styles from './spinnerButton.scss';
 import Button from './button';
-import SpinnerIcon from '../../icons/spinner';
+import SpinnerIcon from '../../../wwwroot/assets/spinner.svg';
+import styles from './spinnerButton.scss';
 
 const SpinnerButton = ({ ...props }) => (
   <Button {...props}>

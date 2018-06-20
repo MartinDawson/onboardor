@@ -74,26 +74,39 @@ module.exports = {
         exclude: /node_modules/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: [{
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              modules: true,
-              localIdentName: isInProduction ? '[hash:base64:5]' : '[path][name]__[local]',
-            },
-          }, {
-            loader: 'postcss-loader',
-            options: {
-              config: {
-                path: path.resolve(__dirname, 'postcss.config.js'),
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+                modules: true,
+                localIdentName: isInProduction ? '[hash:base64:5]' : '[path][name]__[local]',
+              },
+            }, {
+              loader: 'postcss-loader',
+              options: {
+                config: {
+                  path: path.resolve(__dirname, 'postcss.config.js'),
+                },
               },
             },
-          }],
+          ],
         }),
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/,
-        loader: 'file-loader?name=[path][name].[ext]',
+        test: /\.svg$/,
+        issuer: /\.js$/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: 'react-svg-loader',
+            options: {
+              jsx: true,
+            },
+          },
+        ],
       },
     ],
   },
@@ -101,6 +114,7 @@ module.exports = {
   resolve: {
     extensions: [
       '.js',
+      '.scss',
     ],
   },
 };
