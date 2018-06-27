@@ -1,4 +1,5 @@
-﻿using GraphQL.Relay.Types;
+﻿using DotNetEnv;
+using GraphQL.Relay.Types;
 using GraphQL.Types;
 using MailChimp.Net;
 using MailChimp.Net.Interfaces;
@@ -15,12 +16,10 @@ namespace onboardor.Components.shared.form
     public class SubscribeMailingListPayload : MutationPayloadGraphType<Task<object>>
     {
         private readonly IMailChimpManager _mailChimpManager;
-        private readonly IConfiguration _configuration;
 
-        public SubscribeMailingListPayload(IConfiguration configuration)
+        public SubscribeMailingListPayload()
         {
-            _configuration = configuration;
-            _mailChimpManager = new MailChimpManager(_configuration["mailChimp:apiKey"]);
+            _mailChimpManager = new MailChimpManager(Env.GetString("MAILCHIMP_APIKEY"));
 
             Name = nameof(SubscribeMailingListPayload);
         }
@@ -29,16 +28,16 @@ namespace onboardor.Components.shared.form
         {
             var recaptcha = inputs.Get<string>("recaptcha");
             var email = inputs.Get<string>("email");
-            var listId = _configuration["mailChimp:listId"];
+            var listId = Env.GetString("MAILCHIMP_LISTID");
             var parameters = new Dictionary<string, string> {
-                { "secret", _configuration["recaptcha:secret"] },
+                { "secret", Env.GetString("RECAPTCHA_SECRET") },
                 { "response", recaptcha }
             };
             var encodedContent = new FormUrlEncodedContent(parameters);
 
             using (var client = new HttpClient())
             {
-                var response = await client.PostAsync(_configuration["recaptcha:verifyUrl"], encodedContent);
+                var response = await client.PostAsync(Env.GetString("RECAPTCHA_VERIFY_URL"), encodedContent);
                 var recpatcha = await response.Content.ReadAsAsync<Recaptcha>();
 
                 response.EnsureSuccessStatusCode();

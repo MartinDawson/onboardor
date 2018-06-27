@@ -1,0 +1,48 @@
+$memberPadding: 5px;
+
+.dashboard {
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+.members {
+  display: flex;
+  margin-left: -$memberPadding;
+  margin-right: -$memberPadding;
+  max-width: 730px;
+}
+
+.member {
+  padding: $memberPadding;
+}
+
+.organizationDetails {
+  .name {
+    font-weight: 600;
+  }
+
+  .avatarUrl {
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+.selectionDescription {
+  margin: 30px 0;
+  > span {
+    font-weight: 600;
+  }
+}
+
+.name {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.avatarUrl {
+  border-radius: 4px;
+  max-width: 150px
+}

@@ -34,7 +34,6 @@ namespace Onboardor
         {
             configurationBuilder
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", false, true)
                 .AddEnvironmentVariables();
         }
     }

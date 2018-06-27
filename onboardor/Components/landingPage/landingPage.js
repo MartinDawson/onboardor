@@ -3,35 +3,42 @@ import React from 'react';
 import SubscribeMailingList from '../shared/form/subscribeMailingListContainer';
 import styles from './landingPage.scss';
 import CollaborationIcon from '../../wwwroot/assets/collaboration.svg';
-import CoinDollarIcon from '../../wwwroot/assets/coin-dollar.svg';
+import CoinsIcon from '../../wwwroot/assets/coins.svg';
 import TreeIcon from '../../wwwroot/assets/tree.svg';
+import UserPlusIcon from '../../wwwroot/assets/user-plus.svg';
+import ArrowDownIcon from '../../wwwroot/assets/arrow-down.svg';
+import Content from '../shared/layout/content';
 
 const howItWorksList = [
-  { icon: <CollaborationIcon />, description: 'Register your team' },
-  { icon: <TreeIcon />, description: 'Manage your developers' },
-  { icon: <CoinDollarIcon />, description: 'Improve your onboarding process by 250%' },
+  { id: 'register', icon: <CollaborationIcon />, description: 'Register your team' },
+  { id: 'add', icon: <UserPlusIcon />, description: 'Add your new team members' },
+  { id: 'manage', icon: <TreeIcon />, description: 'Manage and mentor them with onboardor' },
+  {
+    id: 'improve',
+    icon: <CoinsIcon />,
+    description: <div>Improve your on-boarding process by up to <span className={styles.important}>250%</span></div>,
+  },
 ];
 
 const LandingPage = () => (
   <div className={styles.landingPage}>
-    <div className={styles.content}>
+    <Content>
       <div className={styles.join}>
-        Join our beta sign up list and we&apos;ll give your team a <span>free sixth month subscription!</span>
+        Enter your email to get started. We&apos;ll also give your team a <span>free sixth month subscription!</span>
       </div>
-
       <SubscribeMailingList className={styles.subscribeMailingList} />
-
-      <div className={styles.coming}>Coming this August.</div>
-
       <div className={styles.howItWorks}>
         {howItWorksList.map(item => (
-          <div key={item.description} className={styles.howItWorksItem}>
-            <div className={styles.iconContainer}>{item.icon}</div>
+          <div key={item.id} className={styles.howItWorksItem}>
+            <div className={styles.iconContainer}>
+              <div className={styles.icon}>{item.icon}</div>
+              <div className={styles.line}><ArrowDownIcon /></div>
+            </div>
             <div className={styles.description}>{item.description}</div>
           </div>
         ))}
       </div>
-    </div>
+    </Content>
   </div>
 );
 

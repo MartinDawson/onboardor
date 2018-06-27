@@ -1,6 +1,6 @@
 .button {
   border-radius: 4px;
-  padding: 20px 10px;
+  padding: 20px 15px;
   color: white;
 }
 
@@ -8,4 +8,10 @@
   background-color: $primary;
   letter-spacing: 0.6px;
   text-transform: uppercase;
+}
+
+.anchorButton,
+.linkButton {
+  cursor: pointer;
+  display: inline-block;
 }

@@ -5,8 +5,7 @@
 
 # Config
 *.env
-**/appsettings.Production.json
-**/appsettings.Staging.json
+onboardor.pem
 
 # User-specific files
 *.suo

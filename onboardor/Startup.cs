@@ -24,17 +24,20 @@ using Microsoft.AspNetCore.Http;
 using Onboardor.Data;
 using Onboardor.Components.graphQl;
 using Onboardor.Components.GraphQl;
+using onboardor.Components.shared.utilities;
+using DotNetEnv;
+using Onboardor.Repository;
+using onboardor.Components.dashboard;
 
 namespace Onboardor
 {
     public class Startup
     {
-        private readonly IConfiguration _configuration;
         private readonly IHostingEnvironment _env;
 
         public Startup(IConfiguration configuration, ILoggerFactory loggerFactory, IHostingEnvironment env)
         {
-            _configuration = configuration;
+            Env.Load();
             _env = env;
             loggerFactory.CreateLogger<Startup>();
         }
@@ -43,11 +46,11 @@ namespace Onboardor
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
+               options.UseSqlServer(Env.GetString("DEFAULT_CONNECTION")), ServiceLifetime.Transient);
 
             if (_env.IsProduction())
             {
-                services.AddApplicationInsightsTelemetry(_configuration["applicationInsights:key"]);
+                services.AddApplicationInsightsTelemetry(Env.GetString("APPLICATIONINSIGHTS_KEY"));
             }
 
             services.AddSession(options =>
@@ -82,9 +85,9 @@ namespace Onboardor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
-            loggerFactory.AddConsole(_configuration.GetSection("Logging"));
+            loggerFactory.AddConsole((LogLevel)Env.GetInt("LOGGING_LOGLEVEL"), false);
             loggerFactory.AddDebug();
 
             if (env.IsDevelopment())
@@ -173,6 +176,8 @@ namespace Onboardor
 
             builder.RegisterType<AppQuery>();
             builder.RegisterType<AppMutation>();
+            builder.RegisterType<Repository<Organization, ApplicationDbContext>>().As<IRepository<Organization>>();
+            builder.RegisterType<Repository<Member, ApplicationDbContext>>().As<IRepository<Member>>();
 
             return builder;
         }

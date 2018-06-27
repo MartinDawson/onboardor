@@ -3,11 +3,6 @@
   padding-top: 130px;
 }
 
-.content {
-  max-width: 830px;
-  margin: 0 auto;
-}
-
 .subscribeMailingList {
   max-width: 70%;
   margin: 0 auto;
@@ -16,34 +11,67 @@
 .howItWorks {
   margin-top: 60px;
   margin-bottom: 80px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
-
-  .howItWorksItem:not(:last-child) {
-    margin-bottom: 50px;
-  }
+  max-width: 70%;
 
   .howItWorksItem {
     display: flex;
-    flex-direction: column;
-    align-items: center;
 
     .iconContainer {
-      border-radius: 50%;
-      background-color: $secondary;
-      padding: 12px;
       display: flex;
+      align-items: center;
+      flex-direction: column;
+      align-self: flex-start;
 
-      > svg {
-        fill: white;
-        width: 24px;
-        height: 24px;
+      .icon {
+        border-radius: 50%;
+        background-color: $secondary;
+        padding: 15px;
+        display: flex;
+
+        > svg {
+          fill: white;
+          width: 27px;
+          height: 27px;
+        }
       }
     }
 
     .description {
-      text-align: center;
-      margin-top: 10px;
+      margin-left: 10px;
+      margin-top: 17px;
+
+      .important {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .howItWorksItem:last-child {
+    .line {
+      display: none;
+    }
+  }
+
+  .howItWorksItem:not(:last-child) {
+    .line {
+      border-right: solid 1px $secondary;
+      border-left: solid 1px $secondary;
+      min-height: 40px;
+      flex: 0 1 100%;
+      position: relative;
+
+      > svg {
+        fill: $secondary;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        z-index: 1000;
+      }
     }
   }
 }
@@ -56,12 +84,6 @@
   > span {
     font-weight: 600;
   }
-}
-
-.coming {
-  color: $lightGrey;
-  text-align: center;
-  margin-top: 30px;
 }
 
 @media only screen and (max-width: $breakpointMobile) {

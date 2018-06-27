@@ -1,5 +1,5 @@
 # source: http://localhost:49891/graphql
-# timestamp: Wed Jun 13 2018 23:38:07 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Wed Jun 27 2018 23:48:30 GMT+0200 (W. Europe Daylight Time)
 
 """
 The `Date` scalar type represents a timestamp provided in UTC. `Date` expects
@@ -25,6 +25,10 @@ type Query {
     """The global Id of the object"""
     id: ID!
   ): Node
+  setup(
+    """The installationId for the app"""
+    installationId: Int!
+  ): Boolean
 }
 
 input SubscribeMailingListInput {

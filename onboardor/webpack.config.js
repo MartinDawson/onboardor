@@ -2,7 +2,6 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const dotenv = require('dotenv');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HTMLPlugin = require('html-webpack-plugin');
 
@@ -11,11 +10,6 @@ dotenv.config();
 const isInProduction = process.env.NODE_ENV === 'production';
 
 const plugins = [
-  new Webpack.optimize.CommonsChunkPlugin({
-    name: 'vendor',
-    filename: 'vendor.bundle.js',
-    minChunks: ({ resource }) => /node_modules/.test(resource),
-  }),
   new ExtractTextPlugin({
     filename: '[name].bundle.css',
   }),
@@ -24,10 +18,11 @@ const plugins = [
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       RECAPTCHA_SITE_KEY: JSON.stringify(process.env.RECAPTCHA_SITE_KEY),
+      APP_NAME: JSON.stringify(process.env.APP_NAME),
     },
   }),
   new HTMLPlugin({
-    title: 'Makes onboarding a smooth process for your developers',
+    title: 'Make the process of on-boarding your new software developers an easy experience.',
     hash: true,
     favicon: path.resolve(__dirname, 'wwwroot/favicon.ico'),
     template: path.resolve(__dirname, 'Components/app/app.ejs'),
@@ -36,13 +31,13 @@ const plugins = [
 ];
 let devtool = false;
 
-const entry = {
-  app: './Components/app/appContainer.js',
-};
+const entry = [
+  'regenerator-runtime/runtime',
+  './Components/app/appContainer.js',
+];
 
 if (isInProduction) {
   plugins.push(
-    new UglifyJsPlugin(),
     new OptimizeCssAssetsPlugin({
       cssProcessorOptions: { discardComments: { removeAll: true } },
     }),
@@ -52,6 +47,7 @@ if (isInProduction) {
 }
 
 module.exports = {
+  mode: process.env.NODE_ENV,
   context: __dirname,
   devtool,
   entry,
@@ -60,8 +56,19 @@ module.exports = {
     publicPath: '/build/',
     filename: '[name].bundle.js',
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
+    },
+  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         include: [
@@ -107,6 +114,11 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.svg$/,
+        issuer: /\.s?css$/,
+        loader: 'file-loader',
       },
     ],
   },

@@ -1,27 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Link } from 'found';
 
 import styles from './button.scss';
 
-const LinkButton = ({
+const AnchorButton = ({
   children, styleName, className, ...props
 }) => (
-  <Link {...props} className={classnames(styles.button, styles.linkButton, styles[styleName], className)}>
+  <a
+    {...props}
+    className={classnames(styles.button, styles.anchorButton, styles[styleName], className)}
+  >
     {children}
-  </Link>
+  </a>
 );
 
-LinkButton.defaultProps = {
+AnchorButton.defaultProps = {
   styleName: 'primary',
   className: null,
 };
 
-LinkButton.propTypes = {
+AnchorButton.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   styleName: PropTypes.string,
 };
 
-export default LinkButton;
+export default AnchorButton;
