@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "outDir": "./wwwroot/build/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "es2015",
+    "target": "es6",
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node"
+  },
+  "include": [
+    "Components/**/*"
+  ]
+}

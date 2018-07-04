@@ -33,7 +33,7 @@ let devtool = false;
 
 const entry = [
   'regenerator-runtime/runtime',
-  './Components/app/appContainer.js',
+  './Components/app/appContainer.tsx',
 ];
 
 if (isInProduction) {
@@ -74,7 +74,25 @@ module.exports = {
         include: [
           path.resolve(__dirname, 'Components'),
         ],
-        loader: 'babel-loader',
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: 'source-map-loader',
+          }
+        ],
+        enforce: 'pre',
+      },
+      {
+        test: /\.tsx?$/,
+        include: [
+          path.resolve(__dirname, 'Components'),
+        ],
+        use: [
+          { loader: 'babel-loader' },
+          { loader: 'ts-loader', options: { transpileOnly: true } },
+        ],
       },
       {
         test: /\.s?css$/,
@@ -83,10 +101,12 @@ module.exports = {
           fallback: 'style-loader',
           use: [
             {
-              loader: 'css-loader',
+              loader: 'typings-for-css-modules-loader',
               options: {
                 importLoaders: 1,
                 modules: true,
+                namedExport: true,
+                camelCase: true,
                 localIdentName: isInProduction ? '[hash:base64:5]' : '[path][name]__[local]',
               },
             }, {
@@ -102,7 +122,7 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        issuer: /\.js$/,
+        issuer: /\.tsx$/,
         use: [
           {
             loader: 'babel-loader',
@@ -125,7 +145,10 @@ module.exports = {
   plugins,
   resolve: {
     extensions: [
+      '.ts',
+      '.tsx',
       '.js',
+      '.json',
       '.scss',
     ],
   },

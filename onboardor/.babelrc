@@ -5,6 +5,7 @@
     "react"
   ],
   "plugins": [
-    "relay"
+    ["relay", { "artifactDirectory": "./Components/__generated__" }],
+    "babel-plugin-transform-es2015-modules-commonjs"
   ]
 }
