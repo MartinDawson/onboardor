@@ -1,7 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-
-import styles from "./errorPage.scss";
+import { Container, Text } from "rebass";
 
 interface IProps {
   status: number;
@@ -9,19 +8,19 @@ interface IProps {
 }
 
 const ErrorPage = ({ status, error = "An unknown error has occured." }: IProps) => (
-  <div className={styles.errorPage}>
+  <Container mt={100}>
     <Helmet>
-      <title>Error {status}</title>
+      <title>{`Error ${status}`}</title>
       <meta name="robots" content="noindex" />
     </Helmet>
-    <h1>Error {status}</h1>
-    <div className={styles.error}>
+    <Text fontSize={60} textAlign="center" mb={25}>Error {status}</Text>
+    <Text fontSize={25} textAlign="center" lineHeight={1.6}>
       <div>
         {error}
       </div>
       We have been notified of the error ¯\_(ツ)_/¯. Please try again later.
-    </div>
-  </div>
+    </Text>
+  </Container>
 );
 
 export default ErrorPage;

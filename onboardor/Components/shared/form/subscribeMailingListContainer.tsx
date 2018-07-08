@@ -3,7 +3,7 @@ import { compose, withHandlers } from "recompose";
 import { reduxForm } from "redux-form";
 
 import { Route } from "../../types/index";
-import SubscribeMailingList from "./subscribeMailingList";
+import SubscribeMailingList, { IProps } from "./subscribeMailingList";
 import subscribeMailingListMutation, { IMutationInput } from "./subscribeMailingListMutation";
 
 const handlers = {
@@ -18,11 +18,7 @@ const handlers = {
   },
 };
 
-interface IProps {
-  className?: string;
-}
-
-export default compose<IProps, IProps>(
+export default compose<IProps, {}>(
   withRouter,
   withHandlers(handlers),
   reduxForm({

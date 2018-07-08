@@ -1,28 +1,24 @@
 import React from "react";
+import { Input } from "rebass";
 
 import { WrappedFieldProps } from "redux-form";
-import styles from "./fieldInput.scss";
 import ValidationField from "./validationField";
 
 export interface IProps extends WrappedFieldProps {
-  id: string;
   name: string;
 }
 
 const FieldInput = ({
   input,
-  meta: { form, touched, error = [] },
-  id,
+  meta: { touched, error = [] },
   name,
   ...props
 }: IProps) => (
   <ValidationField touched={touched} error={error}>
-    <input
+    <Input
       {...input}
       {...props}
       name={name}
-      className={styles.input}
-      id={`${form}_${id}`}
     />
   </ValidationField>
 );

@@ -1,27 +1,12 @@
-import classnames from "classnames";
 import React from "react";
+import { BlockLink, LinkProps } from "rebass";
+import styled from "styled-components";
 
-import { IProps as IButtonProps, styleLookup } from "./button";
-import styles from "./button.scss";
+import colors from '../../styles/colors';
 
-interface IProps extends IButtonProps {
-  href: string;
-}
-
-const AnchorButton = ({
-  children,
-  styleName = "primary",
-  className,
-  href,
-  ...props
-}: IProps) => (
-  <a
-    {...props}
-    href={href}
-    className={classnames(styles.button, styles.anchorButton, styleLookup(styleName, styles), className)}
-  >
-    {children}
-  </a>
-);
+const AnchorButton = styled(({ ...props }: LinkProps) =>
+  <BlockLink {...props} p={15} color="white" bg={colors.$primary} />)`
+  border-radius: 4px;
+`;
 
 export default AnchorButton;

@@ -1,32 +1,14 @@
-import classnames from "classnames";
 import React from "react";
+import { Button as RebassButton, ButtonProps } from "rebass";
+import styled from "styled-components";
 
-import styles from "./button.scss";
+import colors from '../../styles/colors';
 
-export interface IProps {
-  children: React.ReactNode;
-  className?: string;
-  styleName?: string;
-}
-
-interface IStyleLookup {
-  [key: string]: string;
-}
-
-export const styleLookup = (styleName: string, lookup: IStyleLookup): string => lookup[styleName];
-
-const Button = ({
-  children,
-  styleName = "primary",
-  className,
-  ...props
-}: IProps) => (
-  <button
-    {...props}
-    className={classnames(styles.button, styleLookup(styleName, styles), className)}
-  >
-    {children}
-  </button>
-);
+const Button = styled(({ ...props }: ButtonProps) => <RebassButton {...props} bg={colors.$primary} />)`
+  cursor: pointer;
+  &:focus {
+    box-shadow: none;
+  }
+`;
 
 export default Button;

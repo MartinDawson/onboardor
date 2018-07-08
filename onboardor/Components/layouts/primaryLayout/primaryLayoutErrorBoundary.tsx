@@ -13,9 +13,7 @@ class PrimaryLayoutErrorBoundary extends React.Component<IProps> {
   // }
   public render() {
     return (
-      <div className={this.props.className}>
-        {this.props.children}
-      </div>
+      this.props.children
     );
   }
 }

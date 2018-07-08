@@ -6,11 +6,11 @@ import FieldInput from "./fieldInput";
 
 interface IProps {
   name: string;
-  id: string;
   placeholder?: string;
   type: string;
   validations?: string[];
   required?: boolean;
+  [key: string]: any;
 }
 
 export default compose<{}, IProps>(

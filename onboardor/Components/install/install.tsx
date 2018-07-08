@@ -1,25 +1,34 @@
 import React from "react";
+import { Container, Text } from "rebass";
+import { Flex } from "grid-styled";
+import styled from "styled-components";
 
-import GitHub from "../../wwwroot/assets/gitHub.svg";
+import GitHubIcon from "../../wwwroot/assets/gitHub.svg";
 import AnchorButton from "../shared/button/anchorButton";
-import Content from "../shared/layout/content";
-import styles from "./install.scss";
+
+const CustomGitHubIcon = styled(GitHubIcon)`
+  width: 30px;
+  height: 30px;
+  fill: white;
+  margin-right: 10px;
+`;
 
 const Install = () => (
-  <div className={styles.install}>
-    <Content>
-      <div className={styles.description}>Install with GitHub to use onboardor</div>
-      <div className={styles.signInButtonContainer}>
-        <AnchorButton
-          className={styles.signInButton}
-          href={`https://github.com/apps/${process.env.APP_NAME}`}
-        >
-          <GitHub />
-          Install onboardor
-        </AnchorButton>
-      </div>
-    </Content>
-  </div>
+  <Container mt={130}>
+    <Text mb={20} fontSize={20} textAlign="center">Install with GitHub to use onboardor</Text>
+    <Flex justifyContent="center">
+      <AnchorButton
+        href={`https://github.com/apps/${process.env.APP_NAME}`}
+        style={{
+          display: "flex",
+          alignItems: "center"
+        }}
+      >
+        <CustomGitHubIcon />
+        Install onboardor
+      </AnchorButton>
+    </Flex>
+  </Container>
 );
 
 export default Install;

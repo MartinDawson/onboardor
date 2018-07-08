@@ -9,7 +9,6 @@ interface IProps {
   error: string | string[];
   showError?: boolean;
   touched: boolean;
-  className?: string;
 }
 
 const ValidationField = ({
@@ -17,13 +16,12 @@ const ValidationField = ({
   error,
   touched,
   showError,
-  className,
 }: IProps) => {
   const errors = Array.isArray(error) ? error : [error];
   const hasError = errors.length > 0;
 
   return (
-    <div className={classnames(className, (touched && hasError) && styles.hasError)}>
+    <div className={classnames((touched && hasError) && styles.hasError)}>
       <div className={styles.validationField}>
         {children}
       </div>
