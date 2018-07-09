@@ -1,10 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
-import PageContent from "../shared/pageContent";
-
 const TermsAndConditions = () => (
-  <PageContent>
+  <div>
     <Helmet>
       <title>Terms and Conditions</title>
       <meta name="description" content="Our terms and conditions that you agree to when using our site." />
@@ -113,7 +111,7 @@ const TermsAndConditions = () => (
         </p>
       </li>
     </ol>
-  </PageContent>
+  </div>
 );
 
 export default TermsAndConditions;

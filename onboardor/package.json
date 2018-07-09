@@ -31,7 +31,7 @@
     "relay-compiler": "relay-compiler --src ./Components --schema schema.graphql --language typescript --artifactDirectory ./Components/__generated__",
     "relay-compiler:watch": "npm run relay-compiler -- --watch",
     "get-schema": "graphql get-schema dev",
-    "lint": "tslint --fix ./Components/**/*.tsx",
+    "lint": "tslint --fix ./Components/**/*.{ts,tsx}",
     "clean": "rimraf ./wwwroot/build",
     "build-client": "webpack",
     "build": "run-s clean build-client"

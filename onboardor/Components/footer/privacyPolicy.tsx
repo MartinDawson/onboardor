@@ -1,10 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
-import PageContent from "../shared/pageContent";
-
 const PrivacyPolicy = () => (
-  <PageContent>
+  <div>
     <Helmet>
       <title>Privacy Policy</title>
       <meta name="description" content="Our privacy policy explaining what data we collect." />
@@ -176,7 +174,7 @@ const PrivacyPolicy = () => (
         </p>
       </li>
     </ol>
-  </PageContent>
+  </div>
 );
 
 export default PrivacyPolicy;
