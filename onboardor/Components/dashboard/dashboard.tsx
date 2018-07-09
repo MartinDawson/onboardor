@@ -1,7 +1,6 @@
+import { Flex } from "grid-styled";
 import React from "react";
-
-import Container from "../shared/layout/container";
-import styles from "./dashboard.scss";
+import { Text, Card, Subhead, BackgroundImage, Image } from "rebass";
 
 interface IProps {
   organizations: [{
@@ -16,30 +15,33 @@ interface IProps {
   }];
 }
 
+const memberPadding = 7;
+const nameMargin = 7;
+
 const Dashboard = ({
   organizations,
 }: IProps) => (
-  <Container className={styles.dashboard}>
+  <Flex justifyContent="center" pt={30}>
     {organizations.map((organization) => (
       <div key={organization.id}>
-        <div className={styles.organizationDetails}>
-          <div className={styles.name}>{organization.name}</div>
-          <img className={styles.avatarUrl} src={organization.avatarUrl} alt="" />
-        </div>
-        <div className={styles.selectionDescription}>
-          Select your team members that you want to start onboarding for <span>{organization.name}</span>.
-        </div>
-        <div className={styles.members}>
+        <Flex flexDirection="column" alignItems="center">
+          <Text fontWeight="bold" mb={nameMargin}>{organization.name}</Text>
+          <Image width={130} src={organization.avatarUrl} />
+        </Flex>
+        <Text my={30}>
+          Select your team members that you want to start onboarding for <Text is="span" fontWeight="bold">{organization.name}</Text>.
+        </Text>
+        <Flex mx={-memberPadding} flexWrap>
           {organization.members.map((member) => (
-            <div key={member.id}>
-              <div className={styles.name}>{member.name}</div>
-              <img className={styles.avatarUrl} src={member.avatarUrl} alt="" />
-            </div>
+            <Card key={member.id} p={memberPadding}>
+              <BackgroundImage src={member.avatarUrl} ratio={1} />
+              <Subhead mt={nameMargin}>{member.name}</Subhead>
+            </Card>
           ))}
-        </div>
+        </Flex>
       </div>
     ))}
-  </Container>
+  </Flex>
 );
 
 export default Dashboard;

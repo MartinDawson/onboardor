@@ -28,7 +28,7 @@
     "restore-nuget": "dotnet restore",
     "start": "run-p development relay-compiler:watch",
     "development": "cross-env ASPNETCORE_ENVIRONMENT=Development dotnet run",
-    "relay-compiler": "relay-compiler --src ./Components --schema schema.graphql --language typescript --artifactDirectory ./Components/__generated__",
+    "relay-compiler": "relay-compiler --src ./Components --schema schema.graphql --language typescript --artifactDirectory ./Components/__generated__ --extensions tsx",
     "relay-compiler:watch": "npm run relay-compiler -- --watch",
     "get-schema": "graphql get-schema dev",
     "lint": "run-p tslint typescript",
