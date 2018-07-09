@@ -1,7 +1,7 @@
 import React from "react";
 import { compose, withProps } from "recompose";
 
-import { Route } from "../types/index";
+import { IRoute } from "../types/index";
 import ErrorPage from "./errorPage";
 
 interface IProps {
@@ -23,7 +23,7 @@ const ErrorPageContainer = compose<IProps, IProps>(
 )(ErrorPage);
 
 export const routeConfig = {
-  render: (route: Route) => route.props && (
+  render: (route: IRoute) => route.props && (
     <ErrorPageContainer
       status={parseInt(route.props.params.status as string, 10)}
       error={route.props.location.state.error}

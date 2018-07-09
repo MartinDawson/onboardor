@@ -1,12 +1,15 @@
 import React from "react";
 import { BlockLink, LinkProps } from "rebass";
-import styled from "styled-components";
+import styled, { withTheme } from "styled-components";
+import { ITheme } from "../../types";
 
-import colors from '../../styles/colors';
+interface IProps extends LinkProps {
+  theme: ITheme;
+}
 
-const AnchorButton = styled(({ ...props }: LinkProps) =>
-  <BlockLink {...props} p={15} color="white" bg={colors.$primary} />)`
+const AnchorButton = styled(({ theme, ...props }: IProps) =>
+  <BlockLink {...props} p={15} color="white" bg={theme.colors.primary} />)`
   border-radius: 4px;
 `;
 
-export default AnchorButton;
+export default withTheme(AnchorButton);

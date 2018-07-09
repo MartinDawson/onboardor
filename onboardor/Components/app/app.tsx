@@ -7,7 +7,6 @@ import { injectGlobal } from "styled-components";
 import environment from "./environment/environment";
 import Router from "./routing/router";
 import store from "./store/store";
-import colors from '../styles/colors';
 
 /* tslint:disable no-unused-expression */
 injectGlobal`

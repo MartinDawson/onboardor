@@ -2,12 +2,12 @@ import { withRouter } from "found";
 import { compose, withHandlers } from "recompose";
 import { reduxForm } from "redux-form";
 
-import { Route } from "../../types/index";
+import { IRoute } from "../../types/index";
 import SubscribeMailingList, { IProps } from "./subscribeMailingList";
 import subscribeMailingListMutation, { IMutationInput } from "./subscribeMailingListMutation";
 
 const handlers = {
-  onSubmit: ({ router }: Route) => (input: IMutationInput) => {
+  onSubmit: ({ router }: IRoute) => (input: IMutationInput) => {
     try {
       subscribeMailingListMutation(input);
     } catch (error) {

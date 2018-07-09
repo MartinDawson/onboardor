@@ -1,6 +1,6 @@
+import { Flex } from "grid-styled";
 import React from "react";
 import { Container, Text } from "rebass";
-import { Flex } from "grid-styled";
 import styled from "styled-components";
 
 import GitHubIcon from "../../wwwroot/assets/gitHub.svg";

@@ -1,12 +1,12 @@
 import { Link } from "found";
-import React from "react";
 import { Flex } from "grid-styled";
+import React from "react";
 import styled from "styled-components";
 
 import { ITheme } from "../types";
 
 interface IStyleProps {
-  theme: ITheme
+  theme: ITheme;
 }
 
 const CustomLink = styled(Link)`

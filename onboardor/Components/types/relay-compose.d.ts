@@ -1,1 +1,1 @@
-declare module 'relay-compose';
+declare module "relay-compose";

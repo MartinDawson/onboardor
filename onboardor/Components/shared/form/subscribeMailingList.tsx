@@ -1,10 +1,10 @@
-import React from "react";
 import { Box } from "grid-styled";
-import { Relative, Absolute } from "rebass";
+import React from "react";
+import { Absolute, Relative } from "rebass";
 
+import Button from "../button/button";
 import FieldInput from "../inputs/fieldInputContainer";
 import InvisibleRecpatcha from "../inputs/invisibleRecaptchaContainer";
-import Button from "../button/button";
 
 export interface IProps {
   handleSubmit: (input: object) => any;

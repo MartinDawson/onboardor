@@ -6,7 +6,7 @@ import styles from "./dashboard.scss";
 interface IProps {
   organizations: [{
     id: string
-    name: string,
+    name: string
     avatarUrl: string
     members: [{
       id: string

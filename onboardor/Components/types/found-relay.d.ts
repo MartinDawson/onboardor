@@ -1,1 +1,1 @@
-declare module 'found-relay';
+declare module "found-relay";

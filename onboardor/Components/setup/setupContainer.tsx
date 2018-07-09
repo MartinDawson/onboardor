@@ -2,7 +2,7 @@ import { RedirectException } from "found";
 import { graphql } from "react-relay";
 
 import Dashboard from "../dashboard/dashboardContainer";
-import { Match, Route } from "../types/index";
+import { IMatch, IRoute } from "../types/index";
 
 const query = graphql`
   query setupContainerQuery(
@@ -16,11 +16,11 @@ const query = graphql`
 
 export const routeConfig = {
   Component: Dashboard,
-  prepareVariables: (_: Route, { location }: Match) => ({
+  prepareVariables: (_: IRoute, { location }: IMatch) => ({
     installationId: location.query.installation_id,
   }),
   query,
-  render: (route: Route): null => {
+  render: (route: IRoute): null => {
     if (route.props) {
       if (route.props.setup) {
         throw new RedirectException("/dashboard");

@@ -1,27 +1,27 @@
-import { InjectedFormProps } from 'redux-form';
-import { Theme } from 'rebass';
+import { Theme } from "rebass";
+import { InjectedFormProps } from "redux-form";
 
-export interface UrlParameter {
-  [key: string]: string | number
+export interface IUrlParameter {
+  [key: string]: string | number;
 }
 
-export interface FormState {
-  subscribeMailingList: InjectedFormProps
+export interface IFormState {
+  subscribeMailingList: InjectedFormProps;
 }
 
 export interface ITheme {
   fonts: {
     sans: string
-  }
+  };
   breakpoints: [
     768,
     992,
     1200
-  ]
+  ];
   fontWeights: {
     normal: number
     bold: number
-  }
+  };
   colors: {
     darkGrey: string
     error: string
@@ -29,29 +29,29 @@ export interface ITheme {
     lightGrey: string
     primary: string
     secondary: string
-  }
+  };
 }
 
-export interface Route {
+export interface IRoute {
   router: {
     push: (pathname: string) => void
-  }
+  };
   error: {
     _error: string[]
-  }
+  };
   props?: {
     [key: string]: any
-    params: UrlParameter
+    params: IUrlParameter
     location: {
       state: {
         [key: string]: any
       }
     }
-  }
+  };
 }
 
-export interface Match {
+export interface IMatch {
   location: {
-    query: UrlParameter
-  }
+    query: IUrlParameter
+  };
 }

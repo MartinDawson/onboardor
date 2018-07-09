@@ -1,1 +1,1 @@
-declare module 'found';
+declare module "found";
