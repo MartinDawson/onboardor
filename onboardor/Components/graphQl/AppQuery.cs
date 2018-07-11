@@ -29,7 +29,44 @@ namespace Onboardor.Components.GraphQl
 
             var logger = loggerFactory.CreateLogger<AppQuery>();
 
-            Field<BooleanGraphType>()
+            Field<NonNullGraphType<ListGraphType<OrganizationPayload>>>()
+                .Name("organizations")
+                .ResolveAsync(async c =>
+                {
+                    var client = new GitHubClient(new ProductHeaderValue(Env.GetString("APP_NAME")));
+                    var path = $"{_env.WebRootPath}/{Env.GetString("APP_NAME")}.pem";
+                    var appIntegrationId = Env.GetInt("GITHUB_APP_ID");
+                    var generator = new GitHubJwt.GitHubJwtFactory(
+                        new GitHubJwt.FilePrivateKeySource(path),
+                        new GitHubJwt.GitHubJwtFactoryOptions
+                        {
+                            AppIntegrationId = appIntegrationId,
+                            ExpirationSeconds = 600
+                        });
+
+                    var jwtToken = generator.CreateEncodedJwtToken();
+
+                    client.Credentials = new Credentials(jwtToken, AuthenticationType.Bearer);
+
+                    var installations = await client.GitHubApps.GetAllInstallationsForCurrent();
+
+                    var organizations = new List<Organization>();
+
+                    foreach (var installation in installations)
+                    {
+                        var response = await client.GitHubApps.CreateInstallationToken(installation.Id);
+                        var installationClient = new GitHubClient(new ProductHeaderValue($"{Env.GetString("APP_NAME")}-${installation.Id}"))
+                        {
+                            Credentials = new Credentials(response.Token)
+                        };
+
+                        organizations.Add(_organizationService.GetOrganization((int)installation.TargetId));
+                    }
+
+                    return organizations;
+                });
+
+            Field<NonNullGraphType<BooleanGraphType>>()
                 .Argument<NonNullGraphType<IntGraphType>>("installationId", "The installationId for the app")
                 .Name("setup")
                 .ResolveAsync(async c =>
@@ -41,8 +78,8 @@ namespace Onboardor.Components.GraphQl
                         new GitHubJwt.FilePrivateKeySource(path),
                         new GitHubJwt.GitHubJwtFactoryOptions
                         {
-                            AppIntegrationId = appIntegrationId, // The GitHub App Id
-                            ExpirationSeconds = 600 // 10 minutes is the maximum time allowed
+                            AppIntegrationId = appIntegrationId,
+                            ExpirationSeconds = 600
                         });
 
                     var jwtToken = generator.CreateEncodedJwtToken();

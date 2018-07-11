@@ -31,7 +31,7 @@ const Dashboard = ({
         <Text my={30}>
           Select your team members that you want to start onboarding for <Text is="span" fontWeight="bold">{organization.name}</Text>.
         </Text>
-        <Flex mx={-memberPadding} flexWrap>
+        <Flex mx={-memberPadding} flexWrap="wrap">
           {organization.members.map((member) => (
             <Card key={member.id} p={memberPadding}>
               <BackgroundImage src={member.avatarUrl} ratio={1} />

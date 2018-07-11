@@ -1,4 +1,5 @@
-﻿using Onboardor.Repository;
+﻿using Microsoft.EntityFrameworkCore;
+using Onboardor.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,11 @@ namespace onboardor.Components.dashboard
         public void Add(Organization organization)
         {
             _repository.Add(organization);
+        }
+
+        public Organization GetOrganization(int organizationId)
+        {
+            return _repository.GetAll().Include(x => x.Members).Single(x => x.Id == organizationId);
         }
     }
 }

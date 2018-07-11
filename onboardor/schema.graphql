@@ -1,5 +1,5 @@
 # source: http://localhost:49891/graphql
-# timestamp: Wed Jun 27 2018 23:48:30 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Wed Jul 11 2018 23:27:49 GMT+0200 (W. Europe Daylight Time)
 
 """
 The `Date` scalar type represents a timestamp provided in UTC. `Date` expects
@@ -10,6 +10,18 @@ scalar Date
 
 scalar Decimal
 
+type Member implements Node {
+  avatarUrl: String!
+
+  """The Global Id of the Member"""
+  id: ID!
+
+  """The Id of the Member"""
+  memberId: Int!
+  name: String!
+  organization: Organization
+}
+
 type Mutation {
   subscribeMailingList(input: SubscribeMailingListInput!): SubscribeMailingListPayload
 }
@@ -19,16 +31,29 @@ interface Node {
   id: ID
 }
 
+type Organization implements Node {
+  avatarUrl: String!
+
+  """The Global Id of the Organization"""
+  id: ID!
+  members: [Member]!
+  name: String!
+
+  """The Id of the Organization"""
+  organizationId: Int!
+}
+
 type Query {
   """Fetches an object given its global Id"""
   node(
     """The global Id of the object"""
     id: ID!
   ): Node
+  organizations: [Organization]!
   setup(
     """The installationId for the app"""
     installationId: Int!
-  ): Boolean
+  ): Boolean!
 }
 
 input SubscribeMailingListInput {

@@ -8,5 +8,6 @@ namespace onboardor.Components.dashboard
     public interface IOrganizationService
     {
         void Add(Organization organization);
+        Organization GetOrganization(int organizationId);
     }
 }

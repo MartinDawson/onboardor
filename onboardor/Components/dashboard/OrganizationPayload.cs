@@ -15,8 +15,12 @@ namespace onboardor.Components.dashboard
 {
     public class OrganizationPayload : NodeGraphType<Organization>
     {
-        public OrganizationPayload()
+        private readonly IOrganizationService _organizationService;
+
+        public OrganizationPayload(IOrganizationService organizationService)
         {
+            _organizationService = organizationService;
+
             Name = nameof(Organization);
 
             Id(x => x.Id);
@@ -27,7 +31,7 @@ namespace onboardor.Components.dashboard
 
         public override Organization GetById(string id)
         {
-            throw new NotImplementedException();
+            return _organizationService.GetOrganization(int.Parse(id));
         }
     }
 }

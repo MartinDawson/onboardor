@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 66faa03c9fe0defe390057e2cf5ed17c
+ * @relayHash 13276b796906b64034e42c537a28cc7c
  */
 
 /* eslint-disable */
@@ -13,7 +13,7 @@ export type setupContainerQueryVariables = {|
   installationId: number,
 |};
 export type setupContainerQueryResponse = {|
-  +setup: ?boolean,
+  +setup: boolean,
 |};
 */
 
