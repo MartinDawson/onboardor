@@ -46,7 +46,6 @@
     "Explorer 11"
   ],
   "devDependencies": {
-    "@types/classnames": "^2.2.4",
     "@types/grid-styled": "^4.1.0",
     "@types/react": "^16.4.4",
     "@types/react-dom": "^16.0.6",
@@ -88,7 +87,6 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.18.0",
     "babel-runtime": "^6.26.0",
-    "classnames": "^2.2.5",
     "cross-env": "^5.0.0",
     "css-loader": "^0.28.4",
     "dotenv": "^5.0.0",

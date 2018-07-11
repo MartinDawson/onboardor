@@ -1,9 +1,0 @@
-.error {
-  color: $error;
-}
-
-.error::before {
-  content: "• ";
-  margin-right: 6px;
-  color:$error;
-}

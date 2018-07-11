@@ -1,9 +1,6 @@
 import React from "react";
-
-import {
-  breakpointMobile,
-  breakpointTablet,
-} from "../styles/sizes";
+import { withTheme } from "styled-components";
+import { ITheme } from "../types";
 
 interface IDisplayTypeInput {
   isMobile: boolean;
@@ -13,6 +10,7 @@ interface IDisplayTypeInput {
 
 interface IProps {
   children: (displayType: IDisplayTypeInput) => JSX.Element;
+  theme: ITheme;
 }
 
 class DisplayType extends React.Component<IProps> {
@@ -30,11 +28,11 @@ class DisplayType extends React.Component<IProps> {
   }
 
   public getDisplayType = (windowWidth: number) => {
-    if (windowWidth < breakpointMobile.value) {
+    if (windowWidth < this.props.theme.breakpoints[0]) {
       return "mobile";
     }
 
-    if (windowWidth < breakpointTablet.value) {
+    if (windowWidth < this.props.theme.breakpoints[1]) {
       return "tablet";
     }
 
@@ -61,4 +59,4 @@ class DisplayType extends React.Component<IProps> {
   }
 }
 
-export default DisplayType;
+export default withTheme(DisplayType);

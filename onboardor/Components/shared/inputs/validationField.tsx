@@ -1,8 +1,6 @@
-import classnames from "classnames";
 import React from "react";
 
 import ValidationErrors from "../validation/validationErrors";
-import styles from "./validationField.scss";
 
 interface IProps {
   children: React.ReactNode;
@@ -21,8 +19,8 @@ const ValidationField = ({
   const hasError = errors.length > 0;
 
   return (
-    <div className={classnames((touched && hasError) && styles.hasError)}>
-      <div className={styles.validationField}>
+    <div>
+      <div>
         {children}
       </div>
       {touched && showError ? <ValidationErrors errors={errors} /> : null}
