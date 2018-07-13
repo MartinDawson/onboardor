@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { ITheme } from "../types";
 
 interface IStyleProps {
-  theme: ITheme;
+  theme?: ITheme;
 }
 
 const CustomLink = styled(Link)`

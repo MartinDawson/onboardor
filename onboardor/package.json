@@ -114,7 +114,7 @@
     "react-relay": "^1.5.0",
     "react-svg-loader": "^2.1.0",
     "rebass": "^2.0.1",
-    "recompose": "^0.26.0",
+    "recompose": "^0.27.1",
     "redux": "^4.0.0",
     "redux-form": "^7.4.2",
     "redux-thunk": "^2.3.0",
