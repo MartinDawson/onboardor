@@ -3,12 +3,13 @@ import React from "react";
 import { BackgroundImage, Subhead, Text } from "rebass";
 import Button from "../shared/button/button";
 import { IOrganization } from "./selectOrganization";
-import { cardPadding, nameMargin, SelectCard } from "./styles";
+import { cardMargin, nameMargin, SelectCard } from "./styles";
 
 export interface IMember {
-  id: string;
+  id: number;
   name: string;
   avatarUrl: string;
+  isBeingOnboarded: boolean;
   selected: boolean;
 }
 
@@ -16,7 +17,7 @@ export interface IProps {
   organization: IOrganization;
   selectTeamMember: (teamMember: IMember) => void;
   proceed: () => void;
-  selectedTeamMembers: string[];
+  selectedTeamMembers: IMember[];
 }
 
 const SelectTeamMembers = ({
@@ -31,24 +32,24 @@ const SelectTeamMembers = ({
         {organization.name}
       </Text>.
     </Text>
-    <Flex mx={-cardPadding} flexWrap="wrap">
+    <Flex flexWrap="wrap">
       {organization.members.map((member) => {
-        const selected = selectedTeamMembers.some((id) => id === member.id);
+        const selected = selectedTeamMembers.some((selectedTeamMember) => selectedTeamMember.id === member.id);
 
         return (
           <SelectCard
             key={member.id}
-            p={cardPadding}
+            m={cardMargin}
             onClick={() => selectTeamMember(member)}
             selected={selected}
           >
-            <BackgroundImage src={member.avatarUrl} ratio={1} />
-            <Subhead mt={nameMargin}>{member.name}</Subhead>
+            <BackgroundImage width={200} src={member.avatarUrl} ratio={1} />
+            <Subhead textAlign="center" mt={nameMargin}>{member.name}</Subhead>
           </SelectCard>
         );
       })}
     </Flex>
-    <Button mx="auto" mt={50} style={{ fontSize: 25, display: "block"  }} onClick={proceed}>
+    <Button mx="auto" mt={50} fontSize={25} display="block" onClick={proceed}>
       Continue
     </Button>
   </Flex>

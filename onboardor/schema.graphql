@@ -1,5 +1,5 @@
 # source: http://localhost:49891/graphql
-# timestamp: Wed Jul 11 2018 23:27:49 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Sat Jul 14 2018 02:01:11 GMT+0200 (W. Europe Daylight Time)
 
 """
 The `Date` scalar type represents a timestamp provided in UTC. `Date` expects
@@ -15,6 +15,7 @@ type Member implements Node {
 
   """The Global Id of the Member"""
   id: ID!
+  isBeingOnboarded: Boolean!
 
   """The Id of the Member"""
   memberId: Int!
@@ -23,6 +24,7 @@ type Member implements Node {
 }
 
 type Mutation {
+  setOnboardingMembers(input: SetOnboardingMembersInput!): SetOnboardingMembersPayload
   subscribeMailingList(input: SubscribeMailingListInput!): SubscribeMailingListPayload
 }
 
@@ -54,6 +56,15 @@ type Query {
     """The installationId for the app"""
     installationId: Int!
   ): Boolean!
+}
+
+input SetOnboardingMembersInput {
+  clientMutationId: String = null
+  memberIds: [Int]!
+}
+
+type SetOnboardingMembersPayload {
+  clientMutationId: String
 }
 
 input SubscribeMailingListInput {

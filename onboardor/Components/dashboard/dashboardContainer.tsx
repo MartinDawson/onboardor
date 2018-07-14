@@ -1,12 +1,12 @@
+import { RedirectException } from "found";
 import React from "react";
 import { graphql } from "react-relay";
-import { branch, compose, renderComponent, withStateHandlers } from "recompose";
+import { branch, compose, renderComponent, withProps } from "recompose";
 
 import LandingPage from "../landingPage/landingPage";
+import { IOrganization } from "../select/selectOrganization";
+import { IRoute } from "../types";
 import Dashboard from "./dashboard";
-import SelectOrganization, { IOrganization, IProps as IOrganizationProps } from "./selectOrganization";
-import SelectTeamMembers, { IMember, IProps as IMemberProps } from "./selectTeamMembers";
-import { debug } from "util";
 
 const query = graphql`
   query dashboardContainerQuery {
@@ -18,74 +18,41 @@ const query = graphql`
         id
         name
         avatarUrl
+        isBeingOnboarded
       }
     }
   }
 `;
 
-interface IState {
-  selectedTeamMembers: string[];
-  selectedOrganization: string;
-  setupStageIndex: number;
-}
-
-const stateHandlers = {
-  selectOrganization: ({ selectedOrganization }: IState) => (organization: IOrganization) => ({
-    selectedOrganization: selectedOrganization ? null : organization.id,
-  }),
-  selectTeamMember: ({ selectedTeamMembers }: IState) => (teamMember: IMember) => {
-    const teamMemberIndex = selectedTeamMembers.findIndex((id) => id === teamMember.id);
-    const newSelectedTeamMembers = [...selectedTeamMembers];
-
-    if (teamMemberIndex === -1) {
-      newSelectedTeamMembers.push(teamMember.id);
-    } else {
-      newSelectedTeamMembers.splice(teamMemberIndex, 1);
-    }
-
-    return { selectedTeamMembers: newSelectedTeamMembers };
-  },
-  proceed: ({ setupStageIndex }: IState) => () => ({
-    setupStageIndex: ++setupStageIndex,
-  }),
-};
-
-interface IProps extends IOrganizationProps, IMemberProps {}
-
-interface IStageProps extends IProps, IState {
-  setupStageIndex: number;
-}
-
-const selectTeamMembersFactory = ({ setupStageIndex, ...props }: IStageProps) => {
-  const organization = props.organizations.find((orgazniation) => orgazniation.id === props.selectedOrganization);
-
-  const StageComponent = [
-    <SelectOrganization key={0} {...props} />,
-    <SelectTeamMembers key={1} {...props} organization={organization} />,
-  ][setupStageIndex];
-
-  return StageComponent;
-};
-
-const Component = compose<IProps, {}>(
-  branch(
-    (props: IProps) => !props.organizations.length,
-    renderComponent(LandingPage),
-  ),
-  withStateHandlers<IState, {}>({
-    selectedTeamMembers: [],
-    selectedOrganization: null,
-    setupStageIndex: 0,
-  }, stateHandlers),
-  branch(
-    ({ setupStageIndex }: IStageProps) => typeof setupStageIndex === "number",
-    renderComponent(selectTeamMembersFactory),
-  )
+const Component = compose(
+  // TODO: Remove
+  withProps(({ organizations }) => ({ organization: organizations[0]}))
 )(Dashboard);
+
+interface IRoute {
+  props: {
+    organizations: IOrganization[];
+  };
+}
 
 export const routeConfig = {
   Component,
-  query,
+  // query,
+  render: (route: IRoute) => {
+    if (route.props) {
+      // if (!route.props.organizations) {
+      //   return new RedirectException("/landingPage");
+      // }
+
+      // if (!route.props.organizations.some((x) => x.members.some((z) => z.isBeingOnboarded))) {
+      //   return new RedirectException("/select");
+      // }
+
+      return <Component {...route.props} />;
+      // Handle errors
+    }
+    return null;
+  },
 };
 
 export default Dashboard;

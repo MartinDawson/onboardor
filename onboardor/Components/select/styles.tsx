@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { ITheme } from "../types";
 
 interface IStyleProps {
-  theme?: ITheme;
-  selected: boolean;
+  theme: ITheme;
+  selected?: boolean;
 }
 
 export const SelectCard = styled(Card)`
@@ -15,5 +15,5 @@ export const SelectCard = styled(Card)`
   `}
 `;
 
-export const cardPadding = 7;
+export const cardMargin = 11;
 export const nameMargin = 7;

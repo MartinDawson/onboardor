@@ -1,4 +1,6 @@
 ﻿using GraphQL.Relay.Types;
+using GraphQL.Types;
+using onboardor.Components.select;
 using onboardor.Components.shared.form;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace Onboardor.Components.GraphQl
         public AppMutation()
         {
             Mutation<SubscribeMailingListInput, SubscribeMailingListPayload>("subscribeMailingList");
+            Mutation<SetOnboardingMembersInput, SetOnboardingMembersPayload>("setOnboardingMembers");
         }
     }
 }

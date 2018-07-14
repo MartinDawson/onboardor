@@ -9,19 +9,24 @@ namespace onboardor.Components.dashboard
 {
     public class MemberPayload : NodeGraphType<Member>
     {
-        public MemberPayload()
+        private readonly IMemberService _memberService;
+
+        public MemberPayload(IMemberService memberService)
         {
+            _memberService = memberService;
+
             Name = nameof(Member);
 
             Id(x => x.Id);
             Field(x => x.Name);
             Field(x => x.AvatarUrl);
+            Field(x => x.IsBeingOnboarded);
             Field<OrganizationPayload>("organization");
         }
 
         public override Member GetById(string id)
         {
-            throw new NotImplementedException();
+            return _memberService.GetMember(int.Parse(id));
         }
     }
 }

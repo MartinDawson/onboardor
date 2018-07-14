@@ -1,5 +1,5 @@
 import { HttpError } from "found";
-import { IRoute } from "../../types/index";
+import { IRoute } from "../../types";
 
 const withRouteValidation = (route: IRoute) =>
   (render: (route: IRoute) => React.ComponentType) => {

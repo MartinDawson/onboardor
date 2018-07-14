@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 97f7d1f54cfcd5de67959c6784af9c29
+ * @relayHash dbff7e05e8bb58c15ebfcd45a15aedf0
  */
 
 /* eslint-disable */
@@ -19,6 +19,7 @@ export type dashboardContainerQueryResponse = {|
       +id: string,
       +name: string,
       +avatarUrl: string,
+      +isBeingOnboarded: boolean,
     |}>,
   |}>,
 |};
@@ -35,6 +36,7 @@ query dashboardContainerQuery {
       id
       name
       avatarUrl
+      isBeingOnboarded
     }
   }
 }
@@ -86,7 +88,14 @@ v3 = [
         "selections": [
           v0,
           v1,
-          v2
+          v2,
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "isBeingOnboarded",
+            "args": null,
+            "storageKey": null
+          }
         ]
       }
     ]
@@ -97,7 +106,7 @@ return {
   "operationKind": "query",
   "name": "dashboardContainerQuery",
   "id": null,
-  "text": "query dashboardContainerQuery {\n  organizations {\n    id\n    name\n    avatarUrl\n    members {\n      id\n      name\n      avatarUrl\n    }\n  }\n}\n",
+  "text": "query dashboardContainerQuery {\n  organizations {\n    id\n    name\n    avatarUrl\n    members {\n      id\n      name\n      avatarUrl\n      isBeingOnboarded\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -115,5 +124,5 @@ return {
   }
 };
 })();
-(node/*: any*/).hash = '98cf2da7ba9bc85b6cd8da2109827508';
+(node/*: any*/).hash = '6cf885eb8ac76a0db218ee2e4072dd02';
 module.exports = node;

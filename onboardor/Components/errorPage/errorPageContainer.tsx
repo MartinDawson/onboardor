@@ -1,7 +1,7 @@
 import React from "react";
 import { compose, withProps } from "recompose";
 
-import { IRoute } from "../types/index";
+import { IRoute } from "../types";
 import ErrorPage from "./errorPage";
 
 interface IProps {

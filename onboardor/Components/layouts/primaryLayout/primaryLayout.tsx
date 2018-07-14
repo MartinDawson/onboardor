@@ -3,7 +3,6 @@ import React from "react";
 import { Container, Root, Text } from "rebass";
 import styled, { withTheme } from "styled-components";
 
-import Footer from "../../footer/footer";
 import { ITheme } from "../../types";
 import PrimaryLayoutErrorBoundary from "./primaryLayoutErrorBoundary";
 
@@ -31,7 +30,6 @@ const PrimaryLayout = ({
           {children}
         </Box>
       </CustomContainer>
-      <Footer />
     </CustomRoot>
   </PrimaryLayoutErrorBoundary>
 );

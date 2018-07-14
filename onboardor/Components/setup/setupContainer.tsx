@@ -2,7 +2,7 @@ import { RedirectException } from "found";
 import { graphql } from "react-relay";
 
 import Dashboard from "../dashboard/dashboardContainer";
-import { IMatch, IRoute } from "../types/index";
+import { IMatch, IRoute } from "../types";
 
 const query = graphql`
   query setupContainerQuery(
@@ -23,7 +23,7 @@ export const routeConfig = {
   render: (route: IRoute): null => {
     if (route.props) {
       if (route.props.setup) {
-        throw new RedirectException("/dashboard");
+        throw new RedirectException("/selectOrganization");
       }
       // Handle errors
     }

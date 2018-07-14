@@ -16,6 +16,8 @@ namespace onboardor.Components.dashboard
         public string Name { get; set; }
         [Required]
         public string AvatarUrl { get; set; }
+        [Required]
+        public bool IsBeingOnboarded { get; set; }
         public Organization Organization { get; set; }
     }
 }

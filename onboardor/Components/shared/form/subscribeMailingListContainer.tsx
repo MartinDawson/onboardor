@@ -2,7 +2,7 @@ import { withRouter } from "found";
 import { compose, withHandlers } from "recompose";
 import { reduxForm } from "redux-form";
 
-import { IRoute } from "../../types/index";
+import { IRoute } from "../../types";
 import SubscribeMailingList, { IProps } from "./subscribeMailingList";
 import subscribeMailingListMutation, { IMutationInput } from "./subscribeMailingListMutation";
 
