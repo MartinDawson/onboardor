@@ -5,7 +5,6 @@ Helps companies create a good on-boarding experience for their developers.
 - Track progress of engineer
   - The expected time to be as productive as the existing engineers
   - The time it takes the engineer to close an issue based on complexity (time estimate) compared to other engineers
-  - List all PR's and issues closed by the engineer
   - Log the progress so that the manager can compare each month to see if the engineer is gaining in productivity
   - Log subsequent requests for changes and compare monthly
 - Compare progress of onboarding techniques
