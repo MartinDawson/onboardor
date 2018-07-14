@@ -10,11 +10,10 @@ Helps companies create a good on-boarding experience for their developers.
   - Group by skill level to measure onboarding process
 - Onboarding creator
 Give multiple options to do things but don't force. 
-Create an opinionated onboard creator that has the multiple options of assigning different onboarding task states such as:
-
-- Assign mentor
-- Assign group session
-- 100% from day one
-- Introduce to framework (schedule training etc)
+- Create an opinionated onboard creator that has the multiple options of assigning different onboarding task states such as:
+  - Assign mentor
+  - Assign group session
+  - 100% from day one
+  - Introduce to framework (schedule training etc)
 
 Then start logging the performance so the organizations can see the increase or decrease in productivity.
