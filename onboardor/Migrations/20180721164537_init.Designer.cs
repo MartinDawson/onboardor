@@ -11,8 +11,8 @@ using System;
 namespace onboardor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180714000007_onBoardingBool")]
-    partial class onBoardingBool
+    [Migration("20180721164537_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -180,6 +180,19 @@ namespace onboardor.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("onboardor.Components.dashboard.Issue", b =>
+                {
+                    b.Property<int>("Id");
+
+                    b.Property<int?>("MemberId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("Issue");
+                });
+
             modelBuilder.Entity("onboardor.Components.dashboard.Member", b =>
                 {
                     b.Property<int>("Id");
@@ -187,16 +200,14 @@ namespace onboardor.Migrations
                     b.Property<string>("AvatarUrl")
                         .IsRequired();
 
+                    b.Property<DateTimeOffset>("CreatedAt");
+
                     b.Property<bool>("IsBeingOnboarded");
 
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int?>("OrganizationId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
 
                     b.ToTable("Members");
                 });
@@ -214,6 +225,24 @@ namespace onboardor.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Organizations");
+                });
+
+            modelBuilder.Entity("onboardor.Components.dashboard.OrganizationMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("MemberId");
+
+                    b.Property<int?>("OrganizationId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("OrganizationMember");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -261,8 +290,19 @@ namespace onboardor.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("onboardor.Components.dashboard.Member", b =>
+            modelBuilder.Entity("onboardor.Components.dashboard.Issue", b =>
                 {
+                    b.HasOne("onboardor.Components.dashboard.Member")
+                        .WithMany("Issues")
+                        .HasForeignKey("MemberId");
+                });
+
+            modelBuilder.Entity("onboardor.Components.dashboard.OrganizationMember", b =>
+                {
+                    b.HasOne("onboardor.Components.dashboard.Member", "Member")
+                        .WithMany("Organizations")
+                        .HasForeignKey("MemberId");
+
                     b.HasOne("onboardor.Components.dashboard.Organization", "Organization")
                         .WithMany("Members")
                         .HasForeignKey("OrganizationId");

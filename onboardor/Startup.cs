@@ -28,6 +28,8 @@ using onboardor.Components.shared.utilities;
 using DotNetEnv;
 using Onboardor.Repository;
 using onboardor.Components.dashboard;
+using onboardor.Components.graphQl;
+using Octokit.GraphQL;
 
 namespace Onboardor
 {
@@ -178,6 +180,7 @@ namespace Onboardor
             builder.RegisterType<AppMutation>();
             builder.RegisterType<Repository<Organization, ApplicationDbContext>>().As<IRepository<Organization>>();
             builder.RegisterType<Repository<Member, ApplicationDbContext>>().As<IRepository<Member>>();
+            builder.RegisterType<ConnectionFactory>().As<IConnectionFactory>();
 
             return builder;
         }

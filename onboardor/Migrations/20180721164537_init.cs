@@ -49,6 +49,21 @@ namespace onboardor.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Members",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false),
+                    AvatarUrl = table.Column<string>(nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(nullable: false),
+                    IsBeingOnboarded = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Members", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Organizations",
                 columns: table => new
                 {
@@ -168,19 +183,43 @@ namespace onboardor.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Members",
+                name: "Issue",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false),
-                    AvatarUrl = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    MemberId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Issue", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Issue_Members_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "Members",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrganizationMember",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    MemberId = table.Column<int>(nullable: true),
                     OrganizationId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Members", x => x.Id);
+                    table.PrimaryKey("PK_OrganizationMember", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Members_Organizations_OrganizationId",
+                        name: "FK_OrganizationMember_Members_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "Members",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrganizationMember_Organizations_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organizations",
                         principalColumn: "Id",
@@ -227,8 +266,18 @@ namespace onboardor.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Members_OrganizationId",
-                table: "Members",
+                name: "IX_Issue_MemberId",
+                table: "Issue",
+                column: "MemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrganizationMember_MemberId",
+                table: "OrganizationMember",
+                column: "MemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrganizationMember_OrganizationId",
+                table: "OrganizationMember",
                 column: "OrganizationId");
         }
 
@@ -250,13 +299,19 @@ namespace onboardor.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Members");
+                name: "Issue");
+
+            migrationBuilder.DropTable(
+                name: "OrganizationMember");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Members");
 
             migrationBuilder.DropTable(
                 name: "Organizations");

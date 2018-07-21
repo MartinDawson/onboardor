@@ -7,15 +7,10 @@ using System.Threading.Tasks;
 
 namespace onboardor.Components.dashboard
 {
-    public class Organization
+    public class Issue
     {
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        [Required]
-        public string Name { get; set; }
-        [Required]
-        public string AvatarUrl { get; set; }
-        public ICollection<OrganizationMember> Members { get; set; } = new List<OrganizationMember>();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using onboardor.Components.dashboard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,46 @@ namespace Onboardor.Data
                     if (_env.IsDevelopment())
                     {
                         await context.Database.MigrateAsync();
+                        await SeedMocks(context);
                     }
                 }
             }
 
             return webHost;
+        }
+
+        public static async Task SeedMocks(ApplicationDbContext context)
+        {
+            var organizations = new List<Organization>
+            {
+                new Organization {
+                    Id = 371213,
+                    AvatarUrl = "https://avatars3.githubusercontent.com/u/37122164?v=4",
+                    Name = "SoundVast",
+                },
+            };
+
+            organizations[0].Members = new List<OrganizationMember>
+            {
+                new OrganizationMember
+                {
+                    Organization = organizations[0],
+                    Member = new Member
+                    {
+                        Id = 15030491,
+                        AvatarUrl = "https://avatars3.githubusercontent.com/u/15030491?v=4",
+                        CreatedAt = DateTimeOffset.Now,
+                        IsBeingOnboarded = false,
+                        Name = "MartinDawson",
+                    }
+                }
+            };
+
+            var existingOrganizations = context.Organizations;
+
+            await context.AddRangeAsync(organizations.Where(o => !existingOrganizations.Any(z => z.Id == o.Id)));
+
+            context.SaveChanges();
         }
     }
 }

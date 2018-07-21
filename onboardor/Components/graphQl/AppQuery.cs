@@ -8,24 +8,34 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using GraphQL.Relay.Types;
-using Octokit;
 using DotNetEnv;
 using Microsoft.AspNetCore.Hosting;
 using onboardor.Components.dashboard;
 using Organization = onboardor.Components.dashboard.Organization;
+using Octokit.GraphQL;
+using static Octokit.GraphQL.Variable;
+using Onboardor.Components.graphQl;
+using Microsoft.AspNetCore.Http;
+using onboardor.Components.shared.utilities;
+using Octokit.GraphQL.Model;
+using onboardor.Components.graphQl;
 
 namespace Onboardor.Components.GraphQl
 {
-    public class AppQuery : QueryGraphType
+    public class AppQuery : GraphQL.Relay.Types.Temp.QueryGraphType
     {
+        private Octokit.GitHubClient _client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(Env.GetString("APP_NAME")));
+
         private readonly IOrganizationService _organizationService;
         private readonly IHostingEnvironment _env;
+        private readonly IConnectionFactory _connectionFactory;
 
         public AppQuery(ILoggerFactory loggerFactory, IHostingEnvironment env, 
-            IOrganizationService organizationService)
+            IOrganizationService organizationService, IConnectionFactory connectionFactory)
         {
             _env = env;
             _organizationService = organizationService;
+            _connectionFactory = connectionFactory;
 
             var logger = loggerFactory.CreateLogger<AppQuery>();
 
@@ -33,89 +43,83 @@ namespace Onboardor.Components.GraphQl
                 .Name("organizations")
                 .ResolveAsync(async c =>
                 {
-                    var client = new GitHubClient(new ProductHeaderValue(Env.GetString("APP_NAME")));
-                    var path = $"{_env.WebRootPath}/{Env.GetString("APP_NAME")}.pem";
-                    var appIntegrationId = Env.GetInt("GITHUB_APP_ID");
-                    var generator = new GitHubJwt.GitHubJwtFactory(
-                        new GitHubJwt.FilePrivateKeySource(path),
-                        new GitHubJwt.GitHubJwtFactoryOptions
-                        {
-                            AppIntegrationId = appIntegrationId,
-                            ExpirationSeconds = 600
-                        });
-
-                    var jwtToken = generator.CreateEncodedJwtToken();
-
-                    client.Credentials = new Credentials(jwtToken, AuthenticationType.Bearer);
-
-                    var installations = await client.GitHubApps.GetAllInstallationsForCurrent();
-
-                    var organizations = new List<Organization>();
-
-                    foreach (var installation in installations)
-                    {
-                        var response = await client.GitHubApps.CreateInstallationToken(installation.Id);
-                        var installationClient = new GitHubClient(new ProductHeaderValue($"{Env.GetString("APP_NAME")}-${installation.Id}"))
-                        {
-                            Credentials = new Credentials(response.Token)
-                        };
-
-                        organizations.Add(_organizationService.GetOrganization((int)installation.TargetId));
-                    }
+                    var user = await _client.User.Current();
+                    var organizations = _organizationService.GetOrganizations(user.Id);
 
                     return organizations;
                 });
 
-            Field<NonNullGraphType<BooleanGraphType>>()
-                .Argument<NonNullGraphType<IntGraphType>>("installationId", "The installationId for the app")
+            Field<NonNullGraphType<StringGraphType>>()
+                .Description("Returns the url for the OAUTH request")
                 .Name("setup")
-                .ResolveAsync(async c =>
+                .Resolve(c =>
                 {
-                    var client = new GitHubClient(new ProductHeaderValue(Env.GetString("APP_NAME")));
-                    var path = $"{_env.WebRootPath}/{Env.GetString("APP_NAME")}.pem";
-                    var appIntegrationId = Env.GetInt("GITHUB_APP_ID");
-                    var generator = new GitHubJwt.GitHubJwtFactory(
-                        new GitHubJwt.FilePrivateKeySource(path),
-                        new GitHubJwt.GitHubJwtFactoryOptions
-                        {
-                            AppIntegrationId = appIntegrationId,
-                            ExpirationSeconds = 600
-                        });
+                    var context = c.UserContext.As<Context>();
+                    var csrf = Password.Generate(24, 1);
 
-                    var jwtToken = generator.CreateEncodedJwtToken();
-                    client.Credentials = new Credentials(jwtToken, AuthenticationType.Bearer);
+                    context.HttpContext.Session.SetString("CSRF", csrf);
 
-                    var installationId = c.GetArgument<int>("installationId");
-                    var installation = await client.GitHubApps.GetInstallation(installationId);
-                    var response = await client.GitHubApps.CreateInstallationToken(installation.Id);
-                    var installationClient = new GitHubClient(new ProductHeaderValue($"{Env.GetString("APP_NAME")}-${installation.Id}"))
+                    var request = new Octokit.OauthLoginRequest(Env.GetString("CLIENT_ID"))
                     {
-                        Credentials = new Credentials(response.Token)
+                        Scopes = { "repo", "user", "admin:org", "admin:public_key",
+                            "admin:repo_hook", "notifications", "admin:org_hook",
+                            "gist", "delete_repo", "write:discussion", "admin:gpg_key"  },
+                        State = csrf
                     };
 
-                    Octokit.Organization organization;
+                    var oAuthLoginUrl = _client.Oauth.GetGitHubLoginUrl(request);
 
-                    if (installation.TargetType == AccountType.Organization)
-                    {
-                        organization = await installationClient.Organization.Get(installation.Account.Login);
+                    return oAuthLoginUrl;
+                });
 
-                        var members = await installationClient.Organization.Member.GetAll(organization.Login);
+            Field<NonNullGraphType<BooleanGraphType>>()
+                .Argument<NonNullGraphType<StringGraphType>>("code", "The code for the setup")
+                .Argument<NonNullGraphType<StringGraphType>>("state", "The CSRF protection state")
+                .Name("setupCallback")
+                .ResolveAsync(async c =>
+                {
+                    var context = c.UserContext.As<Context>();
+                    var expectedState = context.HttpContext.Session.GetString("CSRF");
+                    var state = c.GetArgument<string>("state");
+                    var code = c.GetArgument<string>("code");
 
-                        var mappedOrganization = new Organization
-                        {
-                            Id = organization.Id,
-                            Name = organization.Login,
-                            AvatarUrl = organization.AvatarUrl,
-                            Members = members.Select(x => new Member
-                            {
-                                Id = x.Id,
-                                Name = x.Login,
-                                AvatarUrl = x.AvatarUrl,
-                            }).ToList(),
-                        };
+                    if (state != expectedState) throw new InvalidOperationException("Security fail");
 
-                        _organizationService.Add(mappedOrganization);
-                    }
+                    context.HttpContext.Session.SetString("CSRF", "");
+                    var request = new Octokit.OauthTokenRequest(Env.GetString("CLIENT_ID"), Env.GetString("CLIENT_SECRET"), code);
+                    var token = await _client.Oauth.CreateAccessToken(request);
+                    _client.Credentials = new Octokit.Credentials(token.AccessToken);
+                    var appName = Env.GetString("APP_NAME");
+                    var productInformation = new ProductHeaderValue(appName);
+
+                    _connectionFactory.CreateConnection(new Connection(productInformation, token.AccessToken));
+                    
+                    //var query = new Query()
+                    //    .Viewer
+                    //    .Organization("SoundVast").Select(o => new Organization
+                    //    {
+                    //        Id = o.DatabaseId.Value,
+                    //        Name = o.Name,
+                    //        AvatarUrl = o.AvatarUrl(null),
+                    //        Members = o.Members(10, null, null, null).Nodes.Select(m => new OrganizationMember
+                    //        {
+                    //            Member = new Member
+                    //            {
+                    //                Id = m.DatabaseId.Value,
+                    //                Name = m.Name,
+                    //                AvatarUrl = m.AvatarUrl(null),
+                    //                CreatedAt = m.CreatedAt,
+                    //                Issues = m.Issues(10, null, null, null, null, null, null).Nodes.Select(i => new onboardor.Components.dashboard.Issue
+                    //                {
+                    //                    Id = i.DatabaseId.Value,
+                    //                }).ToList()
+                    //            }
+                    //        }).ToList()
+                    //    }).Compile();
+
+                    //var organization = await _connectionFactory.Connection.Run(query);
+
+                    //_organizationService.Add(organization);
 
                     return true;
                 });

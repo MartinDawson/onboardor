@@ -12,9 +12,9 @@ const historyEnhancer = createHistoryEnhancer({
   protocol: new BrowserProtocol(),
 });
 
-const matcherEnhancer = createMatchEnhancer(
-  new Matcher(routeConfig),
-);
+export const matcher = new Matcher(routeConfig);
+
+const matcherEnhancer = createMatchEnhancer(matcher);
 
 const composeEnhancers = (window as any).window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

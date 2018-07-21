@@ -1,5 +1,5 @@
 # source: http://localhost:49891/graphql
-# timestamp: Sat Jul 14 2018 02:01:11 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Fri Jul 20 2018 23:28:23 GMT+0200 (W. Europe Daylight Time)
 
 """
 The `Date` scalar type represents a timestamp provided in UTC. `Date` expects
@@ -52,9 +52,15 @@ type Query {
     id: ID!
   ): Node
   organizations: [Organization]!
-  setup(
-    """The installationId for the app"""
-    installationId: Int!
+
+  """Returns the url for the OAUTH request"""
+  setup: String!
+  setupCallback(
+    """The code for the setup"""
+    code: String!
+
+    """The CSRF protection state"""
+    state: String!
   ): Boolean!
 }
 

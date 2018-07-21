@@ -9,5 +9,6 @@ namespace onboardor.Components.dashboard
     {
         void Add(Organization organization);
         Organization GetOrganization(int organizationId);
+        List<Organization> GetOrganizations(int userId);
     }
 }

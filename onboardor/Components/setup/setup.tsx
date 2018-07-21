@@ -13,12 +13,18 @@ const CustomGitHubIcon = styled(GitHubIcon)`
   margin-right: 10px;
 `;
 
-const Install = () => (
+interface IProps {
+  url: string;
+}
+
+const Setup = ({
+  url,
+}: IProps) => (
   <Container mt={130}>
     <Text mb={20} fontSize={20} textAlign="center">Install with GitHub to use onboardor</Text>
     <Flex justifyContent="center">
       <AnchorButton
-        href={`https://github.com/apps/${process.env.APP_NAME}`}
+        href={url}
         style={{
           display: "flex",
           alignItems: "center"
@@ -31,4 +37,4 @@ const Install = () => (
   </Container>
 );
 
-export default Install;
+export default Setup;

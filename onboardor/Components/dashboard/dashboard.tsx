@@ -1,34 +1,22 @@
-import { Flex } from "grid-styled";
+import { Box } from "grid-styled";
 import React from "react";
-import { BackgroundImage, Subhead, Text } from "rebass";
-import { IOrganization } from "../select/selectOrganization";
-import { IMember } from "../select/selectTeamMembers";
-import { cardMargin, nameMargin, SelectCard } from "../select/styles";
+import styled from "styled-components";
 
 interface IProps {
-  organization: IOrganization;
+  children: React.ReactNode;
 }
 
+const DashboardHeader = styled(Box)`
+  box-shadow: 0 2px 4px 0 #d2d2d2;
+  height: 80px;
+`;
+
 const Dashboard = ({
-  organization,
+  children,
 }: IProps) => (
   <div>
-    {organization.name}
-    <Text my={30}>
-      Your employees currently being onboarded.
-    </Text>
-
-    <Flex flexWrap="wrap">
-      {organization.members.map((member) => (
-        <SelectCard
-          key={member.id}
-          m={cardMargin}
-        >
-          <BackgroundImage width={200} src={member.avatarUrl} ratio={1} />
-          <Subhead textAlign="center" mt={nameMargin}>{member.name}</Subhead>
-        </SelectCard>
-      ))}
-    </Flex>
+    <DashboardHeader width="100%" p={10} />
+    {children}
   </div>
 );
 

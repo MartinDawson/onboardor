@@ -18,6 +18,29 @@ namespace GraphQL.Relay.Types.Temp
         T GetById(string id);
     }
 
+    public class QueryGraphType : ObjectGraphType
+    {
+        public QueryGraphType()
+        {
+            Name = "Query";
+
+            Field<NodeInterface>()
+                .Name("node")
+                .Description("Fetches an object given its global Id")
+                .Argument<NonNullGraphType<IdGraphType>>("id", "The global Id of the object")
+                .Resolve(ResolveObjectFromGlobalId);
+        }
+
+        private object ResolveObjectFromGlobalId(ResolveFieldContext<object> context)
+        {
+            var globalId = context.GetArgument<string>("id");
+            var parts = Node.FromGlobalId(globalId);
+            var node = (IRelayNode<object>)context.Schema.FindType(parts.Type);
+
+            return node.GetById(parts.Id);
+        }
+    }
+
     public static class Node
     {
         public static NodeGraphType<TSource, TOut> For<TSource, TOut>(Func<string, TOut> getById)

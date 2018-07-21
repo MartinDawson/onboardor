@@ -27,7 +27,7 @@ namespace onboardor.Components.dashboard
 
         public Member GetMember(int memberId)
         {
-            return _repository.GetAll().Include(x => x.Organization).Single(x => x.Id == memberId);
+            return _repository.GetAll().Include(x => x.Organizations).Single(x => x.Id == memberId);
         }
     }
 }

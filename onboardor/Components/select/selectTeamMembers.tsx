@@ -5,14 +5,6 @@ import Button from "../shared/button/button";
 import { IOrganization } from "./selectOrganization";
 import { cardMargin, nameMargin, SelectCard } from "./styles";
 
-export interface IMember {
-  id: number;
-  name: string;
-  avatarUrl: string;
-  isBeingOnboarded: boolean;
-  selected: boolean;
-}
-
 export interface IProps {
   organization: IOrganization;
   selectTeamMember: (teamMember: IMember) => void;

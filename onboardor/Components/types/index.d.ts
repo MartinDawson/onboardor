@@ -9,6 +9,10 @@ export interface IFormState {
   subscribeMailingList: InjectedFormProps;
 }
 
+export interface IStyleProps {
+  theme: ITheme;
+}
+
 export interface ITheme {
   fonts: {
     sans: string
@@ -39,9 +43,14 @@ export interface IRoute {
   error: {
     _error: string[]
   };
+  match: {
+    location: {
+      pathname: string;
+    }
+  };
   props?: {
     [key: string]: any
-    params: IUrlParameter
+    params?: IUrlParameter
     location: {
       state: {
         [key: string]: any

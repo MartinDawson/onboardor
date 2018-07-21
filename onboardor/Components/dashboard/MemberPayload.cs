@@ -21,7 +21,7 @@ namespace onboardor.Components.dashboard
             Field(x => x.Name);
             Field(x => x.AvatarUrl);
             Field(x => x.IsBeingOnboarded);
-            Field<OrganizationPayload>("organization");
+            Field<NonNullGraphType<ListGraphType<OrganizationPayload>>>("organizations", resolve: c => c.Source.Organizations.Select(o => o.Organization));
         }
 
         public override Member GetById(string id)

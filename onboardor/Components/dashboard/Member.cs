@@ -18,6 +18,9 @@ namespace onboardor.Components.dashboard
         public string AvatarUrl { get; set; }
         [Required]
         public bool IsBeingOnboarded { get; set; }
-        public Organization Organization { get; set; }
+        [Required]
+        public DateTimeOffset CreatedAt { get; set; }
+        public ICollection<OrganizationMember> Organizations { get; set; } = new List<OrganizationMember>();
+        public ICollection<Issue> Issues { get; set; } = new List<Issue>();
     }
 }

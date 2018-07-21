@@ -5,13 +5,6 @@ import LinkButton from "../shared/button/linkButton";
 import { IMember } from "./selectTeamMembers";
 import { cardMargin, nameMargin, SelectCard } from "./styles";
 
-export interface IOrganization {
-  id: string;
-  name: string;
-  avatarUrl: string;
-  members: IMember[];
-}
-
 export interface IProps {
   organizations: IOrganization[];
   selectedOrganizationId: string | null;

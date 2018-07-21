@@ -1,34 +1,19 @@
-import { RedirectException } from "found";
+import React from "react";
 import { graphql } from "react-relay";
 
-import Dashboard from "../dashboard/dashboardContainer";
 import { IMatch, IRoute } from "../types";
+import Setup from "./setup";
 
 const query = graphql`
-  query setupContainerQuery(
-    $installationId: Int!
-  ) {
-    setup(
-      installationId: $installationId
-    )
+  query setupContainerQuery {
+    setup
   }
 `;
 
 export const routeConfig = {
-  Component: Dashboard,
   prepareVariables: (_: IRoute, { location }: IMatch) => ({
-    installationId: location.query.installation_id,
+    code: location.query.code,
   }),
   query,
-  render: (route: IRoute): null => {
-    if (route.props) {
-      if (route.props.setup) {
-        throw new RedirectException("/selectOrganization");
-      }
-      // Handle errors
-    }
-    return null;
-  },
+  render: (route: IRoute): React.ReactNode => route.props && <Setup url={route.props.setup} />,
 };
-
-export default Dashboard;
