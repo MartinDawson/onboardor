@@ -18,6 +18,7 @@ Then start logging the performance so the organizations can see the increase or 
 
 ## Features
 - Integreate your organization directly with GitHub
+- Implement feedback survery which is auto sent to onboarded team members, also gets feedback on custom company process
 - Tracks the progress of your developers on a month by month basis using charts
 - Automatically measures the retention rate of your engineers
 - Measures issues that took the longest and tracks time taken
