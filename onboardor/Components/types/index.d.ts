@@ -1,10 +1,6 @@
 import { Theme } from "rebass";
 import { InjectedFormProps } from "redux-form";
 
-export interface IUrlParameter {
-  [key: string]: string | number;
-}
-
 export interface IFormState {
   subscribeMailingList: InjectedFormProps;
 }
@@ -36,6 +32,22 @@ export interface ITheme {
   };
 }
 
+export interface IUrlParameter {
+  [key: string]: string | number;
+}
+
+export interface ILocation {
+  pathname: string;
+  query: IUrlParameter;
+  state: {
+    [key: string]: any
+  }
+}
+
+export interface IMatch {
+  location: ILocation;
+}
+
 export interface IRoute {
   router: {
     push: (pathname: string) => void
@@ -43,24 +55,11 @@ export interface IRoute {
   error: {
     _error: string[]
   };
-  match: {
-    location: {
-      pathname: string;
-    }
-  };
+  match: IMatch;
   props?: {
     [key: string]: any
     params?: IUrlParameter
-    location: {
-      state: {
-        [key: string]: any
-      }
-    }
+    location: ILocation
   };
 }
 
-export interface IMatch {
-  location: {
-    query: IUrlParameter
-  };
-}

@@ -7,6 +7,7 @@ import { ITheme } from "../../types";
 
 interface IProps extends ButtonProps {
   appTheme: ITheme;
+  [key: string]: any;
 }
 
 const Button = styled(({ appTheme, ...props }: IProps) =>
@@ -17,7 +18,7 @@ const Button = styled(({ appTheme, ...props }: IProps) =>
   }
 `;
 
-export default compose(
+export default compose<{}, IProps>(
   withTheme,
   renameProp("theme", "appTheme"),
 )(Button);

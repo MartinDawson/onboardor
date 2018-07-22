@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3c28baa850a2adbcc143edaa57cb6680
+ * @relayHash 4a8cc7341538856564a05320c65b8a4d
  */
 
 /* eslint-disable */
@@ -9,16 +9,17 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
+export type SetOnboardingMembersInput = {
+  clientMutationId?: ?string,
+  memberIds: $ReadOnlyArray<?number>,
+};
 export type setOnboardingMembersMutationVariables = {|
-  input: {
-    clientMutationId?: ?string,
-    memberIds: $ReadOnlyArray<?number>,
-  },
+  input: SetOnboardingMembersInput
 |};
 export type setOnboardingMembersMutationResponse = {|
   +setOnboardingMembers: ?{|
-    +clientMutationId: ?string,
-  |},
+    +clientMutationId: ?string
+  |}
 |};
 */
 
@@ -92,5 +93,6 @@ return {
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '8b342372835c757e8b8f529947a3e620';
 module.exports = node;

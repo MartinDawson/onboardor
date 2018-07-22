@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash a549fecf5191a1479ce6d40d4a689c79
+ * @relayHash 03b198835e39405a2a751675c9878225
  */
 
 /* eslint-disable */
@@ -14,7 +14,7 @@ export type setupCallbackContainerQueryVariables = {|
   state: string,
 |};
 export type setupCallbackContainerQueryResponse = {|
-  +setupCallback: boolean,
+  +setupCallback: boolean
 |};
 */
 
@@ -88,5 +88,6 @@ return {
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '5d4ee24c2e6e193a1a6e90ae82972954';
 module.exports = node;

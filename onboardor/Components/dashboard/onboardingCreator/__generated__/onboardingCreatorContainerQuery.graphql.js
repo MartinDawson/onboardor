@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3f43a5396a56a964e770e1b9a0520a2e
+ * @relayHash 9d1088e73415e12cd98302f0c2fefb7c
  */
 
 /* eslint-disable */
@@ -9,27 +9,25 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type memberContainerQueryVariables = {|
+export type onboardingCreatorContainerQueryVariables = {|
   id: string
 |};
-export type memberContainerQueryResponse = {|
+export type onboardingCreatorContainerQueryResponse = {|
   +node: ?{|
-    +name?: string,
-    +avatarUrl?: string,
+    +name?: string
   |}
 |};
 */
 
 
 /*
-query memberContainerQuery(
+query onboardingCreatorContainerQuery(
   $id: ID!
 ) {
   node(id: $id) {
     __typename
-    ... on Member {
+    ... on Organization {
       name
-      avatarUrl
     }
     id
   }
@@ -55,19 +53,12 @@ v1 = [
 ],
 v2 = {
   "kind": "InlineFragment",
-  "type": "Member",
+  "type": "Organization",
   "selections": [
     {
       "kind": "ScalarField",
       "alias": null,
       "name": "name",
-      "args": null,
-      "storageKey": null
-    },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "avatarUrl",
       "args": null,
       "storageKey": null
     }
@@ -76,13 +67,13 @@ v2 = {
 return {
   "kind": "Request",
   "operationKind": "query",
-  "name": "memberContainerQuery",
+  "name": "onboardingCreatorContainerQuery",
   "id": null,
-  "text": "query memberContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Member {\n      name\n      avatarUrl\n    }\n    id\n  }\n}\n",
+  "text": "query onboardingCreatorContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      name\n    }\n    id\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "memberContainerQuery",
+    "name": "onboardingCreatorContainerQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": v0,
@@ -103,7 +94,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "memberContainerQuery",
+    "name": "onboardingCreatorContainerQuery",
     "argumentDefinitions": v0,
     "selections": [
       {
@@ -137,5 +128,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '4f8d9c24785d551b080ea1b418d165f4';
+(node/*: any*/).hash = 'd8e725004e27dcbd833aa6b8c780e178';
 module.exports = node;

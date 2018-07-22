@@ -53,8 +53,9 @@ namespace Onboardor.Data
                         Id = 15030491,
                         AvatarUrl = "https://avatars3.githubusercontent.com/u/15030491?v=4",
                         CreatedAt = DateTimeOffset.Now,
-                        IsBeingOnboarded = false,
+                        IsBeingOnboarded = true,
                         Name = "MartinDawson",
+                        Email = "u1356770@gmail.com"
                     }
                 }
             };

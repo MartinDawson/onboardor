@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash b7e0be3b55d2cdcad0adcf28ea3ed9d1
+ * @relayHash fbf69615bfb5841eb82fbc051398c72a
  */
 
 /* eslint-disable */
@@ -10,7 +10,7 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 export type organizationContainerQueryVariables = {|
-  id: string,
+  id: string
 |};
 export type organizationContainerQueryResponse = {|
   +node: ?{|
@@ -18,8 +18,8 @@ export type organizationContainerQueryResponse = {|
       +id: string,
       +name: string,
       +avatarUrl: string,
-    |}>,
-  |},
+    |}>
+  |}
 |};
 */
 
@@ -155,5 +155,6 @@ return {
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '237030a56ce47ddb8db51066d821efe7';
 module.exports = node;

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 75e8591313932d5a4bc00859bcd44552
+ * @relayHash ecce0842474c4ca063a28b58ac5e3f6a
  */
 
 /* eslint-disable */
@@ -9,17 +9,18 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
+export type SubscribeMailingListInput = {
+  clientMutationId?: ?string,
+  email: string,
+  recaptcha: string,
+};
 export type subscribeMailingListMutationVariables = {|
-  input: {
-    clientMutationId?: ?string,
-    email: string,
-    recaptcha: string,
-  },
+  input: SubscribeMailingListInput
 |};
 export type subscribeMailingListMutationResponse = {|
   +subscribeMailingList: ?{|
-    +clientMutationId: ?string,
-  |},
+    +clientMutationId: ?string
+  |}
 |};
 */
 
@@ -93,5 +94,6 @@ return {
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = 'b7774705a522c61eac286b0ba4f46c99';
 module.exports = node;

@@ -2,7 +2,6 @@ import { Link } from "found";
 import { Flex } from "grid-styled";
 import React from "react";
 import { BackgroundImage, Subhead, Text } from "rebass";
-import { matcher } from "../../app/store/store";
 import { nameMargin, SelectCard } from "../../select/styles";
 import { IRoute } from "../../types";
 import { IOrganization } from "../organization/organization";
@@ -24,7 +23,7 @@ const Organizations = ({
       {organizations.map((organization) => (
           <Link
             key={organization.id}
-            to={matcher.joinPaths(match.location.pathname, `/organization/${organization.id}`)}
+            to={`${match.location.pathname}/organization/${organization.id}`}
           >
             <SelectCard
               m={cardMargin}

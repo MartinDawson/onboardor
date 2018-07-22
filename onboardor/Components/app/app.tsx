@@ -15,6 +15,8 @@ injectGlobal`
   #app { height: inherit; > div { height: 100%; } }
   html { height: 100%; }
   a { color: inherit; text-decoration: none; }
+  ul { list-style: none;margin: 0; padding: 0; }
+  li { list-style: none }
 `;
 /* tslint:enable no-unused-expression */
 

@@ -17,6 +17,8 @@ namespace onboardor.Components.dashboard
         [Required]
         public string AvatarUrl { get; set; }
         [Required]
+        public string Email { get; set; }
+        [Required]
         public bool IsBeingOnboarded { get; set; }
         [Required]
         public DateTimeOffset CreatedAt { get; set; }
