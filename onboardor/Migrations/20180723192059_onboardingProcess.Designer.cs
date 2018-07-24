@@ -11,8 +11,8 @@ using System;
 namespace onboardor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180721195032_email")]
-    partial class email
+    [Migration("20180723192059_onboardingProcess")]
+    partial class onboardingProcess
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -180,19 +180,6 @@ namespace onboardor.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("onboardor.Components.dashboard.Issue", b =>
-                {
-                    b.Property<int>("Id");
-
-                    b.Property<int?>("MemberId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberId");
-
-                    b.ToTable("Issue");
-                });
-
             modelBuilder.Entity("onboardor.Components.dashboard.Member", b =>
                 {
                     b.Property<int>("Id");
@@ -213,6 +200,23 @@ namespace onboardor.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Members");
+                });
+
+            modelBuilder.Entity("onboardor.Components.dashboard.OnboardingStep", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("OrganizationId");
+
+                    b.Property<string>("Step")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("OnboardingSteps");
                 });
 
             modelBuilder.Entity("onboardor.Components.dashboard.Organization", b =>
@@ -293,11 +297,11 @@ namespace onboardor.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("onboardor.Components.dashboard.Issue", b =>
+            modelBuilder.Entity("onboardor.Components.dashboard.OnboardingStep", b =>
                 {
-                    b.HasOne("onboardor.Components.dashboard.Member")
-                        .WithMany("Issues")
-                        .HasForeignKey("MemberId");
+                    b.HasOne("onboardor.Components.dashboard.Organization")
+                        .WithMany("OnboardingSteps")
+                        .HasForeignKey("OrganizationId");
                 });
 
             modelBuilder.Entity("onboardor.Components.dashboard.OrganizationMember", b =>

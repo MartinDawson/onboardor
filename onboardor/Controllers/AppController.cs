@@ -14,17 +14,6 @@ namespace Onboardor.Controllers
 {
     public class AppController : Controller
     {
-        public IActionResult Authorized()
-        {
-            var p = HttpContext.Request;
-            return View();
-        }
-
-        public IActionResult Webhook()
-        {
-            return View();
-        }
-
         [Produces("text/html")]
         public IActionResult Index()
         {

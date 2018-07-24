@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash fbf69615bfb5841eb82fbc051398c72a
+ * @relayHash fdfdc33f686c6bcbe7736c2eff1190d4
  */
 
 /* eslint-disable */
@@ -14,10 +14,8 @@ export type organizationContainerQueryVariables = {|
 |};
 export type organizationContainerQueryResponse = {|
   +node: ?{|
-    +members?: $ReadOnlyArray<?{|
-      +id: string,
-      +name: string,
-      +avatarUrl: string,
+    +onboardingSteps?: $ReadOnlyArray<?{|
+      +step: string
     |}>
   |}
 |};
@@ -31,10 +29,9 @@ query organizationContainerQuery(
   node(id: $id) {
     __typename
     ... on Organization {
-      members {
+      onboardingSteps {
+        step
         id
-        name
-        avatarUrl
       }
     }
     id
@@ -62,48 +59,23 @@ v1 = [
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "id",
+  "name": "step",
   "args": null,
   "storageKey": null
 },
 v3 = {
-  "kind": "InlineFragment",
-  "type": "Organization",
-  "selections": [
-    {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "members",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "Member",
-      "plural": true,
-      "selections": [
-        v2,
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "name",
-          "args": null,
-          "storageKey": null
-        },
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "avatarUrl",
-          "args": null,
-          "storageKey": null
-        }
-      ]
-    }
-  ]
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
 };
 return {
   "kind": "Request",
   "operationKind": "query",
   "name": "organizationContainerQuery",
   "id": null,
-  "text": "query organizationContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      members {\n        id\n        name\n        avatarUrl\n      }\n    }\n    id\n  }\n}\n",
+  "text": "query organizationContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      onboardingSteps {\n        step\n        id\n      }\n    }\n    id\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -121,7 +93,24 @@ return {
         "concreteType": null,
         "plural": false,
         "selections": [
-          v3
+          {
+            "kind": "InlineFragment",
+            "type": "Organization",
+            "selections": [
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "onboardingSteps",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "OnboardingStep",
+                "plural": true,
+                "selections": [
+                  v2
+                ]
+              }
+            ]
+          }
         ]
       }
     ]
@@ -147,8 +136,26 @@ return {
             "args": null,
             "storageKey": null
           },
-          v2,
-          v3
+          v3,
+          {
+            "kind": "InlineFragment",
+            "type": "Organization",
+            "selections": [
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "onboardingSteps",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "OnboardingStep",
+                "plural": true,
+                "selections": [
+                  v2,
+                  v3
+                ]
+              }
+            ]
+          }
         ]
       }
     ]
@@ -156,5 +163,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '237030a56ce47ddb8db51066d821efe7';
+(node/*: any*/).hash = 'd83f7d52790881a0b791a5057b299a5a';
 module.exports = node;

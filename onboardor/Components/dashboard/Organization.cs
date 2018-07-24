@@ -16,6 +16,7 @@ namespace onboardor.Components.dashboard
         public string Name { get; set; }
         [Required]
         public string AvatarUrl { get; set; }
+        public ICollection<OnboardingStep> OnboardingSteps { get; set; } = new List<OnboardingStep>();
         public ICollection<OrganizationMember> Members { get; set; } = new List<OrganizationMember>();
     }
 }

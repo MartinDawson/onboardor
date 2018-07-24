@@ -2,15 +2,13 @@ import { Box } from "grid-styled";
 import React from "react";
 import { Absolute, Relative } from "rebass";
 
-import { Field } from "redux-form";
+import { Field, InjectedFormProps } from "redux-form";
 import Button from "../button/button";
 import createFieldValidator from "../inputs/createFieldValidator";
 import FieldInput from "../inputs/fieldInput";
 import InvisibleRecpatcha from "../inputs/invisibleRecaptcha";
 
-export interface IProps {
-  handleSubmit: (input: object) => any;
-}
+export interface IProps extends InjectedFormProps {}
 
 const SubscribeMailingList = ({
   handleSubmit,

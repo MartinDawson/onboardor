@@ -12,6 +12,7 @@ namespace Onboardor.Data
     {
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Member> Members { get; set; }
+        public DbSet<OnboardingStep> OnboardingSteps { get; set; }
 
         public ApplicationDbContext(DbContextOptions options)
             : base(options)

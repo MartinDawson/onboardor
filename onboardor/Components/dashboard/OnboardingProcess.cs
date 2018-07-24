@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace onboardor.Components.dashboard
 {
-    public class OnboardingProcess
+    public class OnboardingStep
     {
         [Required]
         public int Id { get; set; }
         [Required]
-        public string Title { get; set; }
-        [Required]
-        public string Body { get; set; }
+        public string Step { get; set; }
     }
 }

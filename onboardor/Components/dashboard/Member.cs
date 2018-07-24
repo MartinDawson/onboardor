@@ -23,6 +23,5 @@ namespace onboardor.Components.dashboard
         [Required]
         public DateTimeOffset CreatedAt { get; set; }
         public ICollection<OrganizationMember> Organizations { get; set; } = new List<OrganizationMember>();
-        public ICollection<Issue> Issues { get; set; } = new List<Issue>();
     }
 }

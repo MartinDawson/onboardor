@@ -13,6 +13,7 @@ namespace Onboardor.Repository
         T Get(int id);
         IQueryable<T> Include(params Expression<Func<T, object>>[] paths);
         void Add(T item);
+        void Update(T entity);
         void Remove(T item);
         void RemoveRange(IEnumerable<T> items);
         void Attach(T entity);
@@ -81,6 +82,13 @@ namespace Onboardor.Repository
         public virtual void Attach(T entity)
         {
             Context.Set<T>().Attach(entity);
+        }
+
+        public virtual void Update(T entity)
+        {
+            Context.Set<T>().Attach(entity);
+            Context.Entry(entity).State = EntityState.Modified;
+            Context.SaveChanges();
         }
 
         public virtual void Save()

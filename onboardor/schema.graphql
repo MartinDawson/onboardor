@@ -1,5 +1,15 @@
 # source: http://localhost:49891/graphql
-# timestamp: Fri Jul 20 2018 23:28:23 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Mon Jul 23 2018 23:21:04 GMT+0200 (W. Europe Daylight Time)
+
+input CreateOnboardingProcessInput {
+  clientMutationId: String = null
+  organizationId: Int!
+  steps: [String]!
+}
+
+type CreateOnboardingProcessPayload {
+  clientMutationId: String
+}
 
 """
 The `Date` scalar type represents a timestamp provided in UTC. `Date` expects
@@ -12,6 +22,7 @@ scalar Decimal
 
 type Member implements Node {
   avatarUrl: String!
+  email: String!
 
   """The Global Id of the Member"""
   id: ID!
@@ -20,10 +31,11 @@ type Member implements Node {
   """The Id of the Member"""
   memberId: Int!
   name: String!
-  organization: Organization
+  organizations: [Organization]!
 }
 
 type Mutation {
+  createOnboardingProcess(input: CreateOnboardingProcessInput!): CreateOnboardingProcessPayload
   setOnboardingMembers(input: SetOnboardingMembersInput!): SetOnboardingMembersPayload
   subscribeMailingList(input: SubscribeMailingListInput!): SubscribeMailingListPayload
 }
@@ -33,6 +45,15 @@ interface Node {
   id: ID
 }
 
+type OnboardingStep implements Node {
+  """The Global Id of the OnboardingStep"""
+  id: ID!
+
+  """The Id of the OnboardingStep"""
+  onboardingStepId: Int!
+  step: String!
+}
+
 type Organization implements Node {
   avatarUrl: String!
 
@@ -40,6 +61,7 @@ type Organization implements Node {
   id: ID!
   members: [Member]!
   name: String!
+  onboardingSteps: [OnboardingStep]!
 
   """The Id of the Organization"""
   organizationId: Int!

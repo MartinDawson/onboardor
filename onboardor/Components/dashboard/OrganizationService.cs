@@ -24,18 +24,24 @@ namespace onboardor.Components.dashboard
             _repository.Add(organization);
         }
 
+        public void Update(Organization newOrganization)
+        {
+            _repository.Update(newOrganization);
+        }
+
         public List<Organization> GetOrganizations(int userId)
         {
             return _membersRepository.GetAll()
                 .Include(x => x.Organizations)
                 .ThenInclude(x => x.Organization)
+                .ThenInclude(x => x.OnboardingSteps)
                 .Single(x => x.Id == userId)
                 .Organizations.Select(o => o.Organization).ToList();
         }
 
         public Organization GetOrganization(int organizationId)
         {
-            return _repository.GetAll().Include(x => x.Members).ThenInclude(x => x.Member).Single(x => x.Id == organizationId);
+            return _repository.GetAll().Include(x => x.OnboardingSteps).Include(x => x.Members).ThenInclude(x => x.Member).Single(x => x.Id == organizationId);
         }
     }
 }

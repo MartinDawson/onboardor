@@ -1,8 +1,9 @@
 import { Theme } from "rebass";
-import { InjectedFormProps } from "redux-form";
+import { FormState } from "redux-form";
 
 export interface IFormState {
-  subscribeMailingList: InjectedFormProps;
+  subscribeMailingList: FormState;
+  onboardingCreator: FormState;
 }
 
 export interface IStyleProps {

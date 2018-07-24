@@ -13,10 +13,8 @@ const query = graphql`
       id: $id
     ) {
       ...on Organization {
-        members {
-          id
-          name
-          avatarUrl
+        onboardingSteps {
+          step
         }
       }
     }
@@ -32,9 +30,12 @@ export const routeConfig = {
   query,
   render: (route: IRoute) => {
     if (route.props) {
-      throw new RedirectException(
-        `${route.match.location.pathname}/createOnboardingProcess`
-      );
+      if (!route.props.node.onboardingSteps.length) {
+        throw new RedirectException(
+          `${route.match.location.pathname}/createOnboardingProcess`
+        );
+      }
+      return <Component {...route.props} />
     }
     return null;
   },
