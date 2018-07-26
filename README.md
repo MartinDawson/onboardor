@@ -24,3 +24,4 @@ Then start logging the performance so the organizations can see the increase or 
 - Measures issues that took the longest and tracks time taken
 - Measures the engineers contribution to the sprints
 - Anonymous feedback of the onboarding from engineers
+- GitHub-style onboarding board setup for the organization/team that has dates for each column. This allows for reminders to be given to the organization/team when the dates are nearing the end.
