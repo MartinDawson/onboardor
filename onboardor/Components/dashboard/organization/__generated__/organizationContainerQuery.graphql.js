@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash fdfdc33f686c6bcbe7736c2eff1190d4
+ * @relayHash 165cf6b332216f5f16095e3cd59920ad
  */
 
 /* eslint-disable */
@@ -14,9 +14,11 @@ export type organizationContainerQueryVariables = {|
 |};
 export type organizationContainerQueryResponse = {|
   +node: ?{|
+    +name?: string,
     +onboardingSteps?: $ReadOnlyArray<?{|
-      +step: string
-    |}>
+      +id: string,
+      +step: string,
+    |}>,
   |}
 |};
 */
@@ -29,9 +31,10 @@ query organizationContainerQuery(
   node(id: $id) {
     __typename
     ... on Organization {
+      name
       onboardingSteps {
-        step
         id
+        step
       }
     }
     id
@@ -59,23 +62,48 @@ v1 = [
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "step",
+  "name": "id",
   "args": null,
   "storageKey": null
 },
 v3 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "id",
-  "args": null,
-  "storageKey": null
+  "kind": "InlineFragment",
+  "type": "Organization",
+  "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "name",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "onboardingSteps",
+      "storageKey": null,
+      "args": null,
+      "concreteType": "OnboardingStep",
+      "plural": true,
+      "selections": [
+        v2,
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "step",
+          "args": null,
+          "storageKey": null
+        }
+      ]
+    }
+  ]
 };
 return {
   "kind": "Request",
   "operationKind": "query",
   "name": "organizationContainerQuery",
   "id": null,
-  "text": "query organizationContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      onboardingSteps {\n        step\n        id\n      }\n    }\n    id\n  }\n}\n",
+  "text": "query organizationContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      name\n      onboardingSteps {\n        id\n        step\n      }\n    }\n    id\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -93,24 +121,7 @@ return {
         "concreteType": null,
         "plural": false,
         "selections": [
-          {
-            "kind": "InlineFragment",
-            "type": "Organization",
-            "selections": [
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "name": "onboardingSteps",
-                "storageKey": null,
-                "args": null,
-                "concreteType": "OnboardingStep",
-                "plural": true,
-                "selections": [
-                  v2
-                ]
-              }
-            ]
-          }
+          v3
         ]
       }
     ]
@@ -136,26 +147,8 @@ return {
             "args": null,
             "storageKey": null
           },
-          v3,
-          {
-            "kind": "InlineFragment",
-            "type": "Organization",
-            "selections": [
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "name": "onboardingSteps",
-                "storageKey": null,
-                "args": null,
-                "concreteType": "OnboardingStep",
-                "plural": true,
-                "selections": [
-                  v2,
-                  v3
-                ]
-              }
-            ]
-          }
+          v2,
+          v3
         ]
       }
     ]
@@ -163,5 +156,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd83f7d52790881a0b791a5057b299a5a';
+(node/*: any*/).hash = '91184b90678592a1406ff70461eb263e';
 module.exports = node;

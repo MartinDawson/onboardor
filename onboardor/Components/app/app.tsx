@@ -44,6 +44,7 @@ const App = () => (
           grey: "#4A4A4A",
           lightGrey: "#737373",
           primary: "#43cea2",
+          primary2: "#2fdbab",
           secondary: "#3d9dff"
         }
       }}

@@ -17,9 +17,10 @@ export interface IOrganization {
 
 const Organization = ({
   onboardingSteps,
+  name,
 }: IProps) => (
   <div>
-    <OnBoardingSteps onboardingSteps={onboardingSteps} />
+    <OnBoardingSteps organizationName={name} onboardingSteps={onboardingSteps} />
   </div>
 );
 

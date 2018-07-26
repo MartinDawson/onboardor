@@ -13,7 +13,9 @@ const query = graphql`
       id: $id
     ) {
       ...on Organization {
+        name
         onboardingSteps {
+          id
           step
         }
       }

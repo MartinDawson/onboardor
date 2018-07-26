@@ -61,7 +61,6 @@
     "aspnet-webpack": "^3.0.0",
     "css-modules-require-hook": "^4.0.6",
     "editorconfig": "^0.15.0",
-    "file-loader": "^1.1.11",
     "graphql-cli": "^2.15.8",
     "jsdoc": "^3.5.5",
     "postcss": "6.0.0",

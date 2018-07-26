@@ -1,18 +1,27 @@
 import React from "react";
+import { Text } from "rebass";
 
 interface IProps {
   onboardingSteps: IOnboardingStep[];
+  name: string;
 }
 
 export interface IOnboardingStep {
+  id: string;
   step: string;
 }
 
 const OnboardingSteps = ({
   onboardingSteps,
+  name,
 }: IProps) => (
   <div>
-    {onboardingSteps.map(onboardingStep => onboardingStep.step)}
+    <Text>{name} on-boarding process</Text>
+    {onboardingSteps.map((onboardingStep) => (
+      <div key={onboardingStep.id}>
+        {onboardingStep.step}
+      </div>
+    ))}
   </div>
 );
 

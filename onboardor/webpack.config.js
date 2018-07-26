@@ -122,7 +122,6 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        issuer: /\.tsx$/,
         use: [
           {
             loader: 'babel-loader',
@@ -134,11 +133,6 @@ module.exports = {
             },
           },
         ],
-      },
-      {
-        test: /\.svg$/,
-        issuer: /\.s?css$/,
-        loader: 'file-loader',
       },
     ],
   },

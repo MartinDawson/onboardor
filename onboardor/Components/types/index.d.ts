@@ -29,6 +29,7 @@ export interface ITheme {
     grey: string
     lightGrey: string
     primary: string
+    primary2: string
     secondary: string
   };
 }
