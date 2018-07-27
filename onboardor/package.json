@@ -114,7 +114,7 @@
     "react-relay": "^1.5.0",
     "react-svg-loader": "^2.1.0",
     "react-textarea-autosize": "^7.0.4",
-    "rebass": "^2.0.1",
+    "rebass": "^2.1.0",
     "recompose": "^0.27.1",
     "redux": "^4.0.0",
     "redux-form": "^7.4.2",

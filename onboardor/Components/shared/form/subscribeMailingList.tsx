@@ -17,10 +17,10 @@ const SubscribeMailingList = ({
   handleSubmit,
   theme,
 }: IProps) => (
-  <Box width="70%" mx="auto">
+  <Box mx="auto">
     <form onSubmit={handleSubmit} action="">
-      <Relative>
-        <Flex>
+      <Flex justifyContent="center">
+        <Relative>
           <Absolute top="50%" left={30} style={{ transform: "translateY(-50%)" }}>
             <Label htmlFor="email" mb={0}>
               <EmailIcon />
@@ -28,7 +28,6 @@ const SubscribeMailingList = ({
           </Absolute>
           <Field
             component={FieldInput}
-            width={470}
             px={63}
             py={27}
             fontSize={17}
@@ -40,16 +39,16 @@ const SubscribeMailingList = ({
             validations={["email"]}
             required={true}
           />
-          <Button
-            ml={15}
-            fontSize={17}
-            px={76}
-            style={{ textTransform: "uppercase", whiteSpace: "nowrap" }}
-          >
-            Join List
-          </Button>
-        </Flex>
-      </Relative>
+        </Relative>
+        <Button
+          ml={15}
+          fontSize={17}
+          px={[20, 76]}
+          style={{ textTransform: "uppercase", whiteSpace: "nowrap" }}
+        >
+          Join List
+        </Button>
+      </Flex>
       <Field
         component={InvisibleRecpatcha}
         name="recaptcha"
