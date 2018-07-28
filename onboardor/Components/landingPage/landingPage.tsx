@@ -11,6 +11,7 @@ import BackgroundBlue from '../../wwwroot/assets/backgroundBlue.svg';
 import BackgroundGrey from '../../wwwroot/assets/backgroundGrey.svg';
 import DotLines from '../../wwwroot/assets/dotLines.svg';
 import Analytics from '../../wwwroot/assets/analytics.svg';
+import RetentionRate from '../../wwwroot/assets/retentionRate.svg';
 
 interface IProps extends IStyleProps {}
 
@@ -66,7 +67,7 @@ const LandingPage = ({
         </StepFlex>
         <Hide xlarge><DotLinesImage style={{ transform: "rotateX(180deg)" }} /></Hide>
         <StepFlex>
-          <Board />
+          <RetentionRate />
           <StepContainer ml={[0, 80]}>
             <StepNumber>3</StepNumber>
             <StepHeading>Gain a 50%+ retention rate for new developers</StepHeading>

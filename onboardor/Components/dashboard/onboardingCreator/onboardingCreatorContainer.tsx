@@ -5,6 +5,7 @@ import OnboardingCreator from "./onboardingCreator";
 import createOnboardingProcessMutation, { IMutationInput } from "./createOnboardingProcessMutation";
 import { IRoute } from "../../types";
 import { IOrganization } from "../organization/organization";
+import logErrors from "../../shared/logErrors";
 
 const query = graphql`
   query onboardingCreatorContainerQuery(
@@ -33,16 +34,16 @@ interface IProps {
 }
 
 const handlers = {
-  onSubmit: ({ router, organization }: IProps) => (input: IInput) => {
+  onSubmit: ({ router, organization }: IProps) => async (input: IInput) => {
     const mutationInput = {
       organizationId: organization.organizationId,
       steps: input.onboardingSteps.map(s => s._step),
     }
 
     try {
-      createOnboardingProcessMutation(mutationInput);
+      await createOnboardingProcessMutation(mutationInput);
     } catch (error) {
-      // log raven here
+      logErrors(error)
     }
 
     // router.push("/install");
