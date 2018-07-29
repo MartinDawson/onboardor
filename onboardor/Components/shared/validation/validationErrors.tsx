@@ -6,7 +6,7 @@ interface IProps {
   errors?: string[];
 }
 
-const ValidationErrors = ({ errors }: IProps) => (
+const ValidationErrors = ({ errors = [] }: IProps) => (
   errors.length ? (
     <div>
       {errors.map((error) => <ValidationError key={error} error={error} />)}

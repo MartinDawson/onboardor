@@ -10,7 +10,5 @@ export default (error: (Error | Error[]), stackTrace?: object) => {
         raven.captureMessage(error.message, { stackTrace: error.stack });
       }
     });
-
-    throw error;
   }
 };

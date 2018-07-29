@@ -20,7 +20,7 @@ export default ({ email, recaptcha }: IMutationInput) => {
   const variables = {
     input: {
       email,
-      recaptcha: null,
+      recaptcha,
     },
   };
 

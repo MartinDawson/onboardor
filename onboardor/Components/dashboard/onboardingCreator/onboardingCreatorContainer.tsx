@@ -44,6 +44,8 @@ const handlers = {
       await createOnboardingProcessMutation(mutationInput);
     } catch (error) {
       logErrors(error)
+
+      throw error;
     }
 
     // router.push("/install");

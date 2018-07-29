@@ -12,4 +12,4 @@ if (typeof raven !== 'undefined' && process.env.SENTRY_DSN_CLIENT) {
   }).install();
 }
 
-ReactDOM.render(<App />, document.getElementById("app")!);
+ReactDOM.render(<App />, document.getElementById("app"));

@@ -7,11 +7,11 @@ interface IProps {
 const ValidationError = ({
   error,
 }: IProps) => (
-  error && (
+  error ? (
     <span>
       {error}
     </span>
-  )
+  ) : null
 );
 
 export default ValidationError;

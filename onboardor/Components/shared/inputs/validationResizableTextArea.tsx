@@ -13,7 +13,7 @@ export interface IFieldTextAreaProps {
 
 interface IProps extends WrappedFieldProps, IFieldTextAreaProps {}
 
-const FieldResizableTextArea = ({
+const ValidationResizableTextArea = ({
   input,
   meta: { touched, error = [] },
   name,
@@ -29,4 +29,4 @@ const FieldResizableTextArea = ({
   </ValidationField>
 );
 
-export default FieldResizableTextArea;
+export default ValidationResizableTextArea;

@@ -1,9 +1,8 @@
 import { Box, Flex } from "grid-styled";
 import React from "react";
-import { Absolute, Relative, Label } from "rebass";
+import { Absolute, Relative, Label, Input } from "rebass";
 import { Field, InjectedFormProps, change } from "redux-form";
 import createFieldValidator from "../inputs/createFieldValidator";
-import FieldInput from "../inputs/fieldInput";
 import EmailIcon from "../../../wwwroot/assets/email-green.svg";
 import { withTheme } from "styled-components";
 import { IStyleProps } from "../../types";
@@ -23,6 +22,7 @@ const SubscribeMailingList = ({
   theme,
   setRecaptcha,
   recaptcha,
+  error,
 }: IProps) => (
   <Box mx="auto">
     <form onSubmit={(e) => {
@@ -31,13 +31,8 @@ const SubscribeMailingList = ({
     } action="">
       <Flex justifyContent="center">
         <Relative>
-          <Absolute top="50%" left={30} style={{ transform: "translateY(-50%)" }}>
-            <Label htmlFor="email" mb={0}>
-              <EmailIcon />
-            </Label>
-          </Absolute>
           <Field
-            component={FieldInput}
+            component={Input}
             px={63}
             py={27}
             fontSize={17}
@@ -46,9 +41,13 @@ const SubscribeMailingList = ({
             name="email"
             placeholder="Enter your email"
             type="email"
-            validations={["email"]}
-            required={true}
+            validate={createFieldValidator(["required", "email"])}
           />
+          <Absolute top="50%" left={30} style={{ transform: "translateY(-50%)" }}>
+            <Label htmlFor="email" mb={0}>
+              <EmailIcon />
+            </Label>
+          </Absolute>
         </Relative>
         <Button
           ml={15}

@@ -48,19 +48,12 @@ const createValidate = (matchers: IMatcher[]) => (value: any) => {
   return invalidMatcher.errorMessage || true;
 };
 
-interface ICreateFieldValidatorInput {
-  required: boolean;
-  validations?: Array<keyof(IRule) | {
+type validation = Array<keyof(IRule) | {
     [key: string]: string,
   }>;
-}
 
-export default ({ validations = [], required }: ICreateFieldValidatorInput) => {
+export default (validations: validation = []) => {
   let matchers: IMatcher[] = [];
-
-  if (required) {
-    matchers = matchers.concat(getMatcher("required"));
-  }
 
   validations.forEach((validation) => {
     if (validation && typeof validation === "string") {
