@@ -33,6 +33,8 @@ bld/
 
 # Build files
 onboardor/wwwroot/build/
+onboardor/*.zip
+onboardor/site/
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/

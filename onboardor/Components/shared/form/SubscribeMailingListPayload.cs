@@ -37,7 +37,7 @@ namespace onboardor.Components.shared.form
 
             using (var client = new HttpClient())
             {
-                var response = await client.PostAsync(Env.GetString("RECAPTCHA_VERIFY_URL"), encodedContent);
+                var response = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", encodedContent);
                 var recpatcha = await response.Content.ReadAsAsync<Recaptcha>();
 
                 response.EnsureSuccessStatusCode();

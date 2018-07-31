@@ -39,7 +39,10 @@ namespace Onboardor
 
         public Startup(IConfiguration configuration, ILoggerFactory loggerFactory, IHostingEnvironment env)
         {
-            Env.Load();
+            if (env.IsDevelopment())
+            {
+                Env.Load();
+            }
             _env = env;
             loggerFactory.CreateLogger<Startup>();
         }
@@ -47,13 +50,13 @@ namespace Onboardor
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseSqlServer(Env.GetString("DEFAULT_CONNECTION")), ServiceLifetime.Transient);
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //   options.UseSqlServer(Env.GetString("DEFAULT_CONNECTION")), ServiceLifetime.Transient);
 
-            if (_env.IsProduction())
-            {
-                services.AddApplicationInsightsTelemetry(Env.GetString("APPLICATIONINSIGHTS_KEY"));
-            }
+            //if (_env.IsProduction())
+            //{
+            //    services.AddApplicationInsightsTelemetry(Env.GetString("APPLICATIONINSIGHTS_KEY"));
+            //}
 
             services.AddSession(options =>
             {
@@ -63,10 +66,10 @@ namespace Onboardor
 
             services.Configure<MvcOptions>(options =>
             {
-                if (!_env.IsDevelopment())
-                {
-                    options.Filters.Add(new RequireHttpsAttribute());
-                }
+                // if (!_env.IsDevelopment())
+                // {
+                //     options.Filters.Add(new RequireHttpsAttribute());
+                // }
             });
 
             services.Configure<DataProtectionTokenProviderOptions>(options =>
@@ -107,7 +110,6 @@ namespace Onboardor
                 app.UseExceptionHandler("/Error");
             }
 
-
             Context BuildUserContext(HttpContext c)
             {
                 return new Context
@@ -118,10 +120,10 @@ namespace Onboardor
 
             var options = new RewriteOptions();
 
-            if (!_env.IsDevelopment())
-            {
-                options.AddRedirectToHttps();
-            }
+            // if (!_env.IsDevelopment())
+            // {
+            //     options.AddRedirectToHttps();
+            // }
             app.UseRewriter(options);
             app.UseStaticFiles();
             app.UseSession();

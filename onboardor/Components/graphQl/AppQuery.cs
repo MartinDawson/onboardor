@@ -39,90 +39,63 @@ namespace Onboardor.Components.GraphQl
 
             var logger = loggerFactory.CreateLogger<AppQuery>();
 
-            Field<NonNullGraphType<ListGraphType<OrganizationPayload>>>()
-                .Name("organizations")
-                .ResolveAsync(async c =>
-                {
-                    var user = await _client.User.Current();
-                    var organizations = _organizationService.GetOrganizations(user.Id);
+            //Field<NonNullGraphType<ListGraphType<OrganizationPayload>>>()
+            //    .Name("organizations")
+            //    .ResolveAsync(async c =>
+            //    {
+            //        var user = await _client.User.Current();
+            //        var organizations = _organizationService.GetOrganizations(user.Id);
 
-                    return organizations;
-                });
+            //        return organizations;
+            //    });
 
-            Field<NonNullGraphType<StringGraphType>>()
-                .Description("Returns the url for the OAUTH request")
-                .Name("setup")
-                .Resolve(c =>
-                {
-                    var context = c.UserContext.As<Context>();
-                    var csrf = Password.Generate(24, 1);
+            //Field<NonNullGraphType<StringGraphType>>()
+            //    .Description("Returns the url for the OAUTH request")
+            //    .Name("setup")
+            //    .Resolve(c =>
+            //    {
+            //        var context = c.UserContext.As<Context>();
+            //        var csrf = Password.Generate(24, 1);
 
-                    context.HttpContext.Session.SetString("CSRF", csrf);
+            //        context.HttpContext.Session.SetString("CSRF", csrf);
 
-                    var request = new Octokit.OauthLoginRequest(Env.GetString("CLIENT_ID"))
-                    {
-                        Scopes = { "repo", "user", "admin:org", "admin:public_key",
-                            "admin:repo_hook", "notifications", "admin:org_hook",
-                            "gist", "delete_repo", "write:discussion", "admin:gpg_key"  },
-                        State = csrf
-                    };
+            //        var request = new Octokit.OauthLoginRequest(Env.GetString("CLIENT_ID"))
+            //        {
+            //            Scopes = { "repo", "user", "admin:org", "admin:public_key",
+            //                "admin:repo_hook", "notifications", "admin:org_hook",
+            //                "gist", "delete_repo", "write:discussion", "admin:gpg_key"  },
+            //            State = csrf
+            //        };
 
-                    var oAuthLoginUrl = _client.Oauth.GetGitHubLoginUrl(request);
+            //        var oAuthLoginUrl = _client.Oauth.GetGitHubLoginUrl(request);
 
-                    return oAuthLoginUrl;
-                });
+            //        return oAuthLoginUrl;
+            //    });
 
-            Field<NonNullGraphType<BooleanGraphType>>()
-                .Argument<NonNullGraphType<StringGraphType>>("code", "The code for the setup")
-                .Argument<NonNullGraphType<StringGraphType>>("state", "The CSRF protection state")
-                .Name("setupCallback")
-                .ResolveAsync(async c =>
-                {
-                    var context = c.UserContext.As<Context>();
-                    var expectedState = context.HttpContext.Session.GetString("CSRF");
-                    var state = c.GetArgument<string>("state");
-                    var code = c.GetArgument<string>("code");
+            //Field<NonNullGraphType<BooleanGraphType>>()
+            //    .Argument<NonNullGraphType<StringGraphType>>("code", "The code for the setup")
+            //    .Argument<NonNullGraphType<StringGraphType>>("state", "The CSRF protection state")
+            //    .Name("setupCallback")
+            //    .ResolveAsync(async c =>
+            //    {
+            //        var context = c.UserContext.As<Context>();
+            //        var expectedState = context.HttpContext.Session.GetString("CSRF");
+            //        var state = c.GetArgument<string>("state");
+            //        var code = c.GetArgument<string>("code");
 
-                    if (state != expectedState) throw new InvalidOperationException("Security fail");
+            //        if (state != expectedState) throw new InvalidOperationException("Security fail");
 
-                    context.HttpContext.Session.SetString("CSRF", "");
-                    var request = new Octokit.OauthTokenRequest(Env.GetString("CLIENT_ID"), Env.GetString("CLIENT_SECRET"), code);
-                    var token = await _client.Oauth.CreateAccessToken(request);
-                    _client.Credentials = new Octokit.Credentials(token.AccessToken);
-                    var appName = Env.GetString("APP_NAME");
-                    var productInformation = new ProductHeaderValue(appName);
+            //        context.HttpContext.Session.SetString("CSRF", "");
+            //        var request = new Octokit.OauthTokenRequest(Env.GetString("CLIENT_ID"), Env.GetString("CLIENT_SECRET"), code);
+            //        var token = await _client.Oauth.CreateAccessToken(request);
+            //        _client.Credentials = new Octokit.Credentials(token.AccessToken);
+            //        var appName = Env.GetString("APP_NAME");
+            //        var productInformation = new ProductHeaderValue(appName);
 
-                    _connectionFactory.CreateConnection(new Connection(productInformation, token.AccessToken));
-                    
-                    //var query = new Query()
-                    //    .Viewer
-                    //    .Organization("SoundVast").Select(o => new Organization
-                    //    {
-                    //        Id = o.DatabaseId.Value,
-                    //        Name = o.Name,
-                    //        AvatarUrl = o.AvatarUrl(null),
-                    //        Members = o.Members(10, null, null, null).Nodes.Select(m => new OrganizationMember
-                    //        {
-                    //            Member = new Member
-                    //            {
-                    //                Id = m.DatabaseId.Value,
-                    //                Name = m.Name,
-                    //                AvatarUrl = m.AvatarUrl(null),
-                    //                CreatedAt = m.CreatedAt,
-                    //                Issues = m.Issues(10, null, null, null, null, null, null).Nodes.Select(i => new onboardor.Components.dashboard.Issue
-                    //                {
-                    //                    Id = i.DatabaseId.Value,
-                    //                }).ToList()
-                    //            }
-                    //        }).ToList()
-                    //    }).Compile();
+            //        _connectionFactory.CreateConnection(new Connection(productInformation, token.AccessToken));
 
-                    //var organization = await _connectionFactory.Connection.Run(query);
-
-                    //_organizationService.Add(organization);
-
-                    return true;
-                });
+            //        return true;
+            //    });
         }
     }
 }
