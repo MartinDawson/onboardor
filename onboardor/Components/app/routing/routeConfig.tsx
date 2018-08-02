@@ -22,6 +22,7 @@ import { IMatch } from "../../types";
 
 export default makeRouteConfig(
   <Route path="/" {...primaryLayoutRouteConfig}>
+    <Route {...landingPageRouteConfig} />
     <Redirect from="(.*/)" to={({ location }: IMatch) => location.pathname.slice(0, -1)} />
     <Route path="/dashboard" {...dashboardRouteConfig}>
       <Route {...organizationsRouteConfig} />
@@ -29,7 +30,6 @@ export default makeRouteConfig(
       <Route path="organization/:id/teamMember/:id" {...memberRouteConfig} />
       <Route path="organization/:id/createOnboardingProcess" {...onboardingCreatorRouteConfig} />
     </Route>
-    <Route path="landingPage" {...landingPageRouteConfig} />
     <Route path="setup" {...setupRouteConfig} />
     <Route path="setupCallback" {...setupCallbackRouteConfig} />
     <Route path="select">

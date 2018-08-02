@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Onboardor.Data;
-using Onboardor.Kestrel;
 
 namespace Onboardor
 {
@@ -18,7 +17,7 @@ namespace Onboardor
         {
             SetEbConfig();
 
-            var webHost = BuildWebHost(args).SeedData();
+            var webHost = CreateWebHostBuilder(args).Build().SeedData();
 
             webHost.Wait();
             webHost.Result.Run();
@@ -48,18 +47,8 @@ namespace Onboardor
             }
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(ConfigConfiguration)
-                .UseStartup<Startup>()
-                .UseKestrel(/*options => options.ConfigureEndpoints()*/)
-                .Build();
-
-        private static void ConfigConfiguration(WebHostBuilderContext webHostBuilderContext, IConfigurationBuilder configurationBuilder)
-        {
-            configurationBuilder
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddEnvironmentVariables();
-        }
+                .UseStartup<Startup>();
     }
 }

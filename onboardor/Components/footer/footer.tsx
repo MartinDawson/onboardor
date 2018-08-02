@@ -3,11 +3,7 @@ import { Flex } from "grid-styled";
 import React from "react";
 import styled from "styled-components";
 
-import { ITheme } from "../types";
-
-interface IStyleProps {
-  theme: ITheme;
-}
+import { IStyleProps } from "../types";
 
 const CustomLink = styled(Link)`
   color: ${({ theme }: IStyleProps) => theme.colors.lightGrey};

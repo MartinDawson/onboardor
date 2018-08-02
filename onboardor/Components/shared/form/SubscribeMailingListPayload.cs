@@ -1,7 +1,6 @@
 ﻿using DotNetEnv;
 using GraphQL.Relay.Types;
 using GraphQL.Types;
-using MailChimp.Net;
 using MailChimp.Net.Interfaces;
 using MailChimp.Net.Models;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +18,7 @@ namespace onboardor.Components.shared.form
 
         public SubscribeMailingListPayload()
         {
-            _mailChimpManager = new MailChimpManager(Env.GetString("MAILCHIMP_APIKEY"));
+            _mailChimpManager = new MailChimp.Net.MailChimpManager(Env.GetString("MAILCHIMP_APIKEY"));
 
             Name = nameof(SubscribeMailingListPayload);
         }

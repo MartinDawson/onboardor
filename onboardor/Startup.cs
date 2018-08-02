@@ -30,6 +30,8 @@ using Onboardor.Repository;
 using onboardor.Components.dashboard;
 using onboardor.Components.graphQl;
 using Octokit.GraphQL;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Primitives;
 
 namespace Onboardor
 {
@@ -50,26 +52,23 @@ namespace Onboardor
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //   options.UseSqlServer(Env.GetString("DEFAULT_CONNECTION")), ServiceLifetime.Transient);
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Env.GetString("DEFAULT_CONNECTION")));
 
-            //if (_env.IsProduction())
-            //{
-            //    services.AddApplicationInsightsTelemetry(Env.GetString("APPLICATIONINSIGHTS_KEY"));
-            //}
-
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(60);
+            });
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                options.HttpsPort = 443;
+            });
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.Name = ".onboardor";
-            });
-
-            services.Configure<MvcOptions>(options =>
-            {
-                // if (!_env.IsDevelopment())
-                // {
-                //     options.Filters.Add(new RequireHttpsAttribute());
-                // }
             });
 
             services.Configure<DataProtectionTokenProviderOptions>(options =>
@@ -77,7 +76,9 @@ namespace Onboardor
                 options.TokenLifespan = TimeSpan.FromMinutes(30);
             });
             services.AddGraphQLHttp();
-            services.AddMvc().AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddMvc()
+                .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1); ;
             services.AddMemoryCache();
 
             var builder = RegisterServices();
@@ -97,7 +98,6 @@ namespace Onboardor
 
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
@@ -108,6 +108,7 @@ namespace Onboardor
             else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
             Context BuildUserContext(HttpContext c)
@@ -117,14 +118,11 @@ namespace Onboardor
                     HttpContext = c
                 };
             }
-
-            var options = new RewriteOptions();
-
-            // if (!_env.IsDevelopment())
-            // {
-            //     options.AddRedirectToHttps();
-            // }
-            app.UseRewriter(options);
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.All,
+            });
+            app.UseCookiePolicy();
             app.UseStaticFiles();
             app.UseSession();
             app.UseGraphQLHttp<AppSchema>(new GraphQLHttpOptions

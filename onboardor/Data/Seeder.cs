@@ -17,16 +17,16 @@ namespace Onboardor.Data
         {
             using (var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope())
             {
-                //using (var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
-                //{
-                //    _env = scope.ServiceProvider.GetRequiredService<IHostingEnvironment>();
+                using (var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
+                {
+                    _env = scope.ServiceProvider.GetRequiredService<IHostingEnvironment>();
 
-                //    if (_env.IsDevelopment())
-                //    {
-                //        await context.Database.MigrateAsync();
-                //        await SeedMocks(context);
-                //    }
-                //}
+                    if (_env.IsDevelopment())
+                    {
+                        await context.Database.MigrateAsync();
+                        await SeedMocks(context);
+                    }
+                }
             }
 
             return webHost;

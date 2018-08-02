@@ -23,7 +23,7 @@ const plugins = [
     },
   }),
   new HTMLPlugin({
-    title: 'Make the process of on-boarding your new software developers an easy experience.',
+    title: 'Onboardor | For developers by developers.',
     hash: true,
     favicon: path.resolve(__dirname, 'wwwroot/favicon.ico'),
     template: path.resolve(__dirname, 'Components/app/app.ejs'),

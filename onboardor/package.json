@@ -26,7 +26,7 @@
     "prestart": "webpack",
     "setup": "run-s restore-nuget",
     "restore-nuget": "dotnet restore",
-    "start": "run-p run relay-compiler:watch",
+    "start": "cross-env ASPNETCORE_ENVIRONMENT=Development run-p run relay-compiler:watch",
     "run": "dotnet run",
     "relay-compiler": "relay-compiler --src ./Components --schema schema.graphql --language typescript --artifactDirectory ./Components/__generated__ --extensions tsx",
     "relay-compiler:watch": "npm run relay-compiler -- --watch",
