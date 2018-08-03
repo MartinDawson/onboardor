@@ -1,9 +1,7 @@
-import { withRouter } from "found";
 import { compose, withHandlers, withStateHandlers } from "recompose";
-import { reduxForm, SubmissionError } from "redux-form";
+import { reduxForm } from "redux-form";
 import ReCAPTCHA from "react-google-recaptcha";
 
-import { IRoute } from "../../types";
 import SubscribeMailingList, { IProps } from "./subscribeMailingList";
 import subscribeMailingListMutation, { IMutationInput } from "./subscribeMailingListMutation";
 import logErrors from "../logErrors";
@@ -15,9 +13,9 @@ const stateHandlers = {
 };
 
 const handlers = {
-  onSubmit: ({ router }: IRoute) => async (input: IMutationInput) => {
+  onSubmit: () => async (input: IMutationInput) => {
     try {
-      await subscribeMailingListMutation(input);
+      return subscribeMailingListMutation(input);
     } catch (error) {
       logErrors(error);
 
@@ -27,7 +25,6 @@ const handlers = {
 };
 
 export default compose<IProps, {}>(
-  withRouter,
   withStateHandlers(null, stateHandlers),
   withHandlers(handlers),
   reduxForm({

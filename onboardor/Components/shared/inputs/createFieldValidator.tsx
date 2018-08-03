@@ -38,7 +38,7 @@ const getMatcher = (name: keyof(IRule), errorMessage = defaultErrorMessages[name
   return { name, test, errorMessage };
 };
 
-const createValidate = (matchers: IMatcher[]) => (value: any) => {
+const createValidate = (matchers: IMatcher[], value: any) => {
   const invalidMatcher = matchers.find((matcher) => !matcher.test(value));
 
   if (!invalidMatcher) {
@@ -52,7 +52,7 @@ type validation = Array<keyof(IRule) | {
     [key: string]: string,
   }>;
 
-export default (validations: validation = []) => {
+export default (validations: validation = []) => (value: any) => {
   let matchers: IMatcher[] = [];
 
   validations.forEach((validation) => {
@@ -71,5 +71,5 @@ export default (validations: validation = []) => {
     }
   });
 
-  return createValidate(matchers);
+  return createValidate(matchers, value);
 };

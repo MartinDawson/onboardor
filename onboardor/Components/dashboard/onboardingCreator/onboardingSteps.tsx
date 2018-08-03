@@ -4,7 +4,7 @@ import { Box } from "grid-styled";
 import { Absolute, Relative } from "rebass";
 
 import Button from "../../shared/button/button";
-import ValidationInput from "../../shared/inputs/validationInput";
+import Input from "../../shared/inputs/fieldInput";
 import { compose, withHandlers } from "recompose";
 
 interface IFieldValues {
@@ -34,7 +34,7 @@ const OnboardingSteps = ({
               <Field
                 autoFocus
                 tabIndex={1}
-                component={ValidationInput}
+                component={Input}
                 name={`${onboardingStep}_step`}
                 placeholder={index === 0 ? "E.g. 100% ready by day one" : null}
                 required={true}

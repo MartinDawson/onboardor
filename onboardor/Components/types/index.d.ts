@@ -4,6 +4,7 @@ import { FormState } from "redux-form";
 export interface IFormState {
   subscribeMailingList: FormState;
   onboardingCreator: FormState;
+  [key: string]: any;
 }
 
 export interface IStyleProps {
