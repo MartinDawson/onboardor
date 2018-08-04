@@ -7,8 +7,7 @@ const HTMLPlugin = require('html-webpack-plugin');
 
 dotenv.config();
 
-const NODE_ENV = process.env.ASPNETCORE_ENVIRONMENT && process.env.ASPNETCORE_ENVIRONMENT.toLowerCase();
-const isInProduction = process.env.ASPNETCORE_ENVIRONMENT === 'Production';
+const isInProduction = process.env.NODE_ENV === 'production';
 
 const plugins = [
   new ExtractTextPlugin({
@@ -17,7 +16,7 @@ const plugins = [
   new Webpack.DefinePlugin({
     __DEV__: !isInProduction,
     'process.env': {
-      NODE_ENV: JSON.stringify(NODE_ENV),
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       RECAPTCHA_SITE_KEY: JSON.stringify(process.env.RECAPTCHA_SITE_KEY),
       APP_NAME: JSON.stringify(process.env.APP_NAME),
       SENTRY_DSN_CLIENT: JSON.stringify(process.env.SENTRY_DSN_CLIENT),
@@ -28,7 +27,7 @@ const plugins = [
     hash: true,
     favicon: path.resolve(__dirname, 'wwwroot/favicon.ico'),
     template: path.resolve(__dirname, 'Components/app/app.ejs'),
-    env: process.env.ASPNETCORE_ENVIRONMENT,
+    env: process.env.NODE_ENV,
   }),
 ];
 let devtool = false;
@@ -49,7 +48,7 @@ if (isInProduction) {
 }
 
 module.exports = {
-  mode: NODE_ENV,
+  mode: process.env.NODE_ENV,
   context: __dirname,
   devtool,
   entry,
