@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 4a8cc7341538856564a05320c65b8a4d
+ * @relayHash 0cc49b422aef24cf248c7249e4acc77c
  */
 
 /* eslint-disable */
@@ -20,6 +20,10 @@ export type setOnboardingMembersMutationResponse = {|
   +setOnboardingMembers: ?{|
     +clientMutationId: ?string
   |}
+|};
+export type setOnboardingMembersMutation = {|
+  variables: setOnboardingMembersMutationVariables,
+  response: setOnboardingMembersMutationResponse,
 |};
 */
 

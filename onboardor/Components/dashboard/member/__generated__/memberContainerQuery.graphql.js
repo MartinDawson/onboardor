@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3f43a5396a56a964e770e1b9a0520a2e
+ * @relayHash ea67d4d5ab357772eb3fb41e1a663405
  */
 
 /* eslint-disable */
@@ -17,6 +17,10 @@ export type memberContainerQueryResponse = {|
     +name?: string,
     +avatarUrl?: string,
   |}
+|};
+export type memberContainerQuery = {|
+  variables: memberContainerQueryVariables,
+  response: memberContainerQueryResponse,
 |};
 */
 

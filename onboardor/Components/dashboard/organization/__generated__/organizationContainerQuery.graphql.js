@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 165cf6b332216f5f16095e3cd59920ad
+ * @relayHash 985ed9ad5c909b2b6e11b384186c1881
  */
 
 /* eslint-disable */
@@ -20,6 +20,10 @@ export type organizationContainerQueryResponse = {|
       +step: string,
     |}>,
   |}
+|};
+export type organizationContainerQuery = {|
+  variables: organizationContainerQueryVariables,
+  response: organizationContainerQueryResponse,
 |};
 */
 

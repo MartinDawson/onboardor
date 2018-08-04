@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 03b198835e39405a2a751675c9878225
+ * @relayHash 3132c5bf952cf98cfec0c59bf06ff6fb
  */
 
 /* eslint-disable */
@@ -15,6 +15,10 @@ export type setupCallbackContainerQueryVariables = {|
 |};
 export type setupCallbackContainerQueryResponse = {|
   +setupCallback: boolean
+|};
+export type setupCallbackContainerQuery = {|
+  variables: setupCallbackContainerQueryVariables,
+  response: setupCallbackContainerQueryResponse,
 |};
 */
 

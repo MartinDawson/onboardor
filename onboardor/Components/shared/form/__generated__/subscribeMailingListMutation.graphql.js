@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash ecce0842474c4ca063a28b58ac5e3f6a
+ * @relayHash 27fab7a7eb7995747c4fb43650bc98be
  */
 
 /* eslint-disable */
@@ -21,6 +21,10 @@ export type subscribeMailingListMutationResponse = {|
   +subscribeMailingList: ?{|
     +clientMutationId: ?string
   |}
+|};
+export type subscribeMailingListMutation = {|
+  variables: subscribeMailingListMutationVariables,
+  response: subscribeMailingListMutationResponse,
 |};
 */
 

@@ -1,20 +1,20 @@
 import React from "react";
-import { Container, Text, Absolute, Relative } from "rebass";
+import { Container, Text, Absolute, Relative, Image } from "rebass";
 import { Link } from "found";
 import { Box, Flex, theme } from "grid-styled";
 import SubscribeMailingList from "../shared/form/subscribeMailingListContainer";
 import styled, { withTheme } from "styled-components";
 import { IStyleProps, ITheme } from "../types";
-import Laptop from "../../wwwroot/assets/laptop.svg";
-import Board from '../../wwwroot/assets/board.svg';
 import StepNumber from "./stepNumber";
-import BackgroundBlue from '../../wwwroot/assets/backgroundBlue.svg';
-import BackgroundGrey from '../../wwwroot/assets/backgroundGrey.svg';
-import DotLines from '../../wwwroot/assets/dotLines.svg';
-import Analytics from '../../wwwroot/assets/analytics.svg';
-import RetentionRate from '../../wwwroot/assets/retentionRate.svg';
+import BackgroundBlue from "../../wwwroot/assets/backgroundBlue.svg";
+import BackgroundGrey from "../../wwwroot/assets/backgroundGrey.svg";
 import Hide from "../shared/utilities/hide";
-import Check from '../../wwwroot/assets/check.svg';
+import Check from "../../wwwroot/assets/check.svg";
+import laptop from "../../wwwroot/assets/laptop.png";
+import dotLines from "../../wwwroot/assets/dotLines.png";
+import board from "../../wwwroot/assets/board.png";
+import analytics from "../../wwwroot/assets/analytics.png";
+import retentionRate from "../../wwwroot/assets/retentionRate.png";
 
 interface IProps extends IStyleProps {}
 
@@ -44,7 +44,7 @@ const StepItem = ({ children, ...props }: { children: string}) => (
     </Flex>
   </Box>
 );
-const DotLinesImage = ({ ...props }) => <DotLines {...props} width="66%" style={{ margin: "0 auto", display: "block", ...props.style }}  />;
+const DotLinesImage = ({ ...props }) => <Image src={dotLines} {...props} width="66%" mx="auto" style={{ display: "block", ...props.style }}  />;
 
 const LandingPage = ({
   theme,
@@ -64,7 +64,9 @@ const LandingPage = ({
         -Coming this September-
       </Text>
       <Box width={[1, "73%"]} mx="auto">
-        <Laptop />
+        <Image
+          src={laptop}
+        />
       </Box>
       <Text textAlign="center" fontSize={[40, 60]} mt={40}>
         HOW IT WORKS
@@ -74,7 +76,9 @@ const LandingPage = ({
       </Text>
       <Box mt={50} mb={300}>
         <StepFlex>
-          <Board />
+          <Image
+            src={board}
+          />
           <StepContainer ml={[0, 0, 30]}>
             <StepNumber>1</StepNumber>
             <StepHeading>Easily create your teams on-boarding process directly through GitHub</StepHeading>
@@ -96,11 +100,15 @@ const LandingPage = ({
               <StepItem>Tracks your developers progress</StepItem>
             </StepContent>
           </StepContainer>
-          <Analytics />
+          <Image
+            src={analytics}
+          />
         </StepFlex>
         <Hide sm md><DotLinesImage style={{ transform: "rotateX(180deg)" }} /></Hide>
         <StepFlex>
-          <RetentionRate />
+          <Image
+            src={retentionRate}
+          />
           <StepContainer>
             <StepNumber>3</StepNumber>
             <StepHeading>Gain a 50%+ retention rate for new developers</StepHeading>

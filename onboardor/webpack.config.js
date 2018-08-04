@@ -136,6 +136,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(jpe?g|png|gif)$/,
+        loader: 'file-loader?name=[path][name].[ext]',
+      },
     ],
   },
   plugins,
