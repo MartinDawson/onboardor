@@ -1,20 +1,13 @@
 import React from "react";
 import { Container, Text, Absolute, Relative, Image } from "rebass";
-import { Link } from "found";
 import { Box, Flex, theme } from "grid-styled";
 import SubscribeMailingList from "../shared/form/subscribeMailingListContainer";
 import styled, { withTheme } from "styled-components";
 import { IStyleProps, ITheme } from "../types";
-import StepNumber from "./stepNumber";
 import BackgroundBlue from "../../wwwroot/assets/backgroundBlue.svg";
 import BackgroundGrey from "../../wwwroot/assets/backgroundGrey.svg";
-import Hide from "../shared/utilities/hide";
 import Check from "../../wwwroot/assets/check.svg";
-import laptop from "../../wwwroot/assets/laptop.png";
-import dotLines from "../../wwwroot/assets/dotLines.png";
 import board from "../../wwwroot/assets/board.png";
-import analytics from "../../wwwroot/assets/analytics.png";
-import retentionRate from "../../wwwroot/assets/retentionRate.png";
 
 interface IProps extends IStyleProps {}
 
