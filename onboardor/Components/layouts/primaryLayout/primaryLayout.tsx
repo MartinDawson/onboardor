@@ -15,7 +15,7 @@ const PrimaryLayout = ({
   theme,
 }: IProps) => (
   <PrimaryLayoutErrorBoundary>
-    <Root color={theme.colors.grey}>
+    <Root style={{ height: "100%" }} color={theme.colors.grey}>
       {children}
     </Root>
   </PrimaryLayoutErrorBoundary>

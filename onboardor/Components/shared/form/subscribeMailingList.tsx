@@ -19,6 +19,8 @@ export interface IProps extends InjectedFormProps, IStyleProps {
 
 const SubmitSucceededMessage = () => <Text textAlign="center" fontSize={18} color="white">Thank you for subscribing. We will update you once we are live!</Text>;
 
+const emailValidator = createFieldValidator(["required", "email"]);
+
 const SubscribeMailingList = ({
   handleSubmit,
   onSubmit,
@@ -47,7 +49,7 @@ const SubscribeMailingList = ({
             name="email"
             placeholder="Enter your email"
             type="email"
-            validate={createFieldValidator(["required", "email"])}
+            validate={emailValidator}
           />
           <Absolute top="50%" left={30} style={{ transform: "translateY(-50%)" }}>
             <Label htmlFor="email" mb={0}>
