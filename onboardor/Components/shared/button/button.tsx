@@ -11,7 +11,7 @@ interface IProps extends ButtonProps {
 }
 
 const Button = styled(({ appTheme, ...props }: IProps) =>
-  <RebassButton {...props} bg={appTheme.colors.primary} />)`
+  <RebassButton bg={appTheme.colors.primary} {...props} />)`
   &:not(:disabled) {
     cursor: pointer;
   }

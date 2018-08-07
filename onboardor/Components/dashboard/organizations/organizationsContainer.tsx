@@ -22,7 +22,7 @@ export const routeConfig = {
     if (route.props) {
       if (route.props.organizations.length === 1) {
         throw new RedirectException(
-          `${route.match.location.pathname}/organization/${route.props.organizations[0].id}`
+          `${route.match.location.pathname}/organization/${route.props.organizations[0].id}/onboardingProcess`
         );
       }
 

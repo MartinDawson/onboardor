@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 985ed9ad5c909b2b6e11b384186c1881
+ * @relayHash cfa3f6bd0d2ee67f31f2a4750888e4c1
  */
 
 /* eslint-disable */
@@ -14,11 +14,7 @@ export type organizationContainerQueryVariables = {|
 |};
 export type organizationContainerQueryResponse = {|
   +node: ?{|
-    +name?: string,
-    +onboardingSteps?: $ReadOnlyArray<?{|
-      +id: string,
-      +step: string,
-    |}>,
+    +name?: string
   |}
 |};
 export type organizationContainerQuery = {|
@@ -36,10 +32,6 @@ query organizationContainerQuery(
     __typename
     ... on Organization {
       name
-      onboardingSteps {
-        id
-        step
-      }
     }
     id
   }
@@ -64,13 +56,6 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "id",
-  "args": null,
-  "storageKey": null
-},
-v3 = {
   "kind": "InlineFragment",
   "type": "Organization",
   "selections": [
@@ -80,25 +65,6 @@ v3 = {
       "name": "name",
       "args": null,
       "storageKey": null
-    },
-    {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "onboardingSteps",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "OnboardingStep",
-      "plural": true,
-      "selections": [
-        v2,
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "step",
-          "args": null,
-          "storageKey": null
-        }
-      ]
     }
   ]
 };
@@ -107,7 +73,7 @@ return {
   "operationKind": "query",
   "name": "organizationContainerQuery",
   "id": null,
-  "text": "query organizationContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      name\n      onboardingSteps {\n        id\n        step\n      }\n    }\n    id\n  }\n}\n",
+  "text": "query organizationContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      name\n    }\n    id\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -125,7 +91,7 @@ return {
         "concreteType": null,
         "plural": false,
         "selections": [
-          v3
+          v2
         ]
       }
     ]
@@ -151,8 +117,14 @@ return {
             "args": null,
             "storageKey": null
           },
-          v2,
-          v3
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "id",
+            "args": null,
+            "storageKey": null
+          },
+          v2
         ]
       }
     ]
@@ -160,5 +132,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '91184b90678592a1406ff70461eb263e';
+(node/*: any*/).hash = '63d2e3d1e41a2e64d145db8576e7b7c2';
 module.exports = node;

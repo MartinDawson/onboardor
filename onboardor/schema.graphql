@@ -1,5 +1,5 @@
-# source: http://localhost:49891/graphql
-# timestamp: Mon Jul 23 2018 23:21:04 GMT+0200 (W. Europe Daylight Time)
+# source: https://localhost:49891/graphql
+# timestamp: Tue Aug 07 2018 23:15:11 GMT+0200 (W. Europe Daylight Time)
 
 input CreateOnboardingProcessInput {
   clientMutationId: String = null
@@ -45,13 +45,25 @@ interface Node {
   id: ID
 }
 
+type OnboardingPipeline implements Node {
+  """The Global Id of the OnboardingPipeline"""
+  id: ID!
+  name: String!
+
+  """The Id of the OnboardingPipeline"""
+  onboardingPipelineId: Int!
+  onboardingSteps: [OnboardingStep]!
+}
+
 type OnboardingStep implements Node {
+  description: String
+
   """The Global Id of the OnboardingStep"""
   id: ID!
+  name: String!
 
   """The Id of the OnboardingStep"""
   onboardingStepId: Int!
-  step: String!
 }
 
 type Organization implements Node {
@@ -61,7 +73,7 @@ type Organization implements Node {
   id: ID!
   members: [Member]!
   name: String!
-  onboardingSteps: [OnboardingStep]!
+  onboardingPipelines: [OnboardingPipeline]!
 
   """The Id of the Organization"""
   organizationId: Int!

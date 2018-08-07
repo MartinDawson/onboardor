@@ -34,6 +34,7 @@ namespace onboardor.Components.dashboard
             return _membersRepository.GetAll()
                 .Include(x => x.Organizations)
                 .ThenInclude(x => x.Organization)
+                .ThenInclude(x => x.OnboardingPipelines)
                 .ThenInclude(x => x.OnboardingSteps)
                 .Single(x => x.Id == userId)
                 .Organizations.Select(o => o.Organization).ToList();
@@ -41,7 +42,7 @@ namespace onboardor.Components.dashboard
 
         public Organization GetOrganization(int organizationId)
         {
-            return _repository.GetAll().Include(x => x.OnboardingSteps).Include(x => x.Members).ThenInclude(x => x.Member).Single(x => x.Id == organizationId);
+            return _repository.GetAll().Include(x => x.OnboardingPipelines).ThenInclude(x => x.OnboardingSteps).Include(x => x.Members).ThenInclude(x => x.Member).Single(x => x.Id == organizationId);
         }
     }
 }

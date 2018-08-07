@@ -31,7 +31,7 @@
     "run": "dotnet run",
     "relay-compiler": "relay-compiler --src ./Components --schema schema.graphql --language typescript --artifactDirectory ./Components/__generated__ --extensions tsx",
     "relay-compiler:watch": "npm run relay-compiler -- --watch",
-    "get-schema": "graphql get-schema dev",
+    "get-schema": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 graphql get-schema dev",
     "lint": "run-p tslint typescript",
     "tslint": "tslint --fix ./Components/**/*.{ts,tsx}",
     "typescript": "tsc",

@@ -17,6 +17,7 @@ injectGlobal`
   a { color: inherit; text-decoration: none; }
   ul { list-style: none;margin: 0; padding: 0; }
   li { list-style: none }
+  button { border: 0; padding: 0; font: inherit; outline: none; cursor: pointer; }
 `;
 /* tslint:enable no-unused-expression */
 

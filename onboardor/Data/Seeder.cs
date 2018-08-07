@@ -60,6 +60,44 @@ namespace Onboardor.Data
                 }
             };
 
+            organizations[0].OnboardingPipelines = new List<OnboardingPipeline>
+            {
+                new OnboardingPipeline
+                {
+                    Name = "First Day",
+                    OnboardingSteps = new List<OnboardingStep>
+                    {
+                        new OnboardingStep
+                        {
+                            Name = "Read the wiki",
+                            Description = null
+                        },
+                        new OnboardingStep
+                        {
+                            Name = "Get .env variables",
+                            Description = "Check with @sebastian for the required .env variables"
+                        }
+                    }
+                },
+                new OnboardingPipeline
+                {
+                    Name = "First Week",
+                    OnboardingSteps = new List<OnboardingStep>
+                    {
+                        new OnboardingStep
+                        {
+                            Name = "Set up email",
+                            Description = null
+                        },
+                        new OnboardingStep
+                        {
+                            Name = "Go through codebase with @MartinDawson",
+                            Description = null
+                        }
+                    }
+                }
+            };
+
             var existingOrganizations = context.Organizations;
 
             await context.AddRangeAsync(organizations.Where(o => !existingOrganizations.Any(z => z.Id == o.Id)));

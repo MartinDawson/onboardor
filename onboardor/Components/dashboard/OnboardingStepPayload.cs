@@ -20,7 +20,8 @@ namespace onboardor.Components.dashboard
             Name = nameof(OnboardingStep);
 
             Id(x => x.Id);
-            Field(x => x.Step);
+            Field(x => x.Name);
+            Field(x => x.Description, nullable: true);
         }
 
         public override OnboardingStep GetById(string id)

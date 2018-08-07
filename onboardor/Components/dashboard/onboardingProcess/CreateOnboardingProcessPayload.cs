@@ -27,19 +27,20 @@ namespace onboardor.Components.dashboard.onBoardingCreator
 
         public override object MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context)
         {
-            var organizationId = inputs.Get<int>("organizationId");
-            var steps = inputs.Get("steps", new object[0]).Cast<string>().ToList();
+            //var organizationId = inputs.Get<int>("organizationId");
+            //var steps = inputs.Get("steps", new object[0]).Cast<string>().ToList();
 
-            var organization = _organizationService.GetOrganization(organizationId);
+            //var organization = _organizationService.GetOrganization(organizationId);
 
-            foreach (var step in steps)
-            {
-                organization.OnboardingSteps.Add(new OnboardingStep { Step = step });
-            }
+            //foreach (var step in steps)
+            //{
+            //    organization.OnboardingPipelines.Add(new OnboardingStep { Step = step });
+            //}
 
-            _organizationService.Update(organization);
+            //_organizationService.Update(organization);
 
-            return organization;
+            //return organization;
+            return null;
         }
     }
 }

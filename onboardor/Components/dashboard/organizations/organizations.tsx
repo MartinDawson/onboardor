@@ -23,7 +23,7 @@ const Organizations = ({
       {organizations.map((organization) => (
           <Link
             key={organization.id}
-            to={`${match.location.pathname}/organization/${organization.id}`}
+            to={`${match.location.pathname}/organization/${organization.id}/onboardingProcess`}
           >
             <SelectCard
               m={cardMargin}

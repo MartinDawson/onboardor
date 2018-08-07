@@ -5,7 +5,7 @@ import React from "react";
 
 import { routeConfig as dashboardRouteConfig } from "../../dashboard/dashboardContainer";
 import { routeConfig as memberRouteConfig } from "../../dashboard/member/memberContainer";
-import { routeConfig as onboardingCreatorRouteConfig } from "../../dashboard/onboardingCreator/onboardingCreatorContainer";
+import { routeConfig as onboardingProcessRouteConfig } from "../../dashboard/onboardingProcess/onboardingProcessContainer";
 import { routeConfig as organizationRouteConfig } from "../../dashboard/organization/organizationContainer";
 import { routeConfig as organizationsRouteConfig } from "../../dashboard/organizations/organizationsContainer";
 import { routeConfig as errorPageRouteConfig } from "../../errorPage/errorPageContainer";
@@ -28,7 +28,7 @@ export default makeRouteConfig(
       <Route {...organizationsRouteConfig} />
       <Route path="organization/:id" {...organizationRouteConfig} />
       <Route path="organization/:id/teamMember/:id" {...memberRouteConfig} />
-      <Route path="organization/:id/createOnboardingProcess" {...onboardingCreatorRouteConfig} />
+      <Route path="organization/:id/onboardingProcess" {...onboardingProcessRouteConfig} />
     </Route>
     <Route path="setup" {...setupRouteConfig} />
     <Route path="setupCallback" {...setupCallbackRouteConfig} />
