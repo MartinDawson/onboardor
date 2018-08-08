@@ -18,6 +18,7 @@ injectGlobal`
   ul { list-style: none;margin: 0; padding: 0; }
   li { list-style: none }
   button { border: 0; padding: 0; font: inherit; outline: none; cursor: pointer; }
+  svg { fill: #4A4A4A; }
 `;
 /* tslint:enable no-unused-expression */
 

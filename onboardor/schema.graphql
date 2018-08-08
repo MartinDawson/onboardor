@@ -1,5 +1,16 @@
 # source: https://localhost:49891/graphql
-# timestamp: Tue Aug 07 2018 23:15:11 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Wed Aug 08 2018 21:15:49 GMT+0200 (W. Europe Daylight Time)
+
+input AddOnboardingPipelineInput {
+  clientMutationId: String = null
+  organizationId: Int!
+  name: String!
+}
+
+type AddOnboardingPipelinePayload {
+  clientMutationId: String
+  organization: Organization!
+}
 
 input CreateOnboardingProcessInput {
   clientMutationId: String = null
@@ -35,6 +46,7 @@ type Member implements Node {
 }
 
 type Mutation {
+  addPipeline(input: AddOnboardingPipelineInput!): AddOnboardingPipelinePayload
   createOnboardingProcess(input: CreateOnboardingProcessInput!): CreateOnboardingProcessPayload
   setOnboardingMembers(input: SetOnboardingMembersInput!): SetOnboardingMembersPayload
   subscribeMailingList(input: SubscribeMailingListInput!): SubscribeMailingListPayload

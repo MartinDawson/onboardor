@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash efda7a4c730ab076292d25ef4f68300f
+ * @relayHash f27f7f7452e49207b07f6cfd588acf10
  */
 
 /* eslint-disable */
@@ -10,31 +10,37 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type onboardingProcessContainer_organization$ref = any;
-export type onboardingProcessContainerQueryVariables = {|
-  id: string
+export type AddOnboardingPipelineInput = {
+  clientMutationId?: ?string,
+  organizationId: number,
+  name: string,
+};
+export type addPipelineMutationVariables = {|
+  input: AddOnboardingPipelineInput
 |};
-export type onboardingProcessContainerQueryResponse = {|
-  +node: ?{|
-    +$fragmentRefs: onboardingProcessContainer_organization$ref
+export type addPipelineMutationResponse = {|
+  +addPipeline: ?{|
+    +organization: {|
+      +$fragmentRefs: onboardingProcessContainer_organization$ref
+    |}
   |}
 |};
-export type onboardingProcessContainerQuery = {|
-  variables: onboardingProcessContainerQueryVariables,
-  response: onboardingProcessContainerQueryResponse,
+export type addPipelineMutation = {|
+  variables: addPipelineMutationVariables,
+  response: addPipelineMutationResponse,
 |};
 */
 
 
 /*
-query onboardingProcessContainerQuery(
-  $id: ID!
+mutation addPipelineMutation(
+  $input: AddOnboardingPipelineInput!
 ) {
-  node(id: $id) {
-    __typename
-    ... on Organization {
+  addPipeline(input: $input) {
+    organization {
       ...onboardingProcessContainer_organization
+      id
     }
-    id
   }
 }
 
@@ -57,59 +63,64 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "id",
-    "type": "ID!",
+    "name": "input",
+    "type": "AddOnboardingPipelineInput!",
     "defaultValue": null
   }
 ],
 v1 = [
   {
     "kind": "Variable",
-    "name": "id",
-    "variableName": "id",
-    "type": "ID!"
+    "name": "input",
+    "variableName": "input",
+    "type": "AddOnboardingPipelineInput!"
   }
 ],
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "id",
+  "name": "name",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "id",
   "args": null,
   "storageKey": null
 };
 return {
   "kind": "Request",
-  "operationKind": "query",
-  "name": "onboardingProcessContainerQuery",
+  "operationKind": "mutation",
+  "name": "addPipelineMutation",
   "id": null,
-  "text": "query onboardingProcessContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingPipelines {\n    id\n    name\n    onboardingSteps {\n      id\n      name\n      description\n    }\n  }\n}\n",
+  "text": "mutation addPipelineMutation(\n  $input: AddOnboardingPipelineInput!\n) {\n  addPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingPipelines {\n    id\n    name\n    onboardingSteps {\n      id\n      name\n      description\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "onboardingProcessContainerQuery",
-    "type": "Query",
+    "name": "addPipelineMutation",
+    "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "node",
+        "name": "addPipeline",
         "storageKey": null,
         "args": v1,
-        "concreteType": null,
+        "concreteType": "AddOnboardingPipelinePayload",
         "plural": false,
         "selections": [
           {
-            "kind": "InlineFragment",
-            "type": "Organization",
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "organization",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "Organization",
+            "plural": false,
             "selections": [
               {
                 "kind": "FragmentSpread",
@@ -124,29 +135,26 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "onboardingProcessContainerQuery",
+    "name": "addPipelineMutation",
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "node",
+        "name": "addPipeline",
         "storageKey": null,
         "args": v1,
-        "concreteType": null,
+        "concreteType": "AddOnboardingPipelinePayload",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
+            "kind": "LinkedField",
             "alias": null,
-            "name": "__typename",
+            "name": "organization",
+            "storageKey": null,
             "args": null,
-            "storageKey": null
-          },
-          v2,
-          {
-            "kind": "InlineFragment",
-            "type": "Organization",
+            "concreteType": "Organization",
+            "plural": false,
             "selections": [
               {
                 "kind": "ScalarField",
@@ -155,7 +163,7 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              v3,
+              v2,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -165,8 +173,8 @@ return {
                 "concreteType": "OnboardingPipeline",
                 "plural": true,
                 "selections": [
-                  v2,
                   v3,
+                  v2,
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -176,8 +184,8 @@ return {
                     "concreteType": "OnboardingStep",
                     "plural": true,
                     "selections": [
-                      v2,
                       v3,
+                      v2,
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -188,7 +196,8 @@ return {
                     ]
                   }
                 ]
-              }
+              },
+              v3
             ]
           }
         ]
@@ -198,5 +207,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd8d9e14894ca528f012d82867d89a36a';
+(node/*: any*/).hash = '20b67e68c39920e8176632e99143fe35';
 module.exports = node;
