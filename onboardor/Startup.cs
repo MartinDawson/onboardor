@@ -53,7 +53,6 @@ namespace Onboardor
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Env.GetString("DEFAULT_CONNECTION")));
-
             services.AddHsts(options =>
             {
                 options.Preload = true;

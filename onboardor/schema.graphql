@@ -1,5 +1,5 @@
 # source: https://localhost:49891/graphql
-# timestamp: Wed Aug 08 2018 21:15:49 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Sun Aug 12 2018 15:26:36 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
@@ -99,8 +99,10 @@ type Query {
   ): Node
   organizations: [Organization]!
 
-  """Returns the url for the OAUTH request"""
-  setup: String!
+  """
+  Returns the url for the OAUTH request or null if the user already authorized
+  """
+  setup: String
   setupCallback(
     """The code for the setup"""
     code: String!

@@ -35,8 +35,9 @@
     "lint": "run-p tslint typescript",
     "tslint": "tslint --fix ./Components/**/*.{ts,tsx}",
     "typescript": "tsc",
-    "clean": "rimraf ./wwwroot/build",
-    "build-client": "cross-env ASPNETCORE_ENVIRONMENT=Production && npm run clean && webpack"
+    "build-client": "cross-env ASPNETCORE_ENVIRONMENT=Production && rimraf ./wwwroot/build && webpack",
+    "extension-relay-compiler": "relay-compiler --src ./extension/Components --schema schema.graphql --language typescript --artifactDirectory ./Components/__generated__ --extensions tsx",
+    "build-extension": "cross-env ASPNETCORE_ENVIRONMENT=Production NODE_ENV=production && npm run extension-relay-compiler && rimraf './extension/build && webpack --config ./extension/webpack.config.js"
   },
   "browserslist": [
     "> 3%",
@@ -46,6 +47,8 @@
     "Explorer 11"
   ],
   "devDependencies": {
+    "@types/chrome": "^0.0.71",
+    "@types/classnames": "^2.2.6",
     "@types/grid-styled": "^4.1.0",
     "@types/react": "^16.4.4",
     "@types/react-dom": "^16.0.6",
@@ -88,6 +91,7 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.18.0",
     "babel-runtime": "^6.26.0",
+    "classnames": "^2.2.6",
     "cross-env": "^5.0.0",
     "css-loader": "^0.28.4",
     "dotenv": "^5.0.0",
@@ -107,7 +111,6 @@
     "pluralize": "^7.0.0",
     "postcss-loader": "^2.0.6",
     "postcss-nested": "^3.0.0",
-    "prop-types": "^15.6.2",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-emotion": "^9.2.4",

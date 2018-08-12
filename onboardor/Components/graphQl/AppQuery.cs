@@ -43,33 +43,49 @@ namespace Onboardor.Components.GraphQl
                 .Name("organizations")
                 .ResolveAsync(async c =>
                 {
-                    var user = await _client.User.Current();
-                    var organizations = _organizationService.GetOrganizations(user.Id);
+                    try
+                    {
+                        var user = await _client.User.Current();
+                        var organizations = _organizationService.GetOrganizations(user.Id);
 
-                    return organizations;
+                        return organizations;
+                    }
+                    catch (Exception)
+                    {
+                        return new List<Organization>();
+                    }
                 });
 
-            Field<NonNullGraphType<StringGraphType>>()
-                .Description("Returns the url for the OAUTH request")
+            Field<StringGraphType>()
+                .Description("Returns the url for the OAUTH request or null if the user already authorized")
                 .Name("setup")
-                .Resolve(c =>
+                .ResolveAsync(async c =>
                 {
-                    var context = c.UserContext.As<Context>();
-                    var csrf = Password.Generate(24, 1);
-
-                    context.HttpContext.Session.SetString("CSRF", csrf);
-
-                    var request = new Octokit.OauthLoginRequest(Env.GetString("CLIENT_ID"))
+                    try
                     {
-                        Scopes = { "repo", "user", "admin:org", "admin:public_key",
-                            "admin:repo_hook", "notifications", "admin:org_hook",
-                            "gist", "delete_repo", "write:discussion", "admin:gpg_key"  },
-                        State = csrf
-                    };
+                        var user = await _client.User.Current();
 
-                    var oAuthLoginUrl = _client.Oauth.GetGitHubLoginUrl(request);
+                        return null;
+                    }
+                    catch (Exception)
+                    {
+                        var context = c.UserContext.As<Context>();
+                        var csrf = Password.Generate(24, 1);
 
-                    return oAuthLoginUrl;
+                        context.HttpContext.Session.SetString("CSRF", csrf);
+
+                        var request = new Octokit.OauthLoginRequest(Env.GetString("CLIENT_ID"))
+                        {
+                            Scopes = { "repo", "user", "admin:org", "admin:public_key",
+                                "admin:repo_hook", "notifications", "admin:org_hook",
+                                "gist", "delete_repo", "write:discussion", "admin:gpg_key"  },
+                            State = csrf,
+                        };
+
+                        var oAuthLoginUrl = _client.Oauth.GetGitHubLoginUrl(request);
+
+                        return oAuthLoginUrl;
+                    }
                 });
 
             Field<NonNullGraphType<BooleanGraphType>>()

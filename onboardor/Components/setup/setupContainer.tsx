@@ -11,9 +11,6 @@ const query = graphql`
 `;
 
 export const routeConfig = {
-  prepareVariables: (_: IRoute, { location }: IMatch) => ({
-    code: location.query.code,
-  }),
   query,
   render: (route: IRoute): React.ReactNode => route.props && <Setup url={route.props.setup} />,
 };

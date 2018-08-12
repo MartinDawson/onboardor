@@ -1,6 +1,5 @@
 ﻿const Webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const dotenv = require('dotenv');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HTMLPlugin = require('html-webpack-plugin');
@@ -10,9 +9,6 @@ dotenv.config();
 const isInProduction = process.env.NODE_ENV === 'production';
 
 const plugins = [
-  new ExtractTextPlugin({
-    filename: '[name].bundle.css',
-  }),
   new Webpack.DefinePlugin({
     __DEV__: !isInProduction,
     'process.env': {
@@ -34,7 +30,7 @@ let devtool = false;
 
 const entry = [
   'regenerator-runtime/runtime',
-  './Components/app/appContainer.tsx',
+  path.resolve(__dirname, 'Components/app/appContainer.tsx')
 ];
 
 if (isInProduction) {
@@ -61,7 +57,7 @@ module.exports = {
     splitChunks: {
       cacheGroups: {
         commons: {
-          test: /[\\/]node_modules[\\/]/,
+          test: /node_modules/,
           name: 'vendor',
           chunks: 'all',
         },
@@ -72,9 +68,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: [
-          path.resolve(__dirname, 'Components'),
-        ],
+        exclude: /node_modules/,
         use: [
           {
             loader: 'babel-loader',
@@ -87,42 +81,15 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        include: [
-          path.resolve(__dirname, 'Components'),
-        ],
+        exclude: /node_modules/,
         use: [
           { loader: 'babel-loader' },
           { loader: 'ts-loader', options: { transpileOnly: true } },
         ],
       },
       {
-        test: /\.s?css$/,
-        exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'typings-for-css-modules-loader',
-              options: {
-                importLoaders: 1,
-                modules: true,
-                namedExport: true,
-                camelCase: true,
-                localIdentName: isInProduction ? '[hash:base64:5]' : '[path][name]__[local]',
-              },
-            }, {
-              loader: 'postcss-loader',
-              options: {
-                config: {
-                  path: path.resolve(__dirname, 'postcss.config.js'),
-                },
-              },
-            },
-          ],
-        }),
-      },
-      {
         test: /\.svg$/,
+        exclude: /node_modules/,
         use: [
           {
             loader: 'babel-loader',
@@ -137,6 +104,7 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif)$/,
+        exclude: /node_modules/,
         loader: 'file-loader?name=[path][name].[ext]',
       },
     ],
@@ -148,7 +116,6 @@ module.exports = {
       '.tsx',
       '.js',
       '.json',
-      '.scss',
     ],
   },
 };

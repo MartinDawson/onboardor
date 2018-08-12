@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "onboardor",
+  "version": "0.1",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://github.com/*"
+      ],
+      "js": ["./build/vendor.bundle.js", "./build/main.bundle.js"]
+    }
+  ],
+  "permissions": [
+    "*://localhost:*/*",
+    "*://onboardor.com/*",
+    "webRequest",
+    "webRequestBlocking"
+  ]
+}

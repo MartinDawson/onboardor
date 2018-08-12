@@ -7,6 +7,7 @@ import { injectGlobal } from "styled-components";
 import environment from "./environment/environment";
 import Router from "./routing/router";
 import store from "./store/store";
+import theme from "../shared/utilities/theme";
 
 /* tslint:disable no-unused-expression */
 injectGlobal`
@@ -27,29 +28,7 @@ const resolver = new Resolver(environment);
 const App = () => (
   <Provider store={store}>
     <RebassProvider
-      theme={{
-        fonts: {
-          sans: "Montserrat, sans-serif",
-        },
-        breakpoints: [
-          768,
-          992,
-          1200
-        ],
-        fontWeights: {
-          normal: 400,
-          bold: 600
-        },
-        colors: {
-          darkGrey: "#212121",
-          error: "#ff3b3b",
-          grey: "#4A4A4A",
-          lightGrey: "#737373",
-          primary: "#43cea2",
-          primary2: "#2fdbab",
-          secondary: "#3d9dff"
-        }
-      }}
+      theme={theme}
     >
       <Router matchContext={{ store }} resolver={resolver} />
     </RebassProvider>

@@ -12,6 +12,7 @@
     "strictNullChecks": true
   },
   "include": [
-    "./Components/**/*"
+    "./Components/**/*",
+    "./extension/Components/**/*"
   ]
 }

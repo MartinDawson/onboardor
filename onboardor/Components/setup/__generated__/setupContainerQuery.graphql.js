@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1af5392b164c5af00bf676fd5e75e5e7
+ * @relayHash ea7444b3bb8c852653f635a83488e3ff
  */
 
 /* eslint-disable */
@@ -11,7 +11,7 @@
 import type { ConcreteRequest } from 'relay-runtime';
 export type setupContainerQueryVariables = {||};
 export type setupContainerQueryResponse = {|
-  +setup: string
+  +setup: ?string
 |};
 export type setupContainerQuery = {|
   variables: setupContainerQueryVariables,
