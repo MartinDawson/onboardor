@@ -204,6 +204,12 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-portal@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/react-portal/-/react-portal-4.0.1.tgz#c027ae0aefab957248db5fded095a1e91e510e80"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-redux@^6.0.3":
   version "6.0.6"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-6.0.6.tgz#87f1d0a6ea901b93fcaf95fa57641ff64079d277"
@@ -6376,6 +6382,12 @@ react-is@^16.3.1, react-is@^16.3.2:
 react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+
+react-portal@^4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/react-portal/-/react-portal-4.1.5.tgz#6665d4d2a92d47d6f8b07a6529e26fc52d5cccde"
+  dependencies:
+    prop-types "^15.5.8"
 
 react-redux@^5.0.5, react-redux@^5.0.7:
   version "5.0.7"

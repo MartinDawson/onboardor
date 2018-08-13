@@ -1,9 +1,10 @@
 import React from "react";
+import PortalReplacer from "../utilities/portalReplacer";
 
 const Dashboard = (props) => (
-  <div id="onboardor">
+  <PortalReplacer node={document.getElementsByClassName('repository-content')[0]}>
     {JSON.stringify(props)}
-  </div>
+  </PortalReplacer>
 );
 
 export default Dashboard;

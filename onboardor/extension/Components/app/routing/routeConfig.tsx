@@ -6,6 +6,6 @@ import { routeConfig as dashboardRouteConfig } from "../../dashboard/dashboardCo
 
 export default makeRouteConfig(
   <Route path="/">
-    <Route {...dashboardRouteConfig} />
+    <Route path="/everestate/everestate#onboardor" {...dashboardRouteConfig} />
   </Route>,
 );

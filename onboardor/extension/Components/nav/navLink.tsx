@@ -19,7 +19,6 @@ const Anchor = styled.a`
   )}
 `;
 
-export const onboardorHash = "#onboardor";
 const id = "onboardor-nav-link";
 
 class NavLink extends React.Component<{}, IState> {
@@ -32,7 +31,7 @@ class NavLink extends React.Component<{}, IState> {
   }
   componentDidMount() {
     this.observer = new MutationObserver(() => {
-      if (window.location.hash === onboardorHash) {
+      if (window.location.hash === "#onboardor") {
         const selectedItem = document.querySelector(`.reponav-item.selected:not([id='${id}'])`);
 
         if (selectedItem) {
@@ -57,7 +56,7 @@ class NavLink extends React.Component<{}, IState> {
     return (
       <Anchor
         id={id}
-        href={onboardorHash}
+        href="#onboardor"
         className={classnames("reponav-item", this.state.selected && "selected")}
         selected={this.state.selected}
       >

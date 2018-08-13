@@ -4,25 +4,19 @@ import "../../../Components/shared/setupErrorLogging";
 import renderNav from "../nav/navLinkContainer";
 import App from "./app";
 
-// const query = graphql`
-//   query appContainerQuery {
-//     organizations {
-//       id
-//       name
-//       avatarUrl
-//     }
-//   }
-// `;
+const div = document.createElement('div');
 
-//const renderApp = () => {
-  ReactDOM.render(<App />, document.getElementsByClassName('repository-content')[0]);
-//};
+div.setAttribute("id", "onboardor");
+
+document.body.appendChild(div);
+
+ReactDOM.render(<App />, div);
 
 // renderApp();
 
 // const observer = new MutationObserver(() => {
 //   if (!document.getElementById("onboardor") &&
-//       window.location.hash === onboardorHash) {
+//       window.location.hash === "#onboardor") {
 //     renderApp();
 //   }
 // });

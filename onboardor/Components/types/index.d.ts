@@ -42,6 +42,7 @@ export interface IUrlParameter {
 export interface ILocation {
   pathname: string;
   query: IUrlParameter;
+  hash: string;
   state: {
     [key: string]: any
   }
