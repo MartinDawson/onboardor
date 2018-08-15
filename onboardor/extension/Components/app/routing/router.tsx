@@ -1,24 +1,18 @@
 import { createConnectedRouter, createRender } from "found";
+import React from "react";
 
 interface IProps {
   error: {
     status: number
-    data: number,
   };
-  router: any;
 }
-
-const RenderError = ({ error, router }: IProps) => {
-  router.replace({
-    pathname: `/error/${error.status}`,
-    state: {
-      error: error.data,
-    },
-  });
-};
 
 export default createConnectedRouter({
   render: createRender({
-    renderError: RenderError,
+    renderError: ({ error }: IProps) => (
+      <div>
+        {error.status === 404 ? 'Not found' : 'Error'}
+      </div>
+    ),
   }),
 });

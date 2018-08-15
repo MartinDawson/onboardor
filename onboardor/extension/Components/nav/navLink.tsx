@@ -1,7 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { IStyleProps } from "../../../Components/types";
+import { IStyleProps, IMatch } from "../../../../Components/types";
 import classnames from "classnames";
+import { Portal } from "react-portal";
+import { Link, withRouter } from "found";
+
+interface IProps {
+  match: IMatch;
+}
 
 interface IState {
   selected: boolean;
@@ -11,7 +17,7 @@ interface IAnchorProps extends IStyleProps {
   selected: boolean;
 }
 
-const Anchor = styled.a`
+const Anchor = styled(Link)`
   ${(props: IAnchorProps) => props.selected && (
     `&.reponav-item.selected {
       border-color: ${props.theme.colors.primary} rgb(229, 229, 229) transparent;
@@ -21,7 +27,7 @@ const Anchor = styled.a`
 
 const id = "onboardor-nav-link";
 
-class NavLink extends React.Component<{}, IState> {
+class NavLink extends React.Component<IProps, IState> {
   constructor(props: {}, public observer: MutationObserver) {
     super(props);
 
@@ -30,40 +36,42 @@ class NavLink extends React.Component<{}, IState> {
     };
   }
   componentDidMount() {
-    this.observer = new MutationObserver(() => {
-      if (window.location.hash === "#onboardor") {
-        const selectedItem = document.querySelector(`.reponav-item.selected:not([id='${id}'])`);
+    // this.observer = new MutationObserver(() => {
+    //   if (window.location.hash === "#onboardor") {
+    //     const selectedItem = document.querySelector(`.reponav-item.selected:not([id='${id}'])`);
 
-        if (selectedItem) {
-          selectedItem.classList.remove("selected");
-        }
+    //     if (selectedItem) {
+    //       selectedItem.classList.remove("selected");
+    //     }
 
-        this.setState({ selected: true });
-      } else {
-        this.setState({ selected: false });
-      }
-    });
+    //     this.setState({ selected: true });
+    //   } else {
+    //     this.setState({ selected: false });
+    //   }
+    // });
 
-    this.observer.observe(document, {
-      subtree: true,
-      childList: true,
-    })
+    // this.observer.observe(document, {
+    //   subtree: true,
+    //   childList: true,
+    // })
   }
   componentWillUnmount() {
-    this.observer.disconnect();
+    // this.observer.disconnect();
   }
   render() {
     return (
-      <Anchor
-        id={id}
-        href="#onboardor"
-        className={classnames("reponav-item", this.state.selected && "selected")}
-        selected={this.state.selected}
-      >
-        onboardor
-      </Anchor>
+      <Portal node={document.getElementsByClassName("reponav")[0]}>
+        <Anchor
+          id={id}
+          to="/onboardor"
+          className={classnames("reponav-item", this.state.selected && "selected")}
+          selected={this.state.selected}
+        >
+          onboardor
+        </Anchor>
+      </Portal>
     );
   }
 }
 
-export default NavLink;
+export default withRouter(NavLink);

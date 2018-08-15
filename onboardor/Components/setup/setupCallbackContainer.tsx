@@ -16,7 +16,7 @@ const query = graphql`
 `;
 
 export const routeConfig = {
-  prepareVariables: (_: IRoute, { location }: IMatch) => ({
+  prepareVariables: (_: any, { location }: IMatch) => ({
     code: location.query.code,
     state: location.query.state,
   }),
@@ -24,7 +24,7 @@ export const routeConfig = {
   render: (route: IRoute): null => {
     if (route.props) {
       if (route.props.setupCallback) {
-        throw new RedirectException("/dashboard");
+        window.location.href = "https://www.github.com";
       }
       // Handle errors
     }

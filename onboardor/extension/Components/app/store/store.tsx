@@ -1,4 +1,4 @@
-import { Actions as FarceActions, MemoryProtocol, createHistoryEnhancer,
+import { Actions as FarceActions, HashProtocol, createHistoryEnhancer,
   queryMiddleware } from "farce";
 import { createMatchEnhancer, foundReducer as found, Matcher } from "found";
 import { combineReducers, compose, createStore } from "redux";
@@ -7,7 +7,7 @@ import routeConfig from "../routing/routeConfig";
 
 const historyEnhancer = createHistoryEnhancer({
   middlewares: [queryMiddleware],
-  protocol: new MemoryProtocol(location),
+  protocol: new HashProtocol(),
 });
 
 const matcher = new Matcher(routeConfig);
