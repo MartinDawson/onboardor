@@ -1,16 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { IStyleProps, IMatch } from "../../../../Components/types";
 import classnames from "classnames";
 import { Portal } from "react-portal";
 import { Link, withRouter } from "found";
+import { IMatch, IStyleProps } from "../../../Components/types";
 
 interface IProps {
   match: IMatch;
-}
-
-interface IState {
   selected: boolean;
+  onClick: () => void;
+  id: string;
 }
 
 interface IAnchorProps extends IStyleProps {
@@ -25,10 +24,8 @@ const Anchor = styled(Link)`
   )}
 `;
 
-const id = "onboardor-nav-link";
-
-class NavLink extends React.Component<IProps, IState> {
-  constructor(props: {}, public observer: MutationObserver) {
+class NavLink extends React.Component<IProps> {
+  constructor(props: IProps, public observer: MutationObserver) {
     super(props);
 
     this.state = {
@@ -62,10 +59,11 @@ class NavLink extends React.Component<IProps, IState> {
     return (
       <Portal node={document.getElementsByClassName("reponav")[0]}>
         <Anchor
-          id={id}
+          id={this.props.id}
           to="/onboardor"
-          className={classnames("reponav-item", this.state.selected && "selected")}
-          selected={this.state.selected}
+          className={classnames("reponav-item", this.props.selected && "selected")}
+          selected={this.props.selected}
+          onClick={this.props.onClick}
         >
           onboardor
         </Anchor>

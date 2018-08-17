@@ -1,9 +1,15 @@
 import React from "react";
 import PortalReplacer from "../utilities/portalReplacer";
 
-const Dashboard = (props) => (
+interface IProps {
+  children: React.ReactNode;
+}
+
+const Dashboard = ({
+  children,
+}: IProps) => (
   <PortalReplacer node={document.getElementsByClassName('repository-content')[0]}>
-    {JSON.stringify(props)}
+    {children}
   </PortalReplacer>
 );
 
