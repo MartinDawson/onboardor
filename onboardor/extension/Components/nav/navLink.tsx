@@ -12,6 +12,10 @@ interface IProps {
   id: string;
 }
 
+interface IState {
+  selected: boolean;
+}
+
 interface IAnchorProps extends IStyleProps {
   selected: boolean;
 }
@@ -24,7 +28,9 @@ const Anchor = styled(Link)`
   )}
 `;
 
-class NavLink extends React.Component<IProps> {
+const id = "onboardor-nav-link";
+
+class NavLink extends React.Component<IProps, IState> {
   constructor(props: IProps, public observer: MutationObserver) {
     super(props);
 
@@ -32,28 +38,18 @@ class NavLink extends React.Component<IProps> {
       selected: false,
     };
   }
-  componentDidMount() {
-    // this.observer = new MutationObserver(() => {
-    //   if (window.location.hash === "#onboardor") {
-    //     const selectedItem = document.querySelector(`.reponav-item.selected:not([id='${id}'])`);
+  componentWillReceiveProps() {
+    if (this.props.match.location.pathname.includes("/onboardor")) {
+      const selectedItem = document.querySelector(`.reponav-item.selected:not([id='${id}'])`);
 
-    //     if (selectedItem) {
-    //       selectedItem.classList.remove("selected");
-    //     }
+      if (selectedItem) {
+        selectedItem.classList.remove("selected");
+      }
 
-    //     this.setState({ selected: true });
-    //   } else {
-    //     this.setState({ selected: false });
-    //   }
-    // });
-
-    // this.observer.observe(document, {
-    //   subtree: true,
-    //   childList: true,
-    // })
-  }
-  componentWillUnmount() {
-    // this.observer.disconnect();
+      this.setState({ selected: true });
+    } else {
+      this.setState({ selected: false });
+    }
   }
   render() {
     return (
@@ -61,8 +57,8 @@ class NavLink extends React.Component<IProps> {
         <Anchor
           id={this.props.id}
           to="/onboardor"
-          className={classnames("reponav-item", this.props.selected && "selected")}
-          selected={this.props.selected}
+          className={classnames("reponav-item", this.state.selected && "selected")}
+          selected={this.state.selected}
           onClick={this.props.onClick}
         >
           onboardor

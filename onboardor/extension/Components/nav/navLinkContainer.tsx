@@ -1,6 +1,6 @@
 import NavLink from "./navLink";
 import { graphql } from "react-relay";
-import { compose, branch, renderComponent, flattenProp, withStateHandlers, withProps } from "recompose";
+import { compose, branch, renderComponent, flattenProp } from "recompose";
 import oAuthNavLink from "./oAuthNavLink";
 import { fragment } from "relay-compose";
 
@@ -15,35 +15,17 @@ import { fragment } from "relay-compose";
 //   childList: true,
 // });
 
-const id = "onboardor-nav-link";
-
 const fragments = graphql`
   fragment navLinkContainer_navLink on Query {
-    setup
+    setup(
+      redirectUrl: $redirectUrl
+    )
   }
 `;
 
 interface IProps {
   setup: string;
 }
-
-interface IState {
-  selected: boolean;
-}
-
-const stateHandlers = {
-  onClick: ({ selected }: IState) => () => {
-    const selectedItem = document.querySelector(`.reponav-item.selected:not([id='${id}'])`);
-
-    if (selectedItem) {
-      selectedItem.classList.remove("selected");
-    }
-
-    return {
-      selected: !selected,
-    };
-  },
-};
 
 const NavLinkContainer = compose(
   fragment(fragments),
@@ -52,10 +34,6 @@ const NavLinkContainer = compose(
     (props: IProps) => !!props.setup,
     renderComponent(oAuthNavLink),
   ),
-  withStateHandlers({ selected: false }, stateHandlers),
-  withProps({
-    id,
-  }),
 )((NavLink));
 
 export default NavLinkContainer;

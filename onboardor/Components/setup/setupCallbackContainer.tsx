@@ -23,8 +23,14 @@ export const routeConfig = {
   query,
   render: (route: IRoute): null => {
     if (route.props) {
-      if (route.props.setupCallback) {
-        window.location.href = "https://www.github.com";
+      if (route.props.setupCallback) {debugger
+        const redirectUrl = route.match.location.query.redirectUrl;
+
+        if (redirectUrl) {
+          window.location.href = redirectUrl;
+        } else {
+          throw new RedirectException("/dashboard");
+        }
       }
       // Handle errors
     }

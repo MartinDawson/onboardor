@@ -2,7 +2,9 @@ import PrimaryLayout from "./primaryLayout";
 import { graphql } from "react-relay";
 
 const query = graphql`
-  query primaryLayoutContainerQuery {
+  query primaryLayoutContainerQuery(
+    $redirectUrl: String
+  ) {
     ...navLinkContainer_navLink
   }
 `;
@@ -10,6 +12,9 @@ const query = graphql`
 const PrimaryLayoutContainer = PrimaryLayout;
 
 export const routeConfig = {
+  prepareVariables: () => ({
+    redirectUrl: `${location.origin}${location.pathname}%23/onboardor`
+  }),
   query,
   Component: PrimaryLayoutContainer,
 };

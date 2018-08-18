@@ -58,6 +58,7 @@ namespace Onboardor.Components.GraphQl
 
             Field<StringGraphType>()
                 .Description("Returns the url for the OAUTH request or null if the user already authorized")
+                .Argument<StringGraphType>("redirectUrl", "The absolute url to redirect to")
                 .Name("setup")
                 .ResolveAsync(async c =>
                 {
@@ -78,9 +79,15 @@ namespace Onboardor.Components.GraphQl
                         {
                             Scopes = { "repo", "user", "admin:org", "admin:public_key",
                                 "admin:repo_hook", "notifications", "admin:org_hook",
-                                "gist", "delete_repo", "write:discussion", "admin:gpg_key"  },
+                                "gist", "delete_repo", "write:discussion", "admin:gpg_key" },
                             State = csrf,
                         };
+                        var redirectUri = c.GetArgument<string>("redirectUrl");
+
+                        if (redirectUri != null)
+                        {
+                            request.RedirectUri = new Uri($"{Env.GetString("APP_URL")}/setupCallback?redirectUrl={redirectUri}");
+                        }
 
                         var oAuthLoginUrl = _client.Oauth.GetGitHubLoginUrl(request);
 

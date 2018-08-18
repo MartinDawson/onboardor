@@ -22,17 +22,30 @@ const node/*: ConcreteFragment*/ = {
   "name": "navLinkContainer_navLink",
   "type": "Query",
   "metadata": null,
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "kind": "RootArgument",
+      "name": "redirectUrl",
+      "type": "String"
+    }
+  ],
   "selections": [
     {
       "kind": "ScalarField",
       "alias": null,
       "name": "setup",
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "redirectUrl",
+          "variableName": "redirectUrl",
+          "type": "String"
+        }
+      ],
       "storageKey": null
     }
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '82c483ea43bc8849585e16b7fee17ea5';
+(node/*: any*/).hash = '1a2d2a5987e20c40b2f4c759e0eee1fc';
 module.exports = node;

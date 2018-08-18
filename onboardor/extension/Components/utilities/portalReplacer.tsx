@@ -7,9 +7,6 @@ class PortalReplacer extends React.Component<PortalProps> {
       this.props.node.innerHTML = "";
     }
   }
-  componentWillUnmount() {
-    window.location.reload();
-  }
   render() {
     return (
       <Portal node={this.props.node}>
