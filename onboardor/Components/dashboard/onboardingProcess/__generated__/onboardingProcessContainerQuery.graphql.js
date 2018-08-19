@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash efda7a4c730ab076292d25ef4f68300f
+ * @relayHash 393e8fa2c3afd6067041e8c02dd3afb0
  */
 
 /* eslint-disable */
@@ -43,12 +43,18 @@ fragment onboardingProcessContainer_organization on Organization {
   name
   onboardingPipelines {
     id
+    ...pipelineContainer_pipeline
+  }
+}
+
+fragment pipelineContainer_pipeline on OnboardingPipeline {
+  id
+  onboardingPipelineId
+  name
+  onboardingSteps {
+    id
     name
-    onboardingSteps {
-      id
-      name
-      description
-    }
+    description
   }
 }
 */
@@ -89,7 +95,7 @@ return {
   "operationKind": "query",
   "name": "onboardingProcessContainerQuery",
   "id": null,
-  "text": "query onboardingProcessContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingPipelines {\n    id\n    name\n    onboardingSteps {\n      id\n      name\n      description\n    }\n  }\n}\n",
+  "text": "query onboardingProcessContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    name\n    description\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -166,6 +172,13 @@ return {
                 "plural": true,
                 "selections": [
                   v2,
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "onboardingPipelineId",
+                    "args": null,
+                    "storageKey": null
+                  },
                   v3,
                   {
                     "kind": "LinkedField",

@@ -15,7 +15,10 @@ namespace Onboardor.Components.GraphQl
     {
         public AppMutation()
         {
+            Mutation<AddOnboardingStepInput, AddOnboardingStepPayload>("addOnboardingStep");
             Mutation<AddOnboardingPipelineInput, AddOnboardingPipelinePayload>("addPipeline");
+            Mutation<EditOnboardingPipelineInput, EditOnboardingPipelinePayload>("editPipeline");
+            Mutation<RemoveOnboardingPipelineInput, RemoveOnboardingPipelinePayload>("removePipeline");
             Mutation<SubscribeMailingListInput, SubscribeMailingListPayload>("subscribeMailingList");
             Mutation<SetOnboardingMembersInput, SetOnboardingMembersPayload>("setOnboardingMembers");
             Mutation<CreateOnboardingProcessInput, CreateOnboardingProcessPayload>("createOnboardingProcess");

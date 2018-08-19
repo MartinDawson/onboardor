@@ -1,5 +1,5 @@
 # source: https://localhost:49891/graphql
-# timestamp: Sat Aug 18 2018 12:55:09 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Sun Aug 19 2018 20:53:15 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
@@ -10,6 +10,18 @@ input AddOnboardingPipelineInput {
 type AddOnboardingPipelinePayload {
   clientMutationId: String
   organization: Organization!
+}
+
+input AddOnboardingStepInput {
+  clientMutationId: String = null
+  pipelineId: Int!
+  name: String!
+  description: String = null
+}
+
+type AddOnboardingStepPayload {
+  clientMutationId: String
+  pipeline: OnboardingPipeline!
 }
 
 input CreateOnboardingProcessInput {
@@ -31,9 +43,20 @@ scalar Date
 
 scalar Decimal
 
+input EditOnboardingPipelineInput {
+  clientMutationId: String = null
+  organizationId: Int!
+  id: Int!
+  name: String!
+}
+
+type EditOnboardingPipelinePayload {
+  clientMutationId: String
+  organization: Organization!
+}
+
 type Member implements Node {
   avatarUrl: String!
-  email: String!
 
   """The Global Id of the Member"""
   id: ID!
@@ -46,8 +69,11 @@ type Member implements Node {
 }
 
 type Mutation {
+  addOnboardingStep(input: AddOnboardingStepInput!): AddOnboardingStepPayload
   addPipeline(input: AddOnboardingPipelineInput!): AddOnboardingPipelinePayload
   createOnboardingProcess(input: CreateOnboardingProcessInput!): CreateOnboardingProcessPayload
+  editPipeline(input: EditOnboardingPipelineInput!): EditOnboardingPipelinePayload
+  removePipeline(input: RemoveOnboardingPipelineInput!): RemoveOnboardingPipelinePayload
   setOnboardingMembers(input: SetOnboardingMembersInput!): SetOnboardingMembersPayload
   subscribeMailingList(input: SubscribeMailingListInput!): SubscribeMailingListPayload
 }
@@ -113,6 +139,17 @@ type Query {
     """The CSRF protection state"""
     state: String!
   ): Boolean!
+}
+
+input RemoveOnboardingPipelineInput {
+  clientMutationId: String = null
+  organizationId: Int!
+  id: Int!
+}
+
+type RemoveOnboardingPipelinePayload {
+  clientMutationId: String
+  organization: Organization!
 }
 
 input SetOnboardingMembersInput {

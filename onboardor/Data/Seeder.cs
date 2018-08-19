@@ -24,7 +24,7 @@ namespace Onboardor.Data
                     if (_env.IsDevelopment())
                     {
                         await context.Database.MigrateAsync();
-                        await SeedMocks(context);
+                        // await SeedMocks(context);
                     }
                 }
             }
@@ -55,7 +55,6 @@ namespace Onboardor.Data
                         CreatedAt = DateTimeOffset.Now,
                         IsBeingOnboarded = true,
                         Name = "MartinDawson",
-                        Email = "u1356770@gmail.com"
                     }
                 }
             };

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3a5f6a34f51baa283a6988d85788624c
+ * @relayHash 464846442a90213114c46b75cf90dbc0
  */
 
 /* eslint-disable */
@@ -10,33 +10,34 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type onboardingProcessContainer_organization$ref = any;
-export type AddOnboardingPipelineInput = {
+export type EditOnboardingPipelineInput = {
   clientMutationId?: ?string,
   organizationId: number,
+  id: number,
   name: string,
 };
-export type addPipelineMutationVariables = {|
-  input: AddOnboardingPipelineInput
+export type editPipelineMutationVariables = {|
+  input: EditOnboardingPipelineInput
 |};
-export type addPipelineMutationResponse = {|
-  +addPipeline: ?{|
+export type editPipelineMutationResponse = {|
+  +editPipeline: ?{|
     +organization: {|
       +$fragmentRefs: onboardingProcessContainer_organization$ref
     |}
   |}
 |};
-export type addPipelineMutation = {|
-  variables: addPipelineMutationVariables,
-  response: addPipelineMutationResponse,
+export type editPipelineMutation = {|
+  variables: editPipelineMutationVariables,
+  response: editPipelineMutationResponse,
 |};
 */
 
 
 /*
-mutation addPipelineMutation(
-  $input: AddOnboardingPipelineInput!
+mutation editPipelineMutation(
+  $input: EditOnboardingPipelineInput!
 ) {
-  addPipeline(input: $input) {
+  editPipeline(input: $input) {
     organization {
       ...onboardingProcessContainer_organization
       id
@@ -70,7 +71,7 @@ var v0 = [
   {
     "kind": "LocalArgument",
     "name": "input",
-    "type": "AddOnboardingPipelineInput!",
+    "type": "EditOnboardingPipelineInput!",
     "defaultValue": null
   }
 ],
@@ -79,7 +80,7 @@ v1 = [
     "kind": "Variable",
     "name": "input",
     "variableName": "input",
-    "type": "AddOnboardingPipelineInput!"
+    "type": "EditOnboardingPipelineInput!"
   }
 ],
 v2 = {
@@ -99,13 +100,13 @@ v3 = {
 return {
   "kind": "Request",
   "operationKind": "mutation",
-  "name": "addPipelineMutation",
+  "name": "editPipelineMutation",
   "id": null,
-  "text": "mutation addPipelineMutation(\n  $input: AddOnboardingPipelineInput!\n) {\n  addPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    name\n    description\n  }\n}\n",
+  "text": "mutation editPipelineMutation(\n  $input: EditOnboardingPipelineInput!\n) {\n  editPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    name\n    description\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "addPipelineMutation",
+    "name": "editPipelineMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": v0,
@@ -113,10 +114,10 @@ return {
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "addPipeline",
+        "name": "editPipeline",
         "storageKey": null,
         "args": v1,
-        "concreteType": "AddOnboardingPipelinePayload",
+        "concreteType": "EditOnboardingPipelinePayload",
         "plural": false,
         "selections": [
           {
@@ -141,16 +142,16 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "addPipelineMutation",
+    "name": "editPipelineMutation",
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "addPipeline",
+        "name": "editPipeline",
         "storageKey": null,
         "args": v1,
-        "concreteType": "AddOnboardingPipelinePayload",
+        "concreteType": "EditOnboardingPipelinePayload",
         "plural": false,
         "selections": [
           {
@@ -220,5 +221,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '20b67e68c39920e8176632e99143fe35';
+(node/*: any*/).hash = 'cfcbd4b05b92aa339df3457745eadaf4';
 module.exports = node;

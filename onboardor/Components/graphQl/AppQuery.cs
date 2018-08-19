@@ -12,13 +12,10 @@ using DotNetEnv;
 using Microsoft.AspNetCore.Hosting;
 using onboardor.Components.dashboard;
 using Organization = onboardor.Components.dashboard.Organization;
-using Octokit.GraphQL;
-using static Octokit.GraphQL.Variable;
 using Onboardor.Components.graphQl;
 using Microsoft.AspNetCore.Http;
 using onboardor.Components.shared.utilities;
-using Octokit.GraphQL.Model;
-using onboardor.Components.graphQl;
+using Microsoft.EntityFrameworkCore;
 
 namespace Onboardor.Components.GraphQl
 {
@@ -28,14 +25,12 @@ namespace Onboardor.Components.GraphQl
 
         private readonly IOrganizationService _organizationService;
         private readonly IHostingEnvironment _env;
-        private readonly IConnectionFactory _connectionFactory;
 
         public AppQuery(ILoggerFactory loggerFactory, IHostingEnvironment env, 
-            IOrganizationService organizationService, IConnectionFactory connectionFactory)
+            IOrganizationService organizationService)
         {
             _env = env;
             _organizationService = organizationService;
-            _connectionFactory = connectionFactory;
 
             var logger = loggerFactory.CreateLogger<AppQuery>();
 
@@ -43,17 +38,10 @@ namespace Onboardor.Components.GraphQl
                 .Name("organizations")
                 .ResolveAsync(async c =>
                 {
-                    try
-                    {
-                        var user = await _client.User.Current();
-                        var organizations = _organizationService.GetOrganizations(user.Id);
+                    var user = await _client.User.Current();
+                    var organizations = _organizationService.GetOrganizations(user.Id);
 
-                        return organizations;
-                    }
-                    catch (Exception)
-                    {
-                        return new List<Organization>();
-                    }
+                    return organizations;
                 });
 
             Field<StringGraphType>()
@@ -112,10 +100,41 @@ namespace Onboardor.Components.GraphQl
                     var request = new Octokit.OauthTokenRequest(Env.GetString("CLIENT_ID"), Env.GetString("CLIENT_SECRET"), code);
                     var token = await _client.Oauth.CreateAccessToken(request);
                     _client.Credentials = new Octokit.Credentials(token.AccessToken);
-                    var appName = Env.GetString("APP_NAME");
-                    var productInformation = new ProductHeaderValue(appName);
 
-                    _connectionFactory.CreateConnection(new Connection(productInformation, token.AccessToken));
+                    var organizations = await _client.Organization.GetAllForCurrent();
+
+                    var mappedOrganizations = organizations.Select(x => new Organization
+                    {
+                        Id = x.Id,
+                        Name = x.Login,
+                        AvatarUrl = x.AvatarUrl,
+                    }).ToList();
+
+                    foreach (var organization in mappedOrganizations)
+                    {
+                        var members = await _client.Organization.Member.GetAll(organization.Name);
+
+                        organization.Members = members.Select(x => new OrganizationMember
+                        {
+                           Member = new Member
+                           {
+                               Id = x.Id,
+                               Name = x.Login,
+                               AvatarUrl = x.AvatarUrl,
+                               CreatedAt = x.CreatedAt
+                           },
+                           Organization = organization
+                        }).ToList();
+                    }
+
+                    foreach (var organization in mappedOrganizations)
+                    {
+                        try
+                        {
+                            _organizationService.Add(organization);
+                        }
+                        catch (DbUpdateException) {}
+                    }
 
                     return true;
                 });

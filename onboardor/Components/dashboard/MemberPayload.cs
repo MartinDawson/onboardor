@@ -19,7 +19,6 @@ namespace onboardor.Components.dashboard
 
             Id(x => x.Id);
             Field(x => x.Name);
-            Field(x => x.Email);
             Field(x => x.AvatarUrl);
             Field(x => x.IsBeingOnboarded);
             Field<NonNullGraphType<ListGraphType<OrganizationPayload>>>("organizations", resolve: c => c.Source.Organizations.Select(o => o.Organization));

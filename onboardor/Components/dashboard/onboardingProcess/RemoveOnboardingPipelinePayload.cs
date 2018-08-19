@@ -14,15 +14,15 @@ using System.Threading.Tasks;
 
 namespace onboardor.Components.dashboard.onboardingProcess
 {
-    public class AddOnboardingPipelinePayload : MutationPayloadGraphType
+    public class RemoveOnboardingPipelinePayload : MutationPayloadGraphType
     {
         private readonly IOrganizationService _organizationService;
 
-        public AddOnboardingPipelinePayload(IOrganizationService organizationService)
+        public RemoveOnboardingPipelinePayload(IOrganizationService organizationService)
         {
             _organizationService = organizationService;
 
-            Name = nameof(AddOnboardingPipelinePayload);
+            Name = nameof(RemoveOnboardingPipelinePayload);
 
             Field<NonNullGraphType<OrganizationPayload>>("organization");
         }
@@ -30,13 +30,11 @@ namespace onboardor.Components.dashboard.onboardingProcess
         public override object MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context)
         {
             var organizationId = inputs.Get<int>("organizationId");
-            var name = inputs.Get<string>("name");
+            var id = inputs.Get<int>("id");
             var organization = _organizationService.GetOrganization(organizationId);
+            var pipelineToRemove = organization.OnboardingPipelines.Single(x => x.Id == id);
 
-            organization.OnboardingPipelines.Add(new OnboardingPipeline
-            {
-                Name = name,
-            });
+            organization.OnboardingPipelines.Remove(pipelineToRemove);
 
             _organizationService.Update(organization);
 

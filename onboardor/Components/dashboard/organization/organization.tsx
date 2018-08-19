@@ -1,6 +1,7 @@
 import React from "react";
 import { IRoute } from "../../types";
 import { IMember } from "../member/member";
+import { IPipline } from "../onboardingProcess/pipeline";
 
 interface IProps extends IRoute, IOrganization {};
 
@@ -10,15 +11,7 @@ export interface IOrganization {
   name: string;
   avatarUrl: string;
   members: IMember[];
-  onboardingPipelines: {
-    id: string;
-    name: string;
-    onboardingSteps: {
-      id: string;
-      name: string;
-      description?: string;
-    }[]
-  }[]
+  onboardingPipelines: IPipline[]
 };
 
 const Organization = ({

@@ -16,7 +16,7 @@ injectGlobal`
   #app { height: inherit; > div { height: 100%; } }
   html { height: 100%; }
   a { color: inherit; text-decoration: none; }
-  ul { list-style: none;margin: 0; padding: 0; }
+  ul { list-style: none; margin: 0; padding: 0; }
   li { list-style: none }
   button { border: 0; padding: 0; font: inherit; outline: none; cursor: pointer; }
   svg { fill: #4A4A4A; }

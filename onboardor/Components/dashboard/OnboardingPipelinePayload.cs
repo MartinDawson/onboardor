@@ -15,7 +15,7 @@ namespace onboardor.Components.dashboard
 
             Id(x => x.Id);
             Field(x => x.Name);
-            Field<NonNullGraphType<ListGraphType<OnboardingStepPayload>>>("OnboardingSteps");
+            Field<NonNullGraphType<ListGraphType<OnboardingStepPayload>>>("onboardingSteps");
         }
 
         public override OnboardingPipeline GetById(string id)
