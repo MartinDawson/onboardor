@@ -2,12 +2,12 @@ import { graphql } from "react-relay";
 import { createMutation } from "relay-compose";
 
 const mutation = graphql`
-  mutation editPipelineMutation(
-    $input: EditOnboardingPipelineInput!
+  mutation editStepMutation(
+    $input: EditOnboardingStepInput!
   ) {
-    editPipeline(input: $input) {
-      organization {
-        ...onboardingProcessContainer_organization
+    editStep(input: $input) {
+      pipeline {
+        ...pipelineContainer_pipeline
       }
     }
   }

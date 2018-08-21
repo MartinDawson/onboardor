@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash fa57c0fd7e37f2408fa16f8f4e93eeb6
+ * @relayHash 26a0f3336adb94193675255ae73c3e3b
  */
 
 /* eslint-disable */
@@ -12,7 +12,6 @@ import type { ConcreteRequest } from 'relay-runtime';
 type onboardingProcessContainer_organization$ref = any;
 export type RemoveOnboardingPipelineInput = {
   clientMutationId?: ?string,
-  organizationId: number,
   id: number,
 };
 export type removePipelineMutationVariables = {|
@@ -59,9 +58,13 @@ fragment pipelineContainer_pipeline on OnboardingPipeline {
   name
   onboardingSteps {
     id
-    name
-    description
+    ...stepContainer_step
   }
+}
+
+fragment stepContainer_step on OnboardingStep {
+  onboardingStepId
+  name
 }
 */
 
@@ -101,7 +104,7 @@ return {
   "operationKind": "mutation",
   "name": "removePipelineMutation",
   "id": null,
-  "text": "mutation removePipelineMutation(\n  $input: RemoveOnboardingPipelineInput!\n) {\n  removePipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    name\n    description\n  }\n}\n",
+  "text": "mutation removePipelineMutation(\n  $input: RemoveOnboardingPipelineInput!\n) {\n  removePipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -198,14 +201,14 @@ return {
                     "plural": true,
                     "selections": [
                       v3,
-                      v2,
                       {
                         "kind": "ScalarField",
                         "alias": null,
-                        "name": "description",
+                        "name": "onboardingStepId",
                         "args": null,
                         "storageKey": null
-                      }
+                      },
+                      v2
                     ]
                   }
                 ]

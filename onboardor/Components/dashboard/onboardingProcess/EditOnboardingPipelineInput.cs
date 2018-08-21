@@ -13,7 +13,6 @@ namespace onboardor.Components.dashboard.onboardingProcess
         {
             Name = nameof(EditOnboardingPipelineInput);
 
-            Field<NonNullGraphType<IntGraphType>>("organizationId");
             Field<NonNullGraphType<IntGraphType>>("id");
             Field<NonNullGraphType<StringGraphType>>("name");
         }

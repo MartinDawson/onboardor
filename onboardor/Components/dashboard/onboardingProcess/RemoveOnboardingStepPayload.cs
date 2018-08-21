@@ -14,29 +14,29 @@ using System.Threading.Tasks;
 
 namespace onboardor.Components.dashboard.onboardingProcess
 {
-    public class RemoveOnboardingPipelinePayload : MutationPayloadGraphType
+    public class RemoveOnboardingStepPayload : MutationPayloadGraphType
     {
-        private readonly IPipelineService _pipelineService;
+        private readonly IStepService _stepService;
 
-        public RemoveOnboardingPipelinePayload(IPipelineService pipelineService)
+        public RemoveOnboardingStepPayload(IStepService stepService)
         {
-            _pipelineService = pipelineService;
+            _stepService = stepService;
 
-            Name = nameof(RemoveOnboardingPipelinePayload);
+            Name = nameof(RemoveOnboardingStepPayload);
 
-            Field<NonNullGraphType<OrganizationPayload>>("organization");
+            Field<NonNullGraphType<OnboardingPipelinePayload>>("pipeline");
         }
 
         public override object MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context)
         {
             var id = inputs.Get<int>("id");
-            var pipeline = _pipelineService.GetPipeline(id);
-            var organization = pipeline.Organization;
+            var step = _stepService.GetStep(id);
+            var pipeline = step.OnboardingPipeline;
 
-            _pipelineService.Remove(pipeline);
+            _stepService.Remove(step);
 
             return new {
-                organization
+                pipeline
             };
         }
     }

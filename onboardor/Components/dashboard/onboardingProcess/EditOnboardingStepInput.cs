@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace onboardor.Components.dashboard.onboardingProcess
 {
-    public class RemoveOnboardingPipelineInput : MutationInputGraphType
+    public class EditOnboardingStepInput : MutationInputGraphType
     {
-        public RemoveOnboardingPipelineInput()
+        public EditOnboardingStepInput()
         {
-            Name = nameof(RemoveOnboardingPipelineInput);
+            Name = nameof(EditOnboardingStepInput);
 
             Field<NonNullGraphType<IntGraphType>>("id");
+            Field<NonNullGraphType<StringGraphType>>("name");
         }
     }
 }

@@ -8,6 +8,7 @@
 
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
+type stepContainer_step$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type pipelineContainer_pipeline$ref: FragmentReference;
 export type pipelineContainer_pipeline = {|
@@ -16,8 +17,7 @@ export type pipelineContainer_pipeline = {|
   +name: string,
   +onboardingSteps: $ReadOnlyArray<?{|
     +id: string,
-    +name: string,
-    +description: ?string,
+    +$fragmentRefs: stepContainer_step$ref,
   |}>,
   +$refType: pipelineContainer_pipeline$ref,
 |};
@@ -29,13 +29,6 @@ var v0 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
-  "args": null,
-  "storageKey": null
-},
-v1 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "name",
   "args": null,
   "storageKey": null
 };
@@ -54,7 +47,13 @@ return {
       "args": null,
       "storageKey": null
     },
-    v1,
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "name",
+      "args": null,
+      "storageKey": null
+    },
     {
       "kind": "LinkedField",
       "alias": null,
@@ -65,13 +64,10 @@ return {
       "plural": true,
       "selections": [
         v0,
-        v1,
         {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "description",
-          "args": null,
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "stepContainer_step",
+          "args": null
         }
       ]
     }
@@ -79,5 +75,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '16784690dc93a1f044f3f0892208b671';
+(node/*: any*/).hash = '261fb122ea396ee0bd845865600f6792';
 module.exports = node;

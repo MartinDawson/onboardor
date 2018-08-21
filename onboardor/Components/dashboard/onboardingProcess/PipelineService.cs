@@ -18,7 +18,12 @@ namespace onboardor.Components.dashboard
 
         public OnboardingPipeline GetPipeline(int pipelineId)
         {
-            return _repository.GetAll().Include(x => x.OnboardingSteps).Single(x => x.Id == pipelineId);
+            return _repository.GetAll().Include(x => x.OnboardingSteps).Include(x => x.Organization).SingleOrDefault(x => x.Id == pipelineId);
+        }
+
+        public void Remove(OnboardingPipeline pipeline)
+        {
+            _repository.Remove(pipeline);
         }
 
         public void Update(OnboardingPipeline newPipeline)

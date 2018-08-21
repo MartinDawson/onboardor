@@ -9,5 +9,6 @@ namespace onboardor.Components.dashboard
     {
         OnboardingPipeline GetPipeline(int pipelineId);
         void Update(OnboardingPipeline newPipeline);
+        void Remove(OnboardingPipeline pipeline);
     }
 }

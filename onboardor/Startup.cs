@@ -179,6 +179,7 @@ namespace Onboardor
             builder.RegisterType<Repository<Member, ApplicationDbContext>>().As<IRepository<Member>>();
             builder.RegisterType<Repository<Member, ApplicationDbContext>>().As<IRepository<Member>>();
             builder.RegisterType<Repository<OnboardingPipeline, ApplicationDbContext>>().As<IRepository<OnboardingPipeline>>();
+            builder.RegisterType<Repository<OnboardingStep, ApplicationDbContext>>().As<IRepository<OnboardingStep>>();
 
             return builder;
         }

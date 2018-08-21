@@ -16,11 +16,11 @@ namespace onboardor.Components.dashboard.onboardingProcess
 {
     public class EditOnboardingPipelinePayload : MutationPayloadGraphType
     {
-        private readonly IOrganizationService _organizationService;
+        private readonly IPipelineService _pipelineService;
 
-        public EditOnboardingPipelinePayload(IOrganizationService organizationService)
+        public EditOnboardingPipelinePayload(IPipelineService pipelineService)
         {
-            _organizationService = organizationService;
+            _pipelineService = pipelineService;
 
             Name = nameof(EditOnboardingPipelinePayload);
 
@@ -29,18 +29,16 @@ namespace onboardor.Components.dashboard.onboardingProcess
 
         public override object MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context)
         {
-            var organizationId = inputs.Get<int>("organizationId");
             var id = inputs.Get<int>("id");
             var name = inputs.Get<string>("name");
-            var organization = _organizationService.GetOrganization(organizationId);
-            var pipelineToEdit = organization.OnboardingPipelines.Single(x => x.Id == id);
+            var pipeline = _pipelineService.GetPipeline(id);
 
-            pipelineToEdit.Name = name;
+            pipeline.Name = name;
 
-            _organizationService.Update(organization);
+            _pipelineService.Update(pipeline);
 
             return new {
-                organization
+                organization = pipeline.Organization,
             };
         }
     }

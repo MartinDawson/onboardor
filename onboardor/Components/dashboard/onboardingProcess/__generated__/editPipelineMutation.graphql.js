@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 464846442a90213114c46b75cf90dbc0
+ * @relayHash 73d86615f51ea13898025a24f15f2653
  */
 
 /* eslint-disable */
@@ -12,7 +12,6 @@ import type { ConcreteRequest } from 'relay-runtime';
 type onboardingProcessContainer_organization$ref = any;
 export type EditOnboardingPipelineInput = {
   clientMutationId?: ?string,
-  organizationId: number,
   id: number,
   name: string,
 };
@@ -60,9 +59,13 @@ fragment pipelineContainer_pipeline on OnboardingPipeline {
   name
   onboardingSteps {
     id
-    name
-    description
+    ...stepContainer_step
   }
+}
+
+fragment stepContainer_step on OnboardingStep {
+  onboardingStepId
+  name
 }
 */
 
@@ -102,7 +105,7 @@ return {
   "operationKind": "mutation",
   "name": "editPipelineMutation",
   "id": null,
-  "text": "mutation editPipelineMutation(\n  $input: EditOnboardingPipelineInput!\n) {\n  editPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    name\n    description\n  }\n}\n",
+  "text": "mutation editPipelineMutation(\n  $input: EditOnboardingPipelineInput!\n) {\n  editPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -199,14 +202,14 @@ return {
                     "plural": true,
                     "selections": [
                       v3,
-                      v2,
                       {
                         "kind": "ScalarField",
                         "alias": null,
-                        "name": "description",
+                        "name": "onboardingStepId",
                         "args": null,
                         "storageKey": null
-                      }
+                      },
+                      v2
                     ]
                   }
                 ]

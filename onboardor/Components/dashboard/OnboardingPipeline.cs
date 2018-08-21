@@ -12,6 +12,7 @@ namespace onboardor.Components.dashboard
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public Organization Organization { get; set; }
         public ICollection<OnboardingStep> OnboardingSteps { get; set; } = new List<OnboardingStep>();
     }
 }

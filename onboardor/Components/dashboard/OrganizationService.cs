@@ -42,7 +42,7 @@ namespace onboardor.Components.dashboard
 
         public Organization GetOrganization(int organizationId)
         {
-            return _repository.GetAll().Include(x => x.OnboardingPipelines).ThenInclude(x => x.OnboardingSteps).Include(x => x.Members).ThenInclude(x => x.Member).Single(x => x.Id == organizationId);
+            return _repository.GetAll().Include(x => x.OnboardingPipelines).ThenInclude(x => x.OnboardingSteps).Include(x => x.Members).ThenInclude(x => x.Member).SingleOrDefault(x => x.Id == organizationId);
         }
     }
 }

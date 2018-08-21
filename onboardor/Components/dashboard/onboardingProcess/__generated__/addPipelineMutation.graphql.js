@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3a5f6a34f51baa283a6988d85788624c
+ * @relayHash 4d7e7dde69aa201fa7024b5e599c5745
  */
 
 /* eslint-disable */
@@ -59,9 +59,13 @@ fragment pipelineContainer_pipeline on OnboardingPipeline {
   name
   onboardingSteps {
     id
-    name
-    description
+    ...stepContainer_step
   }
+}
+
+fragment stepContainer_step on OnboardingStep {
+  onboardingStepId
+  name
 }
 */
 
@@ -101,7 +105,7 @@ return {
   "operationKind": "mutation",
   "name": "addPipelineMutation",
   "id": null,
-  "text": "mutation addPipelineMutation(\n  $input: AddOnboardingPipelineInput!\n) {\n  addPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    name\n    description\n  }\n}\n",
+  "text": "mutation addPipelineMutation(\n  $input: AddOnboardingPipelineInput!\n) {\n  addPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -198,14 +202,14 @@ return {
                     "plural": true,
                     "selections": [
                       v3,
-                      v2,
                       {
                         "kind": "ScalarField",
                         "alias": null,
-                        "name": "description",
+                        "name": "onboardingStepId",
                         "args": null,
                         "storageKey": null
-                      }
+                      },
+                      v2
                     ]
                   }
                 ]

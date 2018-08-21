@@ -112,28 +112,26 @@ namespace Onboardor.Components.GraphQl
 
                     foreach (var organization in mappedOrganizations)
                     {
-                        var members = await _client.Organization.Member.GetAll(organization.Name);
+                        var existingOrganization = _organizationService.GetOrganization(organization.Id);
 
-                        organization.Members = members.Select(x => new OrganizationMember
+                        if (existingOrganization == null)
                         {
-                           Member = new Member
-                           {
-                               Id = x.Id,
-                               Name = x.Login,
-                               AvatarUrl = x.AvatarUrl,
-                               CreatedAt = x.CreatedAt
-                           },
-                           Organization = organization
-                        }).ToList();
-                    }
+                            var members = await _client.Organization.Member.GetAll(organization.Name);
 
-                    foreach (var organization in mappedOrganizations)
-                    {
-                        try
-                        {
+                            organization.Members = members.Select(x => new OrganizationMember
+                            {
+                               Member = new Member
+                               {
+                                   Id = x.Id,
+                                   Name = x.Login,
+                                   AvatarUrl = x.AvatarUrl,
+                                   CreatedAt = x.CreatedAt
+                               },
+                               Organization = organization
+                            }).ToList();
+
                             _organizationService.Add(organization);
                         }
-                        catch (DbUpdateException) {}
                     }
 
                     return true;

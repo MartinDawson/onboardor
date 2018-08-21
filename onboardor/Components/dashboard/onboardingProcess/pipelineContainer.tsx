@@ -1,13 +1,12 @@
 import { graphql } from "react-relay";
-import { compose, withHandlers, withStateHandlers, withProps, setPropTypes } from "recompose";
+import { compose, withHandlers, withStateHandlers, withProps, flattenProp } from "recompose";
 import { reduxForm, formValueSelector } from "redux-form";
-import { IOrganization } from "../organization/organization";
 import { fragment } from "relay-compose";
 import removePipelineMutation from "./removePipelineMutation";
 import { connect } from "react-redux";
 import editPipelineMutation from "./editPipelineMutation";
-import Pipeline, { IEditPipelineInput, IPipline, IAddOnboardingStepInput } from "./pipeline";
-import addOnboardingStepMutation from "./addOnboardingStepMutation";
+import Pipeline, { IEditPipelineInput, IAddOnboardingStepInput } from "./pipeline";
+import addStepMutation from "./addStepMutation";
 
 const fragments = graphql`
   fragment pipelineContainer_pipeline on OnboardingPipeline {
@@ -16,52 +15,51 @@ const fragments = graphql`
     name
     onboardingSteps {
       id
-      name
-      description
+      ...stepContainer_step
     }
   }
 `;
 
 interface IProps {
   organizationId: number;
-  pipeline: IPipline;
+  onboardingPipelineId: number;
+  name: string;
   form: string;
   togglePipeline: () => void;
-  toggleOnboardingStep: () => void;
+  toggleStep: () => void;
 }
 
 interface IState {
   isEditingPipeline: boolean;
-  isAddingOnboardingStep: boolean;
+  isAddingStep: boolean;
 }
-
-const handlers = {
-  removePipeline: ({ pipeline, organizationId }: IProps) => () =>
-    removePipelineMutation({ id: pipeline.onboardingPipelineId, organizationId }),
-  editPipeline: ({ pipeline, organizationId, togglePipeline }: IProps) => (input: IEditPipelineInput) => {
-    editPipelineMutation({
-      id: pipeline.onboardingPipelineId,
-      organizationId,
-      name: input.pipelineName,
-    }),
-    togglePipeline();
-  },
-  addOnboardingStep: ({ pipeline, toggleOnboardingStep }: IProps) => (input: IAddOnboardingStepInput) => {
-    addOnboardingStepMutation({
-      pipelineId: pipeline.onboardingPipelineId,
-      name: input.onboardingStepName,
-    }),
-    toggleOnboardingStep();
-  },
-};
 
 const stateHandlers = {
   togglePipeline: ({ isEditingPipeline }: IState) => () => ({
     isEditingPipeline: !isEditingPipeline,
   }),
-  toggleOnboardingStep: ({ isAddingOnboardingStep }: IState) => () => ({
-    isAddingOnboardingStep: !isAddingOnboardingStep,
+  toggleStep: ({ isAddingStep }: IState) => () => ({
+    isAddingStep: !isAddingStep,
   }),
+};
+
+const handlers = {
+  removePipeline: ({ onboardingPipelineId }: IProps) => () =>
+    removePipelineMutation({ id: onboardingPipelineId }),
+  editPipeline: ({ onboardingPipelineId, togglePipeline }: IProps) => (input: IEditPipelineInput) => {
+    editPipelineMutation({
+      id: onboardingPipelineId,
+      name: input.pipelineName,
+    }),
+    togglePipeline();
+  },
+  addStep: ({ onboardingPipelineId, toggleStep }: IProps) => (input: IAddOnboardingStepInput) => {
+    addStepMutation({
+      pipelineId: onboardingPipelineId,
+      name: input.onboardingStepName,
+    }),
+    toggleStep();
+  },
 };
 
 const Component = compose(
@@ -69,14 +67,15 @@ const Component = compose(
     selector: formValueSelector(form),
   })),
   fragment(fragments),
+  flattenProp("pipeline"),
   withStateHandlers({
     isEditingPipeline: false,
-    isAddingOnboardingStep: false,
+    isAddingStep: false,
   }, stateHandlers),
   withHandlers(handlers),
-  withProps(({ pipeline }: IProps) => ({
+  withProps(({ name }: IProps) => ({
     initialValues: {
-      pipelineName: pipeline.name,
+      pipelineName: name,
     },
   })),
   reduxForm({}),

@@ -13,5 +13,6 @@ namespace onboardor.Components.dashboard
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
+        public OnboardingPipeline OnboardingPipeline { get; set; } 
     }
 }

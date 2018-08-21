@@ -10,6 +10,8 @@ import Pencil from "../../../wwwroot/assets/Pencil.svg";
 import { Flex } from "grid-styled";
 import { PortalWithState } from "react-portal";
 import createFieldValidator from "../../shared/inputs/createFieldValidator";
+import Step from "./StepContainer";
+import { IStep } from "./step";
 
 export const PipelineColumn = styled(Column)`
   background-color: #F4F4F4;
@@ -17,14 +19,6 @@ export const PipelineColumn = styled(Column)`
   margin-left: 5px;
   margin-right: 5px;
   max-width: 262px;
-`;
-
-const Step = styled(ButtonTransparent)`
-  width: 100%;
-  border-radius: 4px;
-  text-align: left;
-  margin: 5px 0;
-  padding: 0;
 `;
 
 const IconButton = styled(ButtonTransparent)`
@@ -35,11 +29,7 @@ export interface IPipline {
   id: string;
   onboardingPipelineId: number;
   name: string;
-  onboardingSteps: {
-    id: string;
-    name: string;
-    description?: string;
-  }[]
+  onboardingSteps: IStep[]
 }
 
 export interface IEditPipelineInput {
@@ -61,14 +51,16 @@ interface IProps extends InjectedFormProps<FormData> {
   togglePipeline: () => void;
   isEditingPipeline: boolean;
   removingNameConfirmValue: string;
-  pipeline: IPipline;
-  addOnboardingStep: () => void;
-  toggleOnboardingStep: () => void;
-  isAddingOnboardingStep: boolean;
+  onboardingPipelineId: number;
+  name: string;
+  onboardingSteps: IStep[]
+  addStep: () => void;
+  toggleStep: () => void;
+  isAddingStep: boolean;
 }
 
 const editPipelineValidator = createFieldValidator(["required"]);
-const onboardingStepValidator = createFieldValidator(["required"]);
+const addStepValidator = createFieldValidator(["required"]);
 
 const Pipeline = ({
   togglePipeline,
@@ -77,12 +69,14 @@ const Pipeline = ({
   editPipeline,
   removePipeline,
   removingNameConfirmValue,
-  pipeline,
-  addOnboardingStep,
-  isAddingOnboardingStep,
-  toggleOnboardingStep,
+  onboardingPipelineId,
+  name,
+  addStep,
+  isAddingStep,
+  toggleStep,
+  onboardingSteps,
 }: IProps) => (
-  <PipelineColumn key={pipeline.onboardingPipelineId} p={16}>
+  <PipelineColumn key={onboardingPipelineId} p={16}>
     <Box pb={16}>
       <Flex alignItems="center">
         {isEditingPipeline ? (
@@ -99,7 +93,7 @@ const Pipeline = ({
           </form>
           ) : (
             <React.Fragment>
-              <Text fontWeight="bold" fontSize={18}>{pipeline.name}</Text>
+              <Text fontWeight="bold" fontSize={18}>{name}</Text>
               <IconButton ml="auto" onClick={togglePipeline}>
                 <Pencil />
               </IconButton>
@@ -115,10 +109,10 @@ const Pipeline = ({
                           <Field
                             component={FieldInput}
                             name="removingNameConfirm"
-                            placeholder={`Type the pipeline name '${pipeline.name}' to delete.`}
+                            placeholder={`Type the pipeline name '${name}' to delete.`}
                             mb={10}
                           />
-                          <Button mr={10} disabled={removingNameConfirmValue !== pipeline.name}>Remove</Button>
+                          <Button mr={10} disabled={removingNameConfirmValue !== name}>Remove</Button>
                           <Button type="button" onClick={closePortal}>Cancel</Button>
                         </form>
                       </Modal>
@@ -130,28 +124,28 @@ const Pipeline = ({
         )}
       </Flex>
     </Box>
-    {pipeline.onboardingSteps.map((step) => (
-      <Step key={step.id}>
-        <Box bg="white" p={10} br={4}>
-          {step.name}
-        </Box>
-      </Step>
+    {onboardingSteps.map((step, i) => (
+      <Step
+        key={step.id}
+        form={`step_${i}`}
+        step={step}
+      />
     ))}
-    {isAddingOnboardingStep ? (
-      <form onSubmit={handleSubmit(addOnboardingStep)} action="">
+    {isAddingStep ? (
+      <form onSubmit={handleSubmit(addStep)} action="">
         <Field
           component={FieldInput}
           name="onboardingStepName"
           placeholder="e.g. Assign a mentor"
-          validate={onboardingStepValidator}
+          validate={addStepValidator}
         />
         <Box mt={10}>
           <Button mr={10}>Create</Button>
-          <Button type="button" onClick={toggleOnboardingStep}>Cancel</Button>
+          <Button type="button" onClick={toggleStep}>Cancel</Button>
         </Box>
       </form>
     ) : (
-      <Button onClick={toggleOnboardingStep} style={{ width: "100%" }}>Add an onboarding step.</Button>
+      <Button onClick={toggleStep} style={{ width: "100%" }}>Add an onboarding step.</Button>
     )}
   </PipelineColumn>
 );

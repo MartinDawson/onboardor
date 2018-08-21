@@ -1,5 +1,5 @@
 # source: https://localhost:49891/graphql
-# timestamp: Sun Aug 19 2018 20:53:15 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Tue Aug 21 2018 23:44:27 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
@@ -45,7 +45,6 @@ scalar Decimal
 
 input EditOnboardingPipelineInput {
   clientMutationId: String = null
-  organizationId: Int!
   id: Int!
   name: String!
 }
@@ -53,6 +52,17 @@ input EditOnboardingPipelineInput {
 type EditOnboardingPipelinePayload {
   clientMutationId: String
   organization: Organization!
+}
+
+input EditOnboardingStepInput {
+  clientMutationId: String = null
+  id: Int!
+  name: String!
+}
+
+type EditOnboardingStepPayload {
+  clientMutationId: String
+  pipeline: OnboardingPipeline!
 }
 
 type Member implements Node {
@@ -69,11 +79,13 @@ type Member implements Node {
 }
 
 type Mutation {
-  addOnboardingStep(input: AddOnboardingStepInput!): AddOnboardingStepPayload
   addPipeline(input: AddOnboardingPipelineInput!): AddOnboardingPipelinePayload
+  addStep(input: AddOnboardingStepInput!): AddOnboardingStepPayload
   createOnboardingProcess(input: CreateOnboardingProcessInput!): CreateOnboardingProcessPayload
   editPipeline(input: EditOnboardingPipelineInput!): EditOnboardingPipelinePayload
+  editStep(input: EditOnboardingStepInput!): EditOnboardingStepPayload
   removePipeline(input: RemoveOnboardingPipelineInput!): RemoveOnboardingPipelinePayload
+  removeStep(input: RemoveOnboardingStepInput!): RemoveOnboardingStepPayload
   setOnboardingMembers(input: SetOnboardingMembersInput!): SetOnboardingMembersPayload
   subscribeMailingList(input: SubscribeMailingListInput!): SubscribeMailingListPayload
 }
@@ -143,13 +155,22 @@ type Query {
 
 input RemoveOnboardingPipelineInput {
   clientMutationId: String = null
-  organizationId: Int!
   id: Int!
 }
 
 type RemoveOnboardingPipelinePayload {
   clientMutationId: String
   organization: Organization!
+}
+
+input RemoveOnboardingStepInput {
+  clientMutationId: String = null
+  id: Int!
+}
+
+type RemoveOnboardingStepPayload {
+  clientMutationId: String
+  pipeline: OnboardingPipeline!
 }
 
 input SetOnboardingMembersInput {

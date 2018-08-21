@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash f9090a124a3ae3a07f05f96e7d04d0e1
+ * @relayHash 4f9212a34efaaa401f0929fe74221c05
  */
 
 /* eslint-disable */
@@ -10,34 +10,33 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type pipelineContainer_pipeline$ref = any;
-export type AddOnboardingStepInput = {
+export type EditOnboardingStepInput = {
   clientMutationId?: ?string,
-  pipelineId: number,
+  id: number,
   name: string,
-  description?: ?string,
 };
-export type addOnboardingStepMutationVariables = {|
-  input: AddOnboardingStepInput
+export type editStepMutationVariables = {|
+  input: EditOnboardingStepInput
 |};
-export type addOnboardingStepMutationResponse = {|
-  +addOnboardingStep: ?{|
+export type editStepMutationResponse = {|
+  +editStep: ?{|
     +pipeline: {|
       +$fragmentRefs: pipelineContainer_pipeline$ref
     |}
   |}
 |};
-export type addOnboardingStepMutation = {|
-  variables: addOnboardingStepMutationVariables,
-  response: addOnboardingStepMutationResponse,
+export type editStepMutation = {|
+  variables: editStepMutationVariables,
+  response: editStepMutationResponse,
 |};
 */
 
 
 /*
-mutation addOnboardingStepMutation(
-  $input: AddOnboardingStepInput!
+mutation editStepMutation(
+  $input: EditOnboardingStepInput!
 ) {
-  addOnboardingStep(input: $input) {
+  editStep(input: $input) {
     pipeline {
       ...pipelineContainer_pipeline
       id
@@ -51,9 +50,13 @@ fragment pipelineContainer_pipeline on OnboardingPipeline {
   name
   onboardingSteps {
     id
-    name
-    description
+    ...stepContainer_step
   }
+}
+
+fragment stepContainer_step on OnboardingStep {
+  onboardingStepId
+  name
 }
 */
 
@@ -62,7 +65,7 @@ var v0 = [
   {
     "kind": "LocalArgument",
     "name": "input",
-    "type": "AddOnboardingStepInput!",
+    "type": "EditOnboardingStepInput!",
     "defaultValue": null
   }
 ],
@@ -71,7 +74,7 @@ v1 = [
     "kind": "Variable",
     "name": "input",
     "variableName": "input",
-    "type": "AddOnboardingStepInput!"
+    "type": "EditOnboardingStepInput!"
   }
 ],
 v2 = {
@@ -91,13 +94,13 @@ v3 = {
 return {
   "kind": "Request",
   "operationKind": "mutation",
-  "name": "addOnboardingStepMutation",
+  "name": "editStepMutation",
   "id": null,
-  "text": "mutation addOnboardingStepMutation(\n  $input: AddOnboardingStepInput!\n) {\n  addOnboardingStep(input: $input) {\n    pipeline {\n      ...pipelineContainer_pipeline\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    name\n    description\n  }\n}\n",
+  "text": "mutation editStepMutation(\n  $input: EditOnboardingStepInput!\n) {\n  editStep(input: $input) {\n    pipeline {\n      ...pipelineContainer_pipeline\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "addOnboardingStepMutation",
+    "name": "editStepMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": v0,
@@ -105,10 +108,10 @@ return {
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "addOnboardingStep",
+        "name": "editStep",
         "storageKey": null,
         "args": v1,
-        "concreteType": "AddOnboardingStepPayload",
+        "concreteType": "EditOnboardingStepPayload",
         "plural": false,
         "selections": [
           {
@@ -133,16 +136,16 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "addOnboardingStepMutation",
+    "name": "editStepMutation",
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "addOnboardingStep",
+        "name": "editStep",
         "storageKey": null,
         "args": v1,
-        "concreteType": "AddOnboardingStepPayload",
+        "concreteType": "EditOnboardingStepPayload",
         "plural": false,
         "selections": [
           {
@@ -173,14 +176,14 @@ return {
                 "plural": true,
                 "selections": [
                   v2,
-                  v3,
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "name": "description",
+                    "name": "onboardingStepId",
                     "args": null,
                     "storageKey": null
-                  }
+                  },
+                  v3
                 ]
               }
             ]
@@ -192,5 +195,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '57aa5cc357f93db22fb387ff50864e98';
+(node/*: any*/).hash = 'c770a8fc264e9a39e64370cdcecb8fd7';
 module.exports = node;

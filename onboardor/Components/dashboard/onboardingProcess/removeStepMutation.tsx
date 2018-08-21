@@ -2,12 +2,12 @@ import { graphql } from "react-relay";
 import { createMutation } from "relay-compose";
 
 const mutation = graphql`
-  mutation editPipelineMutation(
-    $input: EditOnboardingPipelineInput!
+  mutation removeStepMutation(
+    $input: RemoveOnboardingStepInput!
   ) {
-    editPipeline(input: $input) {
-      organization {
-        ...onboardingProcessContainer_organization
+    removeStep(input: $input) {
+      pipeline {
+        ...pipelineContainer_pipeline
       }
     }
   }
@@ -15,14 +15,12 @@ const mutation = graphql`
 
 export interface IMutationInput {
   id: number;
-  name: string;
 }
 
-export default ({ id, name }: IMutationInput) => {
+export default ({ id }: IMutationInput) => {
   const variables = {
     input: {
       id,
-      name,
     },
   };
 

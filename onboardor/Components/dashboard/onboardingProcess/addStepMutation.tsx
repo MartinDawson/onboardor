@@ -1,12 +1,11 @@
 import { graphql } from "react-relay";
 import { createMutation } from "relay-compose";
-import { IAddOnboardingStepInput } from "./pipeline";
 
 const mutation = graphql`
-  mutation addOnboardingStepMutation(
+  mutation addStepMutation(
     $input: AddOnboardingStepInput!
   ) {
-    addOnboardingStep(input: $input) {
+    addStep(input: $input) {
       pipeline {
         ...pipelineContainer_pipeline
       }
