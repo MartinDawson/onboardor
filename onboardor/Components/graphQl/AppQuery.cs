@@ -65,9 +65,7 @@ namespace Onboardor.Components.GraphQl
 
                         var request = new Octokit.OauthLoginRequest(Env.GetString("CLIENT_ID"))
                         {
-                            Scopes = { "repo", "user", "admin:org", "admin:public_key",
-                                "admin:repo_hook", "notifications", "admin:org_hook",
-                                "gist", "delete_repo", "write:discussion", "admin:gpg_key" },
+                            Scopes = { "repo" },
                             State = csrf,
                         };
                         var redirectUri = c.GetArgument<string>("redirectUrl");
