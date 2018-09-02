@@ -24,7 +24,7 @@ namespace Onboardor.Data
                     if (_env.IsDevelopment())
                     {
                         await context.Database.MigrateAsync();
-                        // await SeedMocks(context);
+                        await SeedMocks(context);
                     }
                 }
             }

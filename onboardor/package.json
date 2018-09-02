@@ -37,6 +37,7 @@
     "typescript": "tsc",
     "build-client": "cross-env ASPNETCORE_ENVIRONMENT=Production && rimraf ./wwwroot/build && webpack",
     "extension-relay-compiler": "relay-compiler --src ./extension/Components --schema schema.graphql --language typescript --artifactDirectory ./Components/__generated__ --extensions tsx",
+    "build-extension-dev": "cross-env ASPNETCORE_ENVIRONMENT=Development NODE_ENV=development && npm run extension-relay-compiler && rimraf ./extension/build ./extension.zip && webpack --config ./extension/webpack.config.js && cd ./extension && zip -r ../extension.zip ./manifest.json ./build/* && cd ..",
     "build-extension": "cross-env ASPNETCORE_ENVIRONMENT=Production NODE_ENV=production && npm run extension-relay-compiler && rimraf ./extension/build ./extension.zip && webpack --config ./extension/webpack.config.js && cd ./extension && zip -r ../extension.zip ./manifest.json ./build/* && cd .."
   },
   "browserslist": [

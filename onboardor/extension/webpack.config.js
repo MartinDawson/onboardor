@@ -7,7 +7,6 @@ dotenv.config();
 
 const isInProduction = process.env.NODE_ENV === 'production';
 
-console.log(process.env.NODE_ENV)
 const plugins = [
   new Webpack.DefinePlugin({
     __DEV__: !isInProduction,

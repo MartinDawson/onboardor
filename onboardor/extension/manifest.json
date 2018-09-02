@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "onboardor",
-  "version": "0.1",
+  "version": "0.3",
   "content_scripts": [
     {
       "matches": [
@@ -12,6 +12,7 @@
   ],
   "permissions": [
     "*://*.onboardor.com/*",
+    "*://localhost/*",
     "webRequest",
     "webRequestBlocking"
   ]
