@@ -26,7 +26,7 @@
     "prestart": "webpack",
     "setup": "run-s restore-nuget",
     "restore-nuget": "dotnet restore",
-    "build": "cross-env ASPNETCORE_ENVIRONMENT=Production && npm run build-client && npm run build-extension && dotnet publish -o site && rimraf ./site.zip ./onboardor.zip && cd ./site && zip -r ../site.zip * && cd .. && zip onboardor.zip site.zip aws-windows-deployment-manifest.json",
+    "build": "npm run build-client && dotnet publish -o ./wwwroot/build/site",
     "start": "cross-env ASPNETCORE_ENVIRONMENT=Development run-p run relay-compiler:watch",
     "run": "dotnet run",
     "relay-compiler": "relay-compiler --src ./Components --schema schema.graphql --language typescript --artifactDirectory ./Components/__generated__ --extensions tsx",
@@ -35,10 +35,10 @@
     "lint": "run-p tslint typescript",
     "tslint": "tslint --fix ./Components/**/*.{ts,tsx}",
     "typescript": "tsc",
-    "build-client": "cross-env ASPNETCORE_ENVIRONMENT=Production && rimraf ./wwwroot/build && webpack",
+    "build-client": "npm run relay-compiler && rimraf ./wwwroot/build && webpack",
     "extension-relay-compiler": "relay-compiler --src ./extension/Components --schema schema.graphql --language typescript --artifactDirectory ./Components/__generated__ --extensions tsx",
     "build-extension-dev": "cross-env ASPNETCORE_ENVIRONMENT=Development NODE_ENV=development && npm run extension-relay-compiler && rimraf ./extension/build ./extension.zip && webpack --config ./extension/webpack.config.js && cd ./extension && zip -r ../extension.zip ./manifest.json ./build/* && cd ..",
-    "build-extension": "cross-env ASPNETCORE_ENVIRONMENT=Production NODE_ENV=production && npm run extension-relay-compiler && rimraf ./extension/build ./extension.zip && webpack --config ./extension/webpack.config.js && cd ./extension && zip -r ../extension.zip ./manifest.json ./build/* && cd .."
+    "build-extension": "npm run extension-relay-compiler && rimraf ./extension/build ./extension.zip && webpack --config ./extension/webpack.config.js && cd ./extension && zip -r ../extension.zip ./manifest.json ./build/* && cd .."
   },
   "browserslist": [
     "> 3%",

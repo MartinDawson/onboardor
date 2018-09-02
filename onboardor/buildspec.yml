@@ -1,0 +1,20 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - npm install yarn
+      - yarn
+  pre_build:
+    commands:
+      - echo "pre build phase"
+      - node --version
+      - npm --version
+      - yarn --version
+  build:
+    commands:
+      - echo "build phase"
+      - yarn run build
+artifacts:
+  files:
+    - 'wwwroot/build/*'
