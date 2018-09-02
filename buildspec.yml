@@ -3,6 +3,8 @@ version: 0.1
 phases:
   install:
     commands:
+      - cd onboardor
+      - sudo apt-get install nodejs
       - npm install yarn
       - yarn
   pre_build:
