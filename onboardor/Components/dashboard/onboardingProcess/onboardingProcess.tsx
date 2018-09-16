@@ -7,7 +7,7 @@ import FieldInput from "../../shared/inputs/fieldInput";
 import { Field, InjectedFormProps } from "redux-form";
 import createFieldValidator from "../../shared/inputs/createFieldValidator";
 import Cross from "../../../wwwroot/assets/cross.svg";
-import Pencil from "../../../wwwroot/assets/Pencil.svg";
+import Pencil from "../../../wwwroot/assets/pencil.svg";
 import { Flex } from "grid-styled";
 import { PortalWithState } from "react-portal";
 import EmptyPipeline from "./emptyPipelineContainer";

@@ -10,7 +10,7 @@ import Pencil from "../../../wwwroot/assets/Pencil.svg";
 import { Flex } from "grid-styled";
 import { PortalWithState } from "react-portal";
 import createFieldValidator from "../../shared/inputs/createFieldValidator";
-import Step from "./StepContainer";
+import Step from "./stepContainer";
 import { IStep } from "./step";
 
 export const PipelineColumn = styled(Column)`
