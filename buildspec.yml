@@ -6,7 +6,6 @@ phases:
       - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
       - sudo apt-get install -y nodejs
       - npm install yarn@~1.7.0 -g
-      - yarn install
   pre_build:
     commands:
       - echo "pre build phase"
@@ -17,6 +16,7 @@ phases:
     commands:
       - cd onboardor
       - echo "build phase"
+      - yarn install
       - yarn run build
 artifacts:
   files:
