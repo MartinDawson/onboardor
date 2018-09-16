@@ -3,7 +3,9 @@ version: 0.1
 phases:
   install:
     commands:
-      - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
+      - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+      - export NVM_DIR="/root/.nvm"
+      - [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
       - . ~/.nvm/nvm.sh
       - nvm install 8.11.2
       - sudo apt-get update -y && sudo apt-get install -y make apt-transport-https
@@ -15,7 +17,7 @@ phases:
       - echo "pre build phase"
       - node --version
       - npm --version
-      - yarn --version   
+      - yarn --version
   build:
     commands:
       - cd onboardor
