@@ -14,8 +14,8 @@ phases:
       - yarn --version
   build:
     commands:
-      - cd onboardor
       - echo "build phase"
+      - cd /onboardor
       - yarn install
       - yarn run build
 artifacts:
