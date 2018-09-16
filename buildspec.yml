@@ -15,10 +15,8 @@ phases:
   build:
     commands:
       - echo "build phase"
-      - sudo -i
-      - cd /onboardor
-      - yarn install
-      - yarn run build
+      - yarn --cwd "onboardor" install
+      - yarn --cwd "onboardor" build
 artifacts:
   files:
     - 'wwwroot/build/*'
