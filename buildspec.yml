@@ -15,8 +15,9 @@ phases:
   build:
     commands:
       - echo "build phase"
+      - echo $CODEBUILD_SRC_DIR
       - yarn --cwd "onboardor" install
       - yarn --cwd "onboardor" build
 artifacts:
   files:
-    - 'onboardor/wwwroot/build/*'
+    - '**/*'
