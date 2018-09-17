@@ -18,6 +18,6 @@ phases:
       - yarn --cwd "onboardor" install
       - yarn --cwd "onboardor" build
 artifacts:
-  directory: 'onboardor/bin/Debug/netcoreapp2.1/publish'
+  base-directory: 'onboardor/bin/Debug/netcoreapp2.1/publish'
   files:
     - 'onboardor/bin/Debug/netcoreapp2.1/publish/**/*'
