@@ -19,5 +19,4 @@ phases:
       - yarn --cwd "onboardor" build
 artifacts:
   files:
-    - 'onboardor/extension/**/*'
-    - 'onboardor/wwwroot/**/*'
+    - 'onboardor/bin/Debug/netcoreapp2.1/publish/**/*'
