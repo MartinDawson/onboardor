@@ -19,6 +19,5 @@ phases:
       - yarn --cwd "onboardor" build
 artifacts:
   files:
-    - '**/*'
-    - 'onboardor/extension/*'
-    - 'onboardor/wwwroot/*'
+    - 'onboardor/extension/**/*'
+    - 'onboardor/wwwroot/**/*'
