@@ -20,4 +20,4 @@ phases:
 artifacts:
   base-directory: 'onboardor/bin/Debug/netcoreapp2.1/publish'
   files:
-    - 'onboardor/bin/Debug/netcoreapp2.1/publish/**/*'
+    - '**/*'
