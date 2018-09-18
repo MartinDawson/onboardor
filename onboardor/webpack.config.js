@@ -23,7 +23,6 @@ const plugins = [
     hash: true,
     favicon: path.resolve(__dirname, 'wwwroot/favicon.ico'),
     template: path.resolve(__dirname, 'Components/app/app.ejs'),
-    env: process.env.NODE_ENV,
   }),
 ];
 let devtool = false;
@@ -44,7 +43,7 @@ if (isInProduction) {
 }
 
 module.exports = {
-  mode: process.env.NODE_ENV,
+  mode: isInProduction ? 'production' : 'development',
   context: __dirname,
   devtool,
   entry,
