@@ -25,6 +25,7 @@ const plugins = [
     template: path.resolve(__dirname, 'Components/app/app.ejs'),
   }),
 ];
+
 let devtool = false;
 
 const entry = [

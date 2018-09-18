@@ -1,0 +1,14 @@
+{
+    "manifestVersion": 1,
+    "deployments": {
+      "aspNetCoreWeb": [
+        {
+          "name": "onboardor",
+          "parameters": {
+            "archive": "onboardor.zip",
+            "iisPath": "/"
+          }
+        }
+      ]
+    }
+  }
