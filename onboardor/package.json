@@ -26,7 +26,7 @@
     "prestart": "webpack",
     "setup": "run-s restore-nuget",
     "restore-nuget": "dotnet restore",
-    "build": "npm run build-client && dotnet restore && dotnet build && dotnet publish -o site/onboardor && copyfiles aws-windows-deployment-manifest.json ./site && cd ./site && zip -r ./onboardor.zip ./onboardor/* && rimraf ./onboardor && cd ..",
+    "build": "npm run build-client && dotnet restore && dotnet build && dotnet publish -o site/onboardor && copyfiles aws-windows-deployment-manifest.json ./site",
     "start": "cross-env ASPNETCORE_ENVIRONMENT=Development run-p run relay-compiler:watch",
     "run": "dotnet run",
     "relay-compiler": "relay-compiler --src ./Components --schema schema.graphql --language typescript --artifactDirectory ./Components/__generated__ --extensions tsx",

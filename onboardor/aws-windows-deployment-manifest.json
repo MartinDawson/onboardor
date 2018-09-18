@@ -5,7 +5,7 @@
         {
           "name": "onboardor",
           "parameters": {
-            "archive": "onboardor.zip",
+            "appBundle": "./onboardor",
             "iisPath": "/"
           }
         }
