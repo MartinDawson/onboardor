@@ -3,6 +3,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HTMLPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 dotenv.config();
 
@@ -24,6 +25,9 @@ const plugins = [
     favicon: path.resolve(__dirname, 'wwwroot/favicon.ico'),
     template: path.resolve(__dirname, 'Components/app/app.ejs'),
   }),
+  new CopyWebpackPlugin([
+    { from: path.resolve(__dirname, 'wwwroot'), to: path.resolve(__dirname, 'wwwroot/build/wwwroot') }
+  ])
 ];
 
 let devtool = false;
