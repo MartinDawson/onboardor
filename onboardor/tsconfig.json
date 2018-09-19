@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./wwwroot/build/",
+    "outDir": "./build/",
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "es2015",

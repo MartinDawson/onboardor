@@ -32,8 +32,7 @@ bld/
 .vs/
 
 # Build files
-onboardor/wwwroot/build/
-onboardor/*.zip
+onboardor/build/
 onboardor/site/
 
 # Visual Studio 2017 auto generated files

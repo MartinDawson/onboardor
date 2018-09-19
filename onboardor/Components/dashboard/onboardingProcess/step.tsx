@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Box, ButtonTransparent, Modal, Text, Flex } from "rebass";
 import Cross from "../../../wwwroot/assets/cross.svg";
-import Pencil from "../../../wwwroot/assets/Pencil.svg";
+import Pencil from "../../../wwwroot/assets/pencil.svg";
 import FieldInput from "../../shared/inputs/fieldInput";
 import createFieldValidator from "../../shared/inputs/createFieldValidator";
 import { Field, InjectedFormProps } from "redux-form";

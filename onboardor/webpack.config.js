@@ -26,7 +26,7 @@ const plugins = [
     template: path.resolve(__dirname, 'Components/app/app.ejs'),
   }),
   new CopyWebpackPlugin([
-    { from: path.resolve(__dirname, 'wwwroot'), to: path.resolve(__dirname, 'wwwroot/build/wwwroot') }
+    { from: path.resolve(__dirname, 'wwwroot'), to: path.resolve(__dirname, 'build/wwwroot') }
   ])
 ];
 
@@ -53,7 +53,7 @@ module.exports = {
   devtool,
   entry,
   output: {
-    path: path.resolve(__dirname, 'wwwroot/build/'),
+    path: path.resolve(__dirname, 'build'),
     publicPath: '/build/',
     filename: '[name].bundle.js',
   },
