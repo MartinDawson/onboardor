@@ -33,7 +33,6 @@ interface IProps {
   organization: IOrganization;
 }
 
-
 const Component = compose(
   renameProp("node", "organization"),
   fragment(fragments),

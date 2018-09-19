@@ -33,7 +33,7 @@ const SubscribeMailingList = ({
       submitSucceeded={submitSucceeded}
       onSubmit={(e) => {
         e.preventDefault();
-        recaptcha && recaptcha.execute()}
+        recaptcha && recaptcha.execute();}
       }
       submitSucceededMessage={<SubmitSucceededMessage />}
     >
@@ -71,7 +71,7 @@ const SubscribeMailingList = ({
         size="invisible"
         sitekey={process.env.RECAPTCHA_SITE_KEY as string}
         onChange={(recaptcha) => {
-          handleSubmit((props) => onSubmit({ ...props, recaptcha }))()
+          handleSubmit((props) => onSubmit({ ...props, recaptcha }))();
         }}
       />
     </Form>

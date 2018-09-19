@@ -7,7 +7,7 @@ import subscribeMailingListMutation, { IMutationInput } from "./subscribeMailing
 import logErrors from "../logErrors";
 
 const stateHandlers = {
-  setRecaptcha: () => (recaptcha : ReCAPTCHA) => ({
+  setRecaptcha: () => (recaptcha: ReCAPTCHA) => ({
     recaptcha
   }),
 };

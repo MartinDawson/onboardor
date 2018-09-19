@@ -72,7 +72,7 @@ const Step = ({
             <IconButton ml="auto" onClick={toggleStep}>
               <Pencil />
             </IconButton>
-            <PortalWithState closeOnEsc closeOnOutsideClick>
+            <PortalWithState closeOnEsc={true} closeOnOutsideClick={true}>
             {({ openPortal, closePortal, portal }) => (
                 <React.Fragment>
                   <IconButton onClick={openPortal}>

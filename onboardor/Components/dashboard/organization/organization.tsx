@@ -3,7 +3,7 @@ import { IRoute } from "../../types";
 import { IMember } from "../member/member";
 import { IPipline } from "../onboardingProcess/pipeline";
 
-interface IProps extends IRoute, IOrganization {};
+interface IProps extends IRoute, IOrganization {}
 
 export interface IOrganization {
   id: string;
@@ -11,8 +11,8 @@ export interface IOrganization {
   name: string;
   avatarUrl: string;
   members: IMember[];
-  onboardingPipelines: IPipline[]
-};
+  onboardingPipelines: IPipline[];
+}
 
 const Organization = ({
   onboardingSteps,

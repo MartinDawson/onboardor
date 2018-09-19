@@ -6,7 +6,7 @@ import Button from "../../shared/button/button";
 import FieldInput from "../../shared/inputs/fieldInput";
 import { Field, InjectedFormProps } from "redux-form";
 import Cross from "../../../wwwroot/assets/cross.svg";
-import Pencil from "../../../wwwroot/assets/Pencil.svg";
+import Pencil from "../../../wwwroot/assets/pencil.svg";
 import { Flex } from "grid-styled";
 import { PortalWithState } from "react-portal";
 import createFieldValidator from "../../shared/inputs/createFieldValidator";
@@ -29,7 +29,7 @@ export interface IPipline {
   id: string;
   onboardingPipelineId: number;
   name: string;
-  onboardingSteps: IStep[]
+  onboardingSteps: IStep[];
 }
 
 export interface IEditPipelineInput {
@@ -53,7 +53,7 @@ interface IProps extends InjectedFormProps<FormData> {
   removingNameConfirmValue: string;
   onboardingPipelineId: number;
   name: string;
-  onboardingSteps: IStep[]
+  onboardingSteps: IStep[];
   addStep: () => void;
   toggleStep: () => void;
   isAddingStep: boolean;
@@ -97,7 +97,7 @@ const Pipeline = ({
               <IconButton ml="auto" onClick={togglePipeline}>
                 <Pencil />
               </IconButton>
-              <PortalWithState closeOnEsc closeOnOutsideClick>
+              <PortalWithState closeOnEsc={true} closeOnOutsideClick={true}>
               {({ openPortal, closePortal, portal }) => (
                   <React.Fragment>
                     <IconButton onClick={openPortal}>

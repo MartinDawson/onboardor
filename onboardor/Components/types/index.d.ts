@@ -46,7 +46,7 @@ export interface ILocation {
   hash: string;
   state: {
     [key: string]: any
-  }
+  };
 }
 
 export interface IMatch {
@@ -67,4 +67,3 @@ export interface IRoute {
     location: ILocation
   };
 }
-
