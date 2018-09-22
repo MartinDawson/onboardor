@@ -26,7 +26,7 @@ const plugins = [
     template: path.resolve(__dirname, 'Components/app/app.ejs'),
   }),
   new CopyWebpackPlugin([
-    { from: path.resolve(__dirname, 'wwwroot'), to: path.resolve(__dirname, 'build/wwwroot') }
+    { from: path.resolve(__dirname, 'wwwroot/assets'), to: path.resolve(__dirname, 'wwwroot/build/wwwroot/assets') }
   ])
 ];
 
