@@ -49,7 +49,7 @@ module.exports = {
   devtool,
   entry,
   output: {
-    path: !isInProduction ? path.resolve(__dirname, 'build') : path.resolve(__dirname, 'site/onboardor/build'),
+    path: !isInProduction ? path.resolve(__dirname, 'build') : path.resolve(__dirname, 'onboardor/site/onboardor/build'),
     publicPath: '/',
     filename: '[name].bundle.js',
   },
