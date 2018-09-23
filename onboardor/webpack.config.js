@@ -3,7 +3,6 @@ const path = require('path');
 const dotenv = require('dotenv');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HTMLPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 dotenv.config();
 
@@ -50,7 +49,7 @@ module.exports = {
   devtool,
   entry,
   output: {
-    path: isInProduction ? path.resolve(__dirname, 'site/onboardor/build') : path.resolve(__dirname, 'build'),
+    path: !isInProduction ? path.resolve(__dirname, 'build') : path.resolve(__dirname, 'site/onboardor/build'),
     publicPath: '/',
     filename: '[name].bundle.js',
   },
