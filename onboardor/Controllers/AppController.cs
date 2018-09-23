@@ -17,7 +17,7 @@ namespace Onboardor.Controllers
         [Produces("text/html")]
         public IActionResult Index()
         {
-            return View("~/index.html");
+            return View("~/build/index.html");
         }
 
         [Produces("application/xml")]
