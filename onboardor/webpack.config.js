@@ -50,7 +50,7 @@ module.exports = {
   entry,
   output: {
     path: process.env.NODE_ENV === 'development' ? path.resolve(__dirname, 'wwwroot/build') : path.resolve(__dirname, 'site/onboardor/wwwroot/build'),
-    publicPath: '/',
+    publicPath: '/build/',
     filename: '[name].bundle.js',
   },
   optimization: {
