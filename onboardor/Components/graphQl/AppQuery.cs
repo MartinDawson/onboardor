@@ -24,13 +24,15 @@ namespace Onboardor.Components.GraphQl
         private Octokit.GitHubClient _client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(Env.GetString("APP_NAME")));
 
         private readonly IOrganizationService _organizationService;
+        private readonly IMemberService _memberService;
         private readonly IHostingEnvironment _env;
 
         public AppQuery(ILoggerFactory loggerFactory, IHostingEnvironment env, 
-            IOrganizationService organizationService)
+            IOrganizationService organizationService, IMemberService memberService)
         {
             _env = env;
             _organizationService = organizationService;
+            _memberService = memberService;
 
             var logger = loggerFactory.CreateLogger<AppQuery>();
 
@@ -48,37 +50,28 @@ namespace Onboardor.Components.GraphQl
                 .Description("Returns the url for the OAUTH request or null if the user already authorized")
                 .Argument<StringGraphType>("redirectUrl", "The absolute url to redirect to")
                 .Name("setup")
-                .ResolveAsync(async c =>
+                .Resolve(c =>
                 {
-                    try
+                    var context = c.UserContext.As<Context>();
+                    var csrf = Password.Generate(24, 1);
+
+                    context.HttpContext.Session.SetString("CSRF", csrf);
+
+                    var request = new Octokit.OauthLoginRequest(Env.GetString("CLIENT_ID"))
                     {
-                        var user = await _client.User.Current();
+                        Scopes = { "repo" },
+                        State = csrf,
+                    };
+                    var redirectUri = c.GetArgument<string>("redirectUrl");
 
-                        return null;
-                    }
-                    catch (Exception)
+                    if (redirectUri != null)
                     {
-                        var context = c.UserContext.As<Context>();
-                        var csrf = Password.Generate(24, 1);
-
-                        context.HttpContext.Session.SetString("CSRF", csrf);
-
-                        var request = new Octokit.OauthLoginRequest(Env.GetString("CLIENT_ID"))
-                        {
-                            Scopes = { "repo" },
-                            State = csrf,
-                        };
-                        var redirectUri = c.GetArgument<string>("redirectUrl");
-
-                        if (redirectUri != null)
-                        {
-                            request.RedirectUri = new Uri($"{Env.GetString("APP_URL")}/setupCallback?redirectUrl={redirectUri}");
-                        }
-
-                        var oAuthLoginUrl = _client.Oauth.GetGitHubLoginUrl(request);
-
-                        return oAuthLoginUrl;
+                        request.RedirectUri = new Uri($"{Env.GetString("APP_URL")}/setupCallback?redirectUrl={redirectUri}");
                     }
+
+                    var oAuthLoginUrl = _client.Oauth.GetGitHubLoginUrl(request);
+
+                    return oAuthLoginUrl;
                 });
 
             Field<NonNullGraphType<BooleanGraphType>>()
@@ -99,6 +92,8 @@ namespace Onboardor.Components.GraphQl
                     var token = await _client.Oauth.CreateAccessToken(request);
                     _client.Credentials = new Octokit.Credentials(token.AccessToken);
 
+                    var user = await _client.User.Current();
+
                     var organizations = await _client.Organization.GetAllForCurrent();
 
                     var mappedOrganizations = organizations.Select(x => new Organization
@@ -118,14 +113,14 @@ namespace Onboardor.Components.GraphQl
 
                             organization.Members = members.Select(x => new OrganizationMember
                             {
-                               Member = new Member
-                               {
-                                   Id = x.Id,
-                                   Name = x.Login,
-                                   AvatarUrl = x.AvatarUrl,
-                                   CreatedAt = x.CreatedAt
-                               },
-                               Organization = organization
+                                Member = new Member
+                                {
+                                    Id = x.Id,
+                                    Name = x.Login,
+                                    AvatarUrl = x.AvatarUrl,
+                                    CreatedAt = x.CreatedAt
+                                },
+                                Organization = organization
                             }).ToList();
 
                             _organizationService.Add(organization);

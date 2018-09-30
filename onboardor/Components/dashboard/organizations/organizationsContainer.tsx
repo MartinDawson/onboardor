@@ -20,6 +20,10 @@ export const routeConfig = {
   query,
   render: (route: IRoute) => {
     if (route.props) {
+      if (route.props.organizations.length === 0) {
+        return <div>You must belong to atleast one GitHub organization for onboardor to work</div>;
+      }
+
       if (route.props.organizations.length === 1) {
         throw new RedirectException(
           `${route.match.location.pathname}/organization/${route.props.organizations[0].id}/onboardingProcess`

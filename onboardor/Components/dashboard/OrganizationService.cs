@@ -31,13 +31,16 @@ namespace onboardor.Components.dashboard
 
         public List<Organization> GetOrganizations(int userId)
         {
-            return _membersRepository.GetAll()
+            var member = _membersRepository.GetAll()
                 .Include(x => x.Organizations)
                 .ThenInclude(x => x.Organization)
                 .ThenInclude(x => x.OnboardingPipelines)
                 .ThenInclude(x => x.OnboardingSteps)
-                .Single(x => x.Id == userId)
-                .Organizations.Select(o => o.Organization).ToList();
+                .SingleOrDefault(x => x.Id == userId);
+
+            if (member == null) return new List<Organization>();
+
+            return member.Organizations.Select(o => o.Organization).ToList();
         }
 
         public Organization GetOrganization(int organizationId)
