@@ -5,11 +5,11 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 dotenv.config();
 
-const isInDevelopment = process.env.NODE_ENV === 'development';
+const isInProduction = process.env.NODE_ENV === 'production';
 
 const plugins = [
   new Webpack.DefinePlugin({
-    __DEV__: isInDevelopment,
+    __DEV__: !isInProduction,
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       APP_NAME: JSON.stringify(process.env.APP_NAME),
@@ -25,7 +25,7 @@ const entry = [
   path.resolve(__dirname, 'Components/app/appContainer.tsx')
 ];
 
-if (!isInDevelopment) {
+if (isInProduction) {
   plugins.push(
     new OptimizeCssAssetsPlugin({
       cssProcessorOptions: { discardComments: { removeAll: true } },
@@ -36,7 +36,7 @@ if (!isInDevelopment) {
 }
 
 module.exports = {
-  mode: isInDevelopment ? 'development' : 'production',
+  mode: isInProduction ? 'production' : 'development',
   context: __dirname,
   devtool,
   entry,

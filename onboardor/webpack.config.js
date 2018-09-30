@@ -6,11 +6,11 @@ const HTMLPlugin = require('html-webpack-plugin');
 
 dotenv.config();
 
-const isInDevelopment = process.env.NODE_ENV === 'development';
+const isInProduction = process.env.NODE_ENV === 'production';
 
 const plugins = [
   new Webpack.DefinePlugin({
-    __DEV__: isInDevelopment,
+    __DEV__: !isInProduction,
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       RECAPTCHA_SITE_KEY: JSON.stringify(process.env.RECAPTCHA_SITE_KEY),
@@ -33,7 +33,7 @@ const entry = [
   path.resolve(__dirname, 'Components/app/appContainer.tsx')
 ];
 
-if (!isInDevelopment) {
+if (isInProduction) {
   plugins.push(
     new OptimizeCssAssetsPlugin({
       cssProcessorOptions: { discardComments: { removeAll: true } },
@@ -44,12 +44,12 @@ if (!isInDevelopment) {
 }
 
 module.exports = {
-  mode: isInDevelopment ? 'development' : 'production',
+  mode: isInProduction ? 'production' : 'development',
   context: __dirname,
   devtool,
   entry,
   output: {
-    path: isInDevelopment ? path.resolve(__dirname, 'wwwroot/build') : path.resolve(__dirname, 'site/onboardor/wwwroot/build'),
+    path: process.env.NODE_ENV === 'development' ? path.resolve(__dirname, 'wwwroot/build') : path.resolve(__dirname, 'site/onboardor/wwwroot/build'),
     publicPath: '/',
     filename: '[name].bundle.js',
   },
