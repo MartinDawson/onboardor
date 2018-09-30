@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "onboardor",
-  "version": "0.3",
+  "version": "0.5",
   "content_scripts": [
     {
       "matches": [
@@ -11,6 +11,8 @@
     }
   ],
   "permissions": [
+    "*://live.jmcs7h5ryz.eu-west-2.elasticbeanstalk.com/*",
+    "*://staging.jmcs7h5ryz.eu-west-2.elasticbeanstalk.com/*",
     "*://*.onboardor.com/*",
     "*://localhost/*",
     "webRequest",

@@ -5,7 +5,6 @@
 
 # Config
 *.env
-onboardor.pem
 
 # User-specific files
 *.suo
@@ -33,7 +32,9 @@ bld/
 
 # Build files
 onboardor/build/
+onboardor/extension/build/
 onboardor/site/
+onboardor/extension/extension.zip
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/

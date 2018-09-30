@@ -6,6 +6,8 @@ import App from "./app";
 
 const div = document.createElement('div');
 
+console.log("Test");
+
 div.setAttribute("id", "onboardor");
 
 document.body.appendChild(div);
