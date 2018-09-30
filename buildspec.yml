@@ -16,8 +16,8 @@ phases:
     commands:
       - echo "build phase"
       - yarn --cwd "onboardor" install
-      - yarn --cwd "onboardor" publish
-      - yarn --cwd "onboardor" publish-extension
+      - yarn --cwd "onboardor" run publish
+      - yarn --cwd "onboardor" run publish-extension
 artifacts:
   base-directory: 'onboardor/site'
   files:
