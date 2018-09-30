@@ -12,7 +12,6 @@ const plugins = [
     __DEV__: !isInProduction,
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      APP_NAME: JSON.stringify(process.env.APP_NAME),
       SENTRY_DSN_CLIENT: JSON.stringify(process.env.SENTRY_DSN_CLIENT),
       APP_URL: JSON.stringify(process.env.APP_URL)
     },

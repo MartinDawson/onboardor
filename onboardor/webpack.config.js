@@ -14,7 +14,6 @@ const plugins = [
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       RECAPTCHA_SITE_KEY: JSON.stringify(process.env.RECAPTCHA_SITE_KEY),
-      APP_NAME: JSON.stringify(process.env.APP_NAME),
       SENTRY_DSN_CLIENT: JSON.stringify(process.env.SENTRY_DSN_CLIENT),
     },
   }),
