@@ -23,7 +23,7 @@ export const routeConfig = {
   query,
   render: (route: IRoute): null => {
     if (route.props) {
-      if (route.props.setupCallback) {
+      if (route.props.setupCallback) {debugger
         const redirectUrl = route.match.location.query.redirectUrl;
 
         if (redirectUrl) {

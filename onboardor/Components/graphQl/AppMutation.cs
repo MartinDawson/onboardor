@@ -3,6 +3,7 @@ using GraphQL.Types;
 using onboardor.Components.dashboard.onBoardingCreator;
 using onboardor.Components.dashboard.onboardingProcess;
 using onboardor.Components.select;
+using onboardor.Components.setup;
 using onboardor.Components.shared.form;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Onboardor.Components.GraphQl
     {
         public AppMutation()
         {
+            Mutation<SetupInput, SetupPayload>("setup");
             Mutation<AddOnboardingStepInput, AddOnboardingStepPayload>("addStep");
             Mutation<EditOnboardingStepInput, EditOnboardingStepPayload>("editStep");
             Mutation<RemoveOnboardingStepInput, RemoveOnboardingStepPayload>("removeStep");

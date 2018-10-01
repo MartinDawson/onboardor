@@ -4,20 +4,20 @@ import { Portal } from "react-portal";
 const id = "onboardor-nav-link";
 
 interface IProps {
-  setup: string;
+  setupOnClick: () => void;
 }
 
 const OAuthNavLink = ({
-  setup,
+  setupOnClick,
 }: IProps) => (
   <Portal node={document.getElementsByClassName("reponav")[0]}>
-    <a
+    <button
       id={id}
-      href={setup}
+      onClick={setupOnClick}
       className="reponav-item"
     >
       onboardor
-    </a>
+    </button>
   </Portal>
 );
 

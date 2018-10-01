@@ -46,36 +46,6 @@ namespace Onboardor.Components.GraphQl
                     return organizations;
                 });
 
-            Field<StringGraphType>()
-                .Description("Returns the url for the OAUTH request or null if the user already authorized")
-                .Argument<StringGraphType>("redirectUrl", "The absolute url to redirect to")
-                .Name("setup")
-                .Resolve(c =>
-                {
-                    var context = c.UserContext.As<Context>();
-                    var csrf = Password.Generate(24, 1);
-
-                    context.HttpContext.Session.SetString("CSRF", csrf);
-
-                    var request = new Octokit.OauthLoginRequest(Env.GetString("CLIENT_ID"))
-                    {
-                        Scopes = { "repo" },
-                        State = csrf,
-                    };
-                    var redirectUri = c.GetArgument<string>("redirectUrl");
-
-                    logger.Log(LogLevel.Debug, $"csrf set: {csrf}");
-
-                    if (redirectUri != null)
-                    {
-                        request.RedirectUri = new Uri($"{Env.GetString("APP_URL")}/setupCallback?redirectUrl={redirectUri}");
-                    }
-
-                    var oAuthLoginUrl = _client.Oauth.GetGitHubLoginUrl(request);
-
-                    return oAuthLoginUrl;
-                });
-
             Field<NonNullGraphType<BooleanGraphType>>()
                 .Argument<NonNullGraphType<StringGraphType>>("code", "The code for the setup")
                 .Argument<NonNullGraphType<StringGraphType>>("state", "The CSRF protection state")

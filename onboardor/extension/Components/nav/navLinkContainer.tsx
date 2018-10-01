@@ -1,28 +1,30 @@
-import NavLink from "./navLink";
-import { graphql } from "react-relay";
-import { compose, branch, renderComponent, flattenProp } from "recompose";
+import { compose, withHandlers } from "recompose";
 import oAuthNavLink from "./oAuthNavLink";
-import { fragment } from "relay-compose";
-
-const fragments = graphql`
-  fragment navLinkContainer_navLink on Query {
-    setup(
-      redirectUrl: $redirectUrl
-    )
-  }
-`;
+import setup from "../../../Components/setup/setupMutation";
+import logErrors from "../../../Components/shared/logErrors";
 
 interface IProps {
   setup: string;
 }
 
-const NavLinkContainer = compose(
-  fragment(fragments),
-  flattenProp('navLink'),
-  branch(
-    (props: IProps) => !!props.setup,
-    renderComponent(oAuthNavLink),
-  ),
-)((NavLink));
+const handlers = {
+  setupOnClick: () => async () => {
+    try {
+      const payload = await setup({
+        redirectUrl: `${location.origin}${location.pathname}%23/onboardor`
+      });
+
+      window.location.href = payload.setup.oAuthLoginUrl;
+    } catch (error) {
+      logErrors(error);
+
+      throw error;
+    }
+  }
+};
+
+const NavLinkContainer = compose<IProps, IProps>(
+  withHandlers(handlers),
+)(oAuthNavLink);
 
 export default NavLinkContainer;

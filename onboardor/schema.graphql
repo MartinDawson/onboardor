@@ -1,5 +1,5 @@
 # source: https://localhost:49891/graphql
-# timestamp: Sat Sep 01 2018 22:32:16 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Mon Oct 01 2018 17:52:01 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
@@ -87,6 +87,7 @@ type Mutation {
   removePipeline(input: RemoveOnboardingPipelineInput!): RemoveOnboardingPipelinePayload
   removeStep(input: RemoveOnboardingStepInput!): RemoveOnboardingStepPayload
   setOnboardingMembers(input: SetOnboardingMembersInput!): SetOnboardingMembersPayload
+  setup(input: SetupInput!): SetupPayload
   subscribeMailingList(input: SubscribeMailingListInput!): SubscribeMailingListPayload
 }
 
@@ -136,14 +137,6 @@ type Query {
     id: ID!
   ): Node
   organizations: [Organization]!
-
-  """
-  Returns the url for the OAUTH request or null if the user already authorized
-  """
-  setup(
-    """The absolute url to redirect to"""
-    redirectUrl: String = null
-  ): String
   setupCallback(
     """The code for the setup"""
     code: String!
@@ -180,6 +173,16 @@ input SetOnboardingMembersInput {
 
 type SetOnboardingMembersPayload {
   clientMutationId: String
+}
+
+input SetupInput {
+  clientMutationId: String = null
+  redirectUrl: String = null
+}
+
+type SetupPayload {
+  clientMutationId: String
+  oAuthLoginUrl: String!
 }
 
 input SubscribeMailingListInput {

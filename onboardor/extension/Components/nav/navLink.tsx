@@ -8,7 +8,6 @@ import { IMatch, IStyleProps } from "../../../Components/types";
 interface IProps {
   match: IMatch;
   selected: boolean;
-  onClick: () => void;
   id: string;
 }
 
@@ -59,7 +58,6 @@ class NavLink extends React.Component<IProps, IState> {
           to="/onboardor"
           className={classnames("reponav-item", this.state.selected && "selected")}
           selected={this.state.selected}
-          onClick={this.props.onClick}
         >
           onboardor
         </Anchor>
