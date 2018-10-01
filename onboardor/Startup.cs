@@ -105,7 +105,10 @@ namespace Onboardor
             }
             else
             {
-                loggerFactory.AddAWSProvider(new AWSLoggerConfig(), (LogLevel)Env.GetInt("LOGGING_LOGLEVEL"));
+                loggerFactory.AddAWSProvider(new AWSLoggerConfig {
+                    Region = "eu-west-2",
+                    LogGroup = "Group1",
+                }, (LogLevel)Env.GetInt("LOGGING_LOGLEVEL"));
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
