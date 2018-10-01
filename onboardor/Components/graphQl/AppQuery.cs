@@ -64,6 +64,8 @@ namespace Onboardor.Components.GraphQl
                     };
                     var redirectUri = c.GetArgument<string>("redirectUrl");
 
+                    logger.Log(LogLevel.Debug, $"csrf set: {csrf}");
+
                     if (redirectUri != null)
                     {
                         request.RedirectUri = new Uri($"{Env.GetString("APP_URL")}/setupCallback?redirectUrl={redirectUri}");
@@ -85,7 +87,11 @@ namespace Onboardor.Components.GraphQl
                     var state = c.GetArgument<string>("state");
                     var code = c.GetArgument<string>("code");
 
-                    if (state != expectedState) throw new InvalidOperationException("Security fail");
+                    if (state != expectedState) {
+                        logger.Log(LogLevel.Error, $"state: ${state} does not match code: ${code}");
+
+                        throw new InvalidOperationException("Security fail");
+                    }
 
                     context.HttpContext.Session.SetString("CSRF", "");
                     var request = new Octokit.OauthTokenRequest(Env.GetString("CLIENT_ID"), Env.GetString("CLIENT_SECRET"), code);
