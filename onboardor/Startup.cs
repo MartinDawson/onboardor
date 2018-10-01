@@ -30,6 +30,7 @@ using Onboardor.Repository;
 using onboardor.Components.dashboard;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Primitives;
+using AWS.Logger;
 
 namespace Onboardor
 {
@@ -92,7 +93,6 @@ namespace Onboardor
         {
             loggerFactory.AddConsole((LogLevel)Env.GetInt("LOGGING_LOGLEVEL"), false);
             loggerFactory.AddDebug();
-            loggerFactory.AddAWSProvider(new AWS.Logger.AWSLoggerConfig(), (LogLevel)Env.GetInt("LOGGING_LOGLEVEL"));
 
             if (env.IsDevelopment())
             {
@@ -105,6 +105,7 @@ namespace Onboardor
             }
             else
             {
+                loggerFactory.AddAWSProvider(new AWSLoggerConfig(), (LogLevel)Env.GetInt("LOGGING_LOGLEVEL"));
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }

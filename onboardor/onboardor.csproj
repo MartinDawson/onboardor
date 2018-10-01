@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
+    <PackageReference Include="AWS.Logger.AspNetCore" Version="1.3.0" />
     <PackageReference Include="DotNetEnv" Version="1.2.0" />
     <PackageReference Include="GitHubJwt" Version="0.0.2" />
     <PackageReference Include="GraphQL" Version="2.0.0-alpha-927" />
