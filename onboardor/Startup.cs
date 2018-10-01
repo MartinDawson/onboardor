@@ -92,6 +92,7 @@ namespace Onboardor
         {
             loggerFactory.AddConsole((LogLevel)Env.GetInt("LOGGING_LOGLEVEL"), false);
             loggerFactory.AddDebug();
+            loggerFactory.AddAWSProvider(new AWS.Logger.AWSLoggerConfig(), (LogLevel)Env.GetInt("LOGGING_LOGLEVEL"));
 
             if (env.IsDevelopment())
             {
