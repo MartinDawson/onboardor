@@ -68,8 +68,6 @@ namespace Onboardor.Components.GraphQl
                     var token = await _client.Oauth.CreateAccessToken(request);
                     _client.Credentials = new Octokit.Credentials(token.AccessToken);
 
-                    var user = await _client.User.Current();
-
                     var organizations = await _client.Organization.GetAllForCurrent();
 
                     var mappedOrganizations = organizations.Select(x => new Organization
