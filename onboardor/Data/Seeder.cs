@@ -69,7 +69,7 @@ namespace Onboardor.Data
                         new OnboardingStep
                         {
                             Name = "Read the wiki",
-                            Description = null
+                            Description = null,
                         },
                         new OnboardingStep
                         {

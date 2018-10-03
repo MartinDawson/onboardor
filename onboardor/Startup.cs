@@ -63,10 +63,16 @@ namespace Onboardor
                 options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
                 options.HttpsPort = 443;
             });
-            services.AddSession(options =>
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => new SessionOptions
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-                options.Cookie.Name = ".onboardor";
+                Cookie = new CookieBuilder
+                {
+                    SameSite = SameSiteMode.None,
+                    IsEssential = true,
+                    Name = ".onboardor",
+                    Domain = ".github.com"
+                }
             });
 
             services.Configure<DataProtectionTokenProviderOptions>(options =>
@@ -126,7 +132,16 @@ namespace Onboardor
             });
             app.UseCookiePolicy();
             app.UseStaticFiles();
-            app.UseSession();
+            app.UseSession(new SessionOptions
+            {
+                Cookie = new CookieBuilder
+                {
+                    SameSite = SameSiteMode.None,
+                    IsEssential = true,
+                    Name = ".onboardor",
+                    Domain = ".github.com"
+                }
+            });
             app.UseGraphQLHttp<AppSchema>(new GraphQLHttpOptions
             {
                 ExposeExceptions = !env.IsProduction(),

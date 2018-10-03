@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Onboardor.Data;
 
 namespace onboardor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181003162633_IssueId")]
+    partial class IssueId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,9 +185,6 @@ namespace onboardor.Migrations
             modelBuilder.Entity("onboardor.Components.dashboard.Member", b =>
                 {
                     b.Property<int>("Id");
-
-                    b.Property<string>("AccessToken")
-                        .IsRequired();
 
                     b.Property<string>("AvatarUrl")
                         .IsRequired();

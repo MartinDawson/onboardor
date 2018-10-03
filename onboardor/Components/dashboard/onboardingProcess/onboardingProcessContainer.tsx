@@ -1,7 +1,6 @@
 import { graphql } from "react-relay";
 import { compose, renameProp } from "recompose";
 import OnboardingProcess from "./onboardingProcess";
-import { IOrganization } from "../organization/organization";
 import { fragment } from "relay-compose";
 
 const query = graphql`
@@ -28,10 +27,6 @@ const fragments = graphql`
     }
   }
 `;
-
-interface IProps {
-  organization: IOrganization;
-}
 
 const Component = compose(
   renameProp("node", "organization"),

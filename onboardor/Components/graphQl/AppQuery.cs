@@ -16,21 +16,21 @@ using Onboardor.Components.graphQl;
 using Microsoft.AspNetCore.Http;
 using onboardor.Components.shared.utilities;
 using Microsoft.EntityFrameworkCore;
+using Octokit;
 
 namespace Onboardor.Components.GraphQl
 {
     public class AppQuery : GraphQL.Relay.Types.Temp.QueryGraphType
     {
-        private Octokit.GitHubClient _client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(Env.GetString("APP_NAME")));
+        private GitHubClient _client = new GitHubClient(new ProductHeaderValue(Env.GetString("APP_NAME")));
 
         private readonly IOrganizationService _organizationService;
         private readonly IMemberService _memberService;
-        private readonly IHostingEnvironment _env;
 
-        public AppQuery(ILoggerFactory loggerFactory, IHostingEnvironment env, 
-            IOrganizationService organizationService, IMemberService memberService)
+        public AppQuery(ILoggerFactory loggerFactory,
+            IOrganizationService organizationService,
+            IMemberService memberService)
         {
-            _env = env;
             _organizationService = organizationService;
             _memberService = memberService;
 
@@ -40,13 +40,20 @@ namespace Onboardor.Components.GraphQl
                 .Name("organizations")
                 .ResolveAsync(async c =>
                 {
+               //     var context = c.UserContext.As<Context>();
+              //      var token = context.HttpContext.Session.GetString("OAuthToken");
+
+                  //  if (token == null) throw new NullReferenceException("OAuthToken is null");
+
+                 //   _client.Credentials = new Credentials(token);
+
                     var user = await _client.User.Current();
                     var organizations = _organizationService.GetOrganizations(user.Id);
 
                     return organizations;
                 });
 
-            Field<NonNullGraphType<BooleanGraphType>>()
+            Field<NonNullGraphType<StringGraphType>>()
                 .Argument<NonNullGraphType<StringGraphType>>("code", "The code for the setup")
                 .Argument<NonNullGraphType<StringGraphType>>("state", "The CSRF protection state")
                 .Name("setupCallback")
@@ -57,16 +64,13 @@ namespace Onboardor.Components.GraphQl
                     var state = c.GetArgument<string>("state");
                     var code = c.GetArgument<string>("code");
 
-                    if (state != expectedState) {
-                        logger.Log(LogLevel.Error, $"state: ${state} does not match code: ${code}");
-
-                        throw new InvalidOperationException("Security fail");
-                    }
+                    if (state != expectedState) throw new InvalidOperationException();
 
                     context.HttpContext.Session.SetString("CSRF", "");
-                    var request = new Octokit.OauthTokenRequest(Env.GetString("CLIENT_ID"), Env.GetString("CLIENT_SECRET"), code);
+                    var request = new OauthTokenRequest(Env.GetString("CLIENT_ID"), Env.GetString("CLIENT_SECRET"), code);
                     var token = await _client.Oauth.CreateAccessToken(request);
-                    _client.Credentials = new Octokit.Credentials(token.AccessToken);
+
+                    _client.Credentials = new Credentials(token.AccessToken);
 
                     var organizations = await _client.Organization.GetAllForCurrent();
 
@@ -101,7 +105,7 @@ namespace Onboardor.Components.GraphQl
                         }
                     }
 
-                    return true;
+                    return token.AccessToken;
                 });
         }
     }

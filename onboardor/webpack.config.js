@@ -15,6 +15,7 @@ const plugins = [
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       RECAPTCHA_SITE_KEY: JSON.stringify(process.env.RECAPTCHA_SITE_KEY),
       SENTRY_DSN_CLIENT: JSON.stringify(process.env.SENTRY_DSN_CLIENT),
+      EXTENSION_ID: JSON.stringify(process.env.EXTENSION_ID),
     },
   }),
   new HTMLPlugin({

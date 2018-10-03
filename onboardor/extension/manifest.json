@@ -10,12 +10,24 @@
       "js": ["./build/vendor.bundle.js", "./build/main.bundle.js"]
     }
   ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://live.jmcs7h5ryz.eu-west-2.elasticbeanstalk.com/*",
+      "*://staging.jmcs7h5ryz.eu-west-2.elasticbeanstalk.com/*",
+      "*://*.onboardor.com/*",
+      "*://localhost/*"
+    ]
+  },
   "permissions": [
     "*://live.jmcs7h5ryz.eu-west-2.elasticbeanstalk.com/*",
     "*://staging.jmcs7h5ryz.eu-west-2.elasticbeanstalk.com/*",
     "*://*.onboardor.com/*",
     "*://localhost/*",
     "webRequest",
-    "webRequestBlocking"
+    "webRequestBlocking",
+    "cookies"
   ]
 }

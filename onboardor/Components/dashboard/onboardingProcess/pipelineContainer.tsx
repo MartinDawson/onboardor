@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import editPipelineMutation from "./editPipelineMutation";
 import Pipeline, { IEditPipelineInput, IAddOnboardingStepInput } from "./pipeline";
 import addStepMutation from "./addStepMutation";
+import logErrors from "../../shared/logErrors";
 
 const fragments = graphql`
   fragment pipelineContainer_pipeline on OnboardingPipeline {
@@ -50,14 +51,35 @@ const handlers = {
     editPipelineMutation({
       id: onboardingPipelineId,
       name: input.pipelineName,
-    }),
+    });
     togglePipeline();
   },
   addStep: ({ onboardingPipelineId, toggleStep }: IProps) => (input: IAddOnboardingStepInput) => {
+    let repositoryId = 0;
+
+    if (window.chrome && chrome.extension) {
+      try {
+        const octolytics = document.head.querySelector("[name=octolytics-dimension-repository_id]");
+
+        repositoryId = parseInt(octolytics.getAttribute("content"), 10);
+
+        if (isNaN(repositoryId)) {
+          throw new Error();
+        }
+        } catch {
+          const error = new Error("CRITICAL: repositoryId could not be got from the octolytics meta tag");
+
+          logErrors(error);
+
+          throw error;
+      }
+    }
+
     addStepMutation({
+      repositoryId,
       pipelineId: onboardingPipelineId,
       name: input.onboardingStepName,
-    }),
+    });
     toggleStep();
   },
 };

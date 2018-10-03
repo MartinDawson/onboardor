@@ -8,6 +8,7 @@ using MailChimp.Net.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Octokit;
 using onboardor.Components.dashboard;
 using onboardor.Components.shared.utilities;
 using Onboardor.Components.graphQl;
@@ -21,7 +22,7 @@ namespace onboardor.Components.setup
 {
     public class SetupPayload : MutationPayloadGraphType
     {
-        private Octokit.GitHubClient _client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(Env.GetString("APP_NAME")));
+        private GitHubClient _client = new GitHubClient(new Octokit.ProductHeaderValue(Env.GetString("APP_NAME")));
         private ILogger<SetupPayload> _logger;
 
         public SetupPayload(ILoggerFactory loggerFactory)
@@ -40,7 +41,7 @@ namespace onboardor.Components.setup
 
             c.HttpContext.Session.SetString("CSRF", csrf);
 
-            var request = new Octokit.OauthLoginRequest(Env.GetString("CLIENT_ID"))
+            var request = new OauthLoginRequest(Env.GetString("CLIENT_ID"))
             {
                 Scopes = { "repo" },
                 State = csrf,

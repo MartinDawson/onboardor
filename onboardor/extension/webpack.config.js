@@ -13,7 +13,7 @@ const plugins = [
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       SENTRY_DSN_CLIENT: JSON.stringify(process.env.SENTRY_DSN_CLIENT),
-      APP_URL: JSON.stringify(process.env.APP_URL)
+      APP_URL: JSON.stringify(process.env.APP_URL),
     },
   }),
 ];

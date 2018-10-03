@@ -1,5 +1,5 @@
 # source: https://localhost:49891/graphql
-# timestamp: Mon Oct 01 2018 17:52:01 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Wed Oct 03 2018 21:29:21 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
@@ -15,6 +15,7 @@ type AddOnboardingPipelinePayload {
 input AddOnboardingStepInput {
   clientMutationId: String = null
   pipelineId: Int!
+  repositoryId: Int!
   name: String!
   description: String = null
 }
@@ -143,7 +144,7 @@ type Query {
 
     """The CSRF protection state"""
     state: String!
-  ): Boolean!
+  ): String!
 }
 
 input RemoveOnboardingPipelineInput {

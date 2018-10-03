@@ -11,6 +11,8 @@ namespace onboardor.Components.dashboard
         [Required]
         public int Id { get; set; }
         [Required]
+        public int IssueId { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Description { get; set; }
         public OnboardingPipeline OnboardingPipeline { get; set; } 
