@@ -1,12 +1,16 @@
 ﻿using DotNetEnv;
+using GraphQL;
 using GraphQL.Relay.Types;
 using GraphQL.Types;
 using MailChimp.Net;
 using MailChimp.Net.Interfaces;
 using MailChimp.Net.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Octokit;
 using onboardor.Components.dashboard;
+using onboardor.Components.shared;
+using Onboardor.Components.graphQl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,29 +36,23 @@ namespace onboardor.Components.dashboard.onboardingProcess
         public override async Task<object> MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context)
         {
             var pipelineId = inputs.Get<int>("pipelineId");
-            var repositoryId = inputs.Get<int>("repositoryId");
+            var organizationName = inputs.Get<string>("organizationName");
             var name = inputs.Get<string>("name");
             var description = inputs.Get<string>("description");
             var pipeline = _pipelineService.GetPipeline(pipelineId);
+            var userContext = context.UserContext.As<Context>();
+            var token = userContext.HttpContext.Session.GetString("OAuthToken");
 
-            var p = await _client.Repository.Get(repositoryId);
+            if (token == null) throw new NullReferenceException("OAuthToken is null");
 
-            //var label = await _client.Issue.Labels.Create(repositoryId, new NewLabel("onboarding", "43cea2")
-            //{
-            //    Description = "Onboardor.com generated"
-            //});
+            _client.Credentials = new Credentials(token);
 
-            //var newIssue = new NewIssue(name)
-            //{
-            //    Body = description,
-            //};
+            var newIssue = new NewIssue(name)
+            {
+                Body = description,
+            };
 
-            //  newIssue.Labels.Add(label.Name);
-            var newIssue = new NewIssue("test");
-
-            var issue = await _client.Issue.Create(136980719, newIssue);
-
-            //var issue = await _client.Issue.Create(p.Id, newIssue);
+            var issue = await _client.Issue.Create(organizationName, Constants.RepositoryName, newIssue);
 
             pipeline.OnboardingSteps.Add(new OnboardingStep
             {

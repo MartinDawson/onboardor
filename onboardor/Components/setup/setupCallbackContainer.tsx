@@ -23,8 +23,6 @@ export const routeConfig = {
   query,
   render: (route: IRoute): null => {
     if (route.props) {
-      chrome.runtime.sendMessage(process.env.EXTENSION_ID, { gitHubToken: route.props.setupCallback });
-
       const redirectUrl = route.match.location.query.redirectUrl;
 
       if (redirectUrl) {

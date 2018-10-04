@@ -1,5 +1,5 @@
 # source: https://localhost:49891/graphql
-# timestamp: Wed Oct 03 2018 21:29:21 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Fri Oct 05 2018 00:17:33 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
@@ -15,7 +15,7 @@ type AddOnboardingPipelinePayload {
 input AddOnboardingStepInput {
   clientMutationId: String = null
   pipelineId: Int!
-  repositoryId: Int!
+  organizationName: String!
   name: String!
   description: String = null
 }

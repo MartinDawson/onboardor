@@ -44,6 +44,7 @@ const OnboardingProcess = ({
           key={pipeline.id}
           form={`pipeline_${i}`}
           pipeline={pipeline}
+          organizationName={organization.name}
         />
       )}
       <EmptyPipeline organizationId={organization.organizationId} />

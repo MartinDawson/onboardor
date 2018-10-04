@@ -12,6 +12,7 @@ const fetchQuery = (operation: { text: string }, variables: any) =>
       query: operation.text,
       variables,
     }),
+    credentials: "same-origin",
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",

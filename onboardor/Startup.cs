@@ -64,16 +64,7 @@ namespace Onboardor
                 options.HttpsPort = 443;
             });
             services.AddDistributedMemoryCache();
-            services.AddSession(options => new SessionOptions
-            {
-                Cookie = new CookieBuilder
-                {
-                    SameSite = SameSiteMode.None,
-                    IsEssential = true,
-                    Name = ".onboardor",
-                    Domain = ".github.com"
-                }
-            });
+            services.AddSession();
 
             services.Configure<DataProtectionTokenProviderOptions>(options =>
             {
@@ -130,16 +121,16 @@ namespace Onboardor
             {
                 ForwardedHeaders = ForwardedHeaders.All,
             });
-            app.UseCookiePolicy();
-            app.UseStaticFiles();
-            app.UseSession(new SessionOptions
+            app.UseCookiePolicy(new CookiePolicyOptions
             {
+                MinimumSameSitePolicy = SameSiteMode.None
+            });
+            app.UseStaticFiles();
+            app.UseSession(new SessionOptions {
                 Cookie = new CookieBuilder
                 {
+                    Name = ".AspNetCore.Session",
                     SameSite = SameSiteMode.None,
-                    IsEssential = true,
-                    Name = ".onboardor",
-                    Domain = ".github.com"
                 }
             });
             app.UseGraphQLHttp<AppSchema>(new GraphQLHttpOptions

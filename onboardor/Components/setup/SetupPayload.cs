@@ -36,10 +36,10 @@ namespace onboardor.Components.setup
 
         public override object MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context)
         {
-            var c = context.UserContext.As<Context>();
+            var userContext = context.UserContext.As<Context>();
             var csrf = Password.Generate(24, 1);
 
-            c.HttpContext.Session.SetString("CSRF", csrf);
+            userContext.HttpContext.Session.SetString("CSRF", csrf);
 
             var request = new OauthLoginRequest(Env.GetString("CLIENT_ID"))
             {
