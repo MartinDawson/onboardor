@@ -69,12 +69,10 @@ namespace Onboardor.Data
                         new OnboardingStep
                         {
                             Name = "Read the wiki",
-                            Description = null,
                         },
                         new OnboardingStep
                         {
                             Name = "Get .env variables",
-                            Description = "Check with @sebastian for the required .env variables"
                         }
                     }
                 },
@@ -86,12 +84,10 @@ namespace Onboardor.Data
                         new OnboardingStep
                         {
                             Name = "Set up email",
-                            Description = null
                         },
                         new OnboardingStep
                         {
                             Name = "Go through codebase with @MartinDawson",
-                            Description = null
                         }
                     }
                 }

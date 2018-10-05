@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 4f9212a34efaaa401f0929fe74221c05
+ * @relayHash c4b05434d099186fb3836d103d230835
  */
 
 /* eslint-disable */
@@ -57,6 +57,11 @@ fragment pipelineContainer_pipeline on OnboardingPipeline {
 fragment stepContainer_step on OnboardingStep {
   onboardingStepId
   name
+  issueNumber
+  organization {
+    name
+    id
+  }
 }
 */
 
@@ -96,7 +101,7 @@ return {
   "operationKind": "mutation",
   "name": "editStepMutation",
   "id": null,
-  "text": "mutation editStepMutation(\n  $input: EditOnboardingStepInput!\n) {\n  editStep(input: $input) {\n    pipeline {\n      ...pipelineContainer_pipeline\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n}\n",
+  "text": "mutation editStepMutation(\n  $input: EditOnboardingStepInput!\n) {\n  editStep(input: $input) {\n    pipeline {\n      ...pipelineContainer_pipeline\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  organization {\n    name\n    id\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -183,7 +188,27 @@ return {
                     "args": null,
                     "storageKey": null
                   },
-                  v3
+                  v3,
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "issueNumber",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "organization",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "Organization",
+                    "plural": false,
+                    "selections": [
+                      v3,
+                      v2
+                    ]
+                  }
                 ]
               }
             ]

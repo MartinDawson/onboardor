@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "onboardor",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "content_scripts": [
     {
       "matches": [

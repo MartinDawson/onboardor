@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import editPipelineMutation from "./editPipelineMutation";
 import Pipeline, { IEditPipelineInput, IAddOnboardingStepInput } from "./pipeline";
 import addStepMutation from "./addStepMutation";
-import logErrors from "../../shared/logErrors";
 
 const fragments = graphql`
   fragment pipelineContainer_pipeline on OnboardingPipeline {

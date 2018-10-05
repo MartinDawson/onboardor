@@ -57,8 +57,7 @@ namespace onboardor.Components.dashboard.onboardingProcess
             pipeline.OnboardingSteps.Add(new OnboardingStep
             {
                 Name = name,
-                Description = description,
-                IssueId = issue.Id
+                IssueNumber = issue.Number
             });
 
             _pipelineService.Update(pipeline);

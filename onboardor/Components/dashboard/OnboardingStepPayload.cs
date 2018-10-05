@@ -20,8 +20,9 @@ namespace onboardor.Components.dashboard
             Name = nameof(OnboardingStep);
 
             Id(x => x.Id);
+            Field(x => x.IssueNumber);
             Field(x => x.Name);
-            Field(x => x.Description, nullable: true);
+            Field<OrganizationPayload>("organization", resolve: c => c.Source.OnboardingPipeline.Organization);
         }
 
         public override OnboardingStep GetById(string id)
