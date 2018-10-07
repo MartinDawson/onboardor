@@ -15,6 +15,7 @@ const fragments = graphql`
     name
     onboardingSteps {
       id
+      isClosed
       ...stepContainer_step
     }
   }

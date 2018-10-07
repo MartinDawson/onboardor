@@ -2,6 +2,7 @@ import React from "react";
 import { IRoute } from "../../types";
 import { IMember } from "../member/member";
 import { IPipline } from "../onboardingProcess/pipeline";
+import { IStep } from "../onboardingProcess/step";
 
 interface IProps extends IRoute, IOrganization {}
 
@@ -12,6 +13,7 @@ export interface IOrganization {
   avatarUrl: string;
   members: IMember[];
   onboardingPipelines: IPipline[];
+  onboardingSteps: IStep[];
 }
 
 const Organization = ({
@@ -19,7 +21,7 @@ const Organization = ({
   name,
 }: IProps) => (
   <div>
-    <OnBoardingSteps organizationName={name} onboardingSteps={onboardingSteps} />
+    {/* <OnBoardingSteps organizationName={name} onboardingSteps={onboardingSteps} /> */}
   </div>
 );
 

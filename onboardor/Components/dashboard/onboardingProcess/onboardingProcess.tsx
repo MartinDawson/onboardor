@@ -1,16 +1,10 @@
 import React from "react";
-import { Container, Text, Row, Column, Box, ButtonTransparent, Modal } from "rebass";
+import { Container, Text, Row } from "rebass";
 import { IOrganization } from "../organization/organization";
 import styled from "styled-components";
-import Button from "../../shared/button/button";
-import FieldInput from "../../shared/inputs/fieldInput";
-import { Field, InjectedFormProps } from "redux-form";
-import createFieldValidator from "../../shared/inputs/createFieldValidator";
-import Cross from "../../../wwwroot/assets/cross.svg";
-import Pencil from "../../../wwwroot/assets/pencil.svg";
-import { Flex } from "grid-styled";
-import { PortalWithState } from "react-portal";
+import { InjectedFormProps } from "redux-form";
 import EmptyPipeline from "./emptyPipelineContainer";
+import ClosedPipeline from "./closedPipeline";
 import Pipeline from "./pipelineContainer";
 
 interface IProps extends InjectedFormProps {
@@ -47,6 +41,7 @@ const OnboardingProcess = ({
           organizationName={organization.name}
         />
       )}
+      <ClosedPipeline onboardingSteps={organization.onboardingSteps} />
       <EmptyPipeline organizationId={organization.organizationId} />
     </PipelineRow>
   </Container>

@@ -1,5 +1,5 @@
 # source: https://localhost:49891/graphql
-# timestamp: Fri Oct 05 2018 23:15:51 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Sat Oct 06 2018 16:17:08 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
@@ -108,10 +108,9 @@ type OnboardingPipeline implements Node {
 }
 
 type OnboardingStep implements Node {
-  description: String
-
   """The Global Id of the OnboardingStep"""
   id: ID!
+  isClosed: Boolean!
   issueNumber: Int!
   name: String!
 
@@ -128,6 +127,7 @@ type Organization implements Node {
   members: [Member]!
   name: String!
   onboardingPipelines: [OnboardingPipeline]!
+  onboardingSteps: [OnboardingStep]!
 
   """The Id of the Organization"""
   organizationId: Int!
@@ -146,7 +146,7 @@ type Query {
 
     """The CSRF protection state"""
     state: String!
-  ): String!
+  ): Boolean!
 }
 
 input RemoveOnboardingPipelineInput {

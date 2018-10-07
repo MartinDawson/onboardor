@@ -14,8 +14,10 @@ export type stepContainer_step = {|
   +onboardingStepId: number,
   +name: string,
   +issueNumber: number,
+  +isClosed: boolean,
   +organization: ?{|
-    +name: string
+    +id: string,
+    +name: string,
   |},
   +$refType: stepContainer_step$ref,
 |};
@@ -53,6 +55,13 @@ return {
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "isClosed",
+      "args": null,
+      "storageKey": null
+    },
+    {
       "kind": "LinkedField",
       "alias": null,
       "name": "organization",
@@ -61,6 +70,13 @@ return {
       "concreteType": "Organization",
       "plural": false,
       "selections": [
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "id",
+          "args": null,
+          "storageKey": null
+        },
         v0
       ]
     }
@@ -68,5 +84,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'f5abb1fd5f9f923a42e663593510744c';
+(node/*: any*/).hash = '1db5fc63d6fb5d83a1fafaf093321bfe';
 module.exports = node;

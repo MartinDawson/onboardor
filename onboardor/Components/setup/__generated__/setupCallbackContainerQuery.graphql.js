@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 8e1f8b883298ee63e73a2afb464655a1
+ * @relayHash 3132c5bf952cf98cfec0c59bf06ff6fb
  */
 
 /* eslint-disable */
@@ -14,7 +14,7 @@ export type setupCallbackContainerQueryVariables = {|
   state: string,
 |};
 export type setupCallbackContainerQueryResponse = {|
-  +setupCallback: string
+  +setupCallback: boolean
 |};
 export type setupCallbackContainerQuery = {|
   variables: setupCallbackContainerQueryVariables,

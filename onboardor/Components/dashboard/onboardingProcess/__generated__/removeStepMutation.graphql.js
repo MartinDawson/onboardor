@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash b08a5f0154e71119b156029359b2da60
+ * @relayHash b7240e215a2ed0cbe0446a78189b82d2
  */
 
 /* eslint-disable */
@@ -49,6 +49,7 @@ fragment pipelineContainer_pipeline on OnboardingPipeline {
   name
   onboardingSteps {
     id
+    isClosed
     ...stepContainer_step
   }
 }
@@ -57,9 +58,10 @@ fragment stepContainer_step on OnboardingStep {
   onboardingStepId
   name
   issueNumber
+  isClosed
   organization {
-    name
     id
+    name
   }
 }
 */
@@ -100,7 +102,7 @@ return {
   "operationKind": "mutation",
   "name": "removeStepMutation",
   "id": null,
-  "text": "mutation removeStepMutation(\n  $input: RemoveOnboardingStepInput!\n) {\n  removeStep(input: $input) {\n    pipeline {\n      ...pipelineContainer_pipeline\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  organization {\n    name\n    id\n  }\n}\n",
+  "text": "mutation removeStepMutation(\n  $input: RemoveOnboardingStepInput!\n) {\n  removeStep(input: $input) {\n    pipeline {\n      ...pipelineContainer_pipeline\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -183,6 +185,13 @@ return {
                   {
                     "kind": "ScalarField",
                     "alias": null,
+                    "name": "isClosed",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
                     "name": "onboardingStepId",
                     "args": null,
                     "storageKey": null
@@ -204,8 +213,8 @@ return {
                     "concreteType": "Organization",
                     "plural": false,
                     "selections": [
-                      v3,
-                      v2
+                      v2,
+                      v3
                     ]
                   }
                 ]

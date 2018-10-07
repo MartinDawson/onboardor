@@ -17,6 +17,7 @@ export type pipelineContainer_pipeline = {|
   +name: string,
   +onboardingSteps: $ReadOnlyArray<?{|
     +id: string,
+    +isClosed: boolean,
     +$fragmentRefs: stepContainer_step$ref,
   |}>,
   +$refType: pipelineContainer_pipeline$ref,
@@ -65,6 +66,13 @@ return {
       "selections": [
         v0,
         {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "isClosed",
+          "args": null,
+          "storageKey": null
+        },
+        {
           "kind": "FragmentSpread",
           "name": "stepContainer_step",
           "args": null
@@ -75,5 +83,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '261fb122ea396ee0bd845865600f6792';
+(node/*: any*/).hash = '3bc7f91028896786039b14920b3b011f';
 module.exports = node;

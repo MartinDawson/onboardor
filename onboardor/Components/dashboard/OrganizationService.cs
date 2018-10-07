@@ -11,12 +11,16 @@ namespace onboardor.Components.dashboard
     {
         private IRepository<Organization> _repository;
         private IRepository<Member> _membersRepository;
+        private IRepository<OnboardingStep> _stepRepository;
 
-        public OrganizationService(IRepository<Organization> repository,
-            IRepository<Member> membersRepository)
+        public OrganizationService(
+            IRepository<Organization> repository,
+            IRepository<Member> membersRepository,
+            IRepository<OnboardingStep> stepRepository)
         {
             _repository = repository;
             _membersRepository = membersRepository;
+            _stepRepository = stepRepository;
         }
 
         public void Add(Organization organization)
@@ -27,6 +31,20 @@ namespace onboardor.Components.dashboard
         public void Update(Organization newOrganization)
         {
             _repository.Update(newOrganization);
+        }
+
+        public List<OnboardingStep> GetStepsForOrganization(int organizationId)
+        {
+            var organization = _repository.GetAll().Single(x => x.Id == organizationId);
+
+            var steps = organization.OnboardingPipelines.SelectMany(x => x.OnboardingSteps);
+
+            foreach (var step in steps)
+            {
+                _stepRepository.Reload(step);
+            }
+
+            return steps.ToList();
         }
 
         public List<Organization> GetOrganizations(int userId)

@@ -38,7 +38,7 @@ namespace Onboardor
     {
         private readonly IHostingEnvironment _env;
 
-        public Startup(IConfiguration configuration, ILoggerFactory loggerFactory, IHostingEnvironment env)
+        public Startup(ILoggerFactory loggerFactory, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -73,7 +73,8 @@ namespace Onboardor
             services.AddGraphQLHttp();
             services.AddMvc()
                 .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1); ;
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddGitHubWebHooks();
             services.AddMemoryCache();
 
             var builder = RegisterServices();
@@ -102,7 +103,8 @@ namespace Onboardor
             }
             else
             {
-                loggerFactory.AddAWSProvider(new AWSLoggerConfig {
+                loggerFactory.AddAWSProvider(new AWSLoggerConfig
+                {
                     Region = "eu-west-2",
                     LogGroup = "Group1",
                 }, (LogLevel)Env.GetInt("LOGGING_LOGLEVEL"));
@@ -138,15 +140,12 @@ namespace Onboardor
                 ExposeExceptions = !env.IsProduction(),
                 BuildUserContext = BuildUserContext,
             });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     "app",
-                    "{action}",
-                    new
-                    {
-                        controller = "App",
-                    }
+                    "{controller}/{action}"
                 );
 
                 routes.MapSpaFallbackRoute(
@@ -187,7 +186,6 @@ namespace Onboardor
             builder.RegisterType<AppQuery>();
             builder.RegisterType<AppMutation>();
             builder.RegisterType<Repository<Organization, ApplicationDbContext>>().As<IRepository<Organization>>();
-            builder.RegisterType<Repository<Member, ApplicationDbContext>>().As<IRepository<Member>>();
             builder.RegisterType<Repository<Member, ApplicationDbContext>>().As<IRepository<Member>>();
             builder.RegisterType<Repository<OnboardingPipeline, ApplicationDbContext>>().As<IRepository<OnboardingPipeline>>();
             builder.RegisterType<Repository<OnboardingStep, ApplicationDbContext>>().As<IRepository<OnboardingStep>>();

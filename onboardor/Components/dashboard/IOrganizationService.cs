@@ -7,6 +7,7 @@ namespace onboardor.Components.dashboard
 {
     public interface IOrganizationService
     {
+        List<OnboardingStep> GetStepsForOrganization(int organizationId);
         void Add(Organization organization);
         void Update(Organization newOrganization);
         Organization GetOrganization(int organizationId);

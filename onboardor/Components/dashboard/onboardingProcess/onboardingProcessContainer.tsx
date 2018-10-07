@@ -21,6 +21,11 @@ const fragments = graphql`
   fragment onboardingProcessContainer_organization on Organization {
     organizationId
     name
+    onboardingSteps {
+      id
+      isClosed
+      ...stepContainer_step
+    }
     onboardingPipelines {
       id
       ...pipelineContainer_pipeline

@@ -2,7 +2,6 @@ import EmptyPipeline from "./emptyPipeline";
 import { compose, withStateHandlers, withHandlers } from "recompose";
 import { reduxForm } from "redux-form";
 import addPipelineMutation from "./addPipelineMutation";
-import { IOrganization } from "../organization/organization";
 
 interface IState {
   isAddingPipeline: boolean;
@@ -19,7 +18,7 @@ interface IAddPipelineInput {
 
 const handlers = {
   addPipeline: ({ organizationId, togglePipeline }: IProps) => (input: IAddPipelineInput) => {
-    addPipelineMutation({ organizationId, ...input }),
+    addPipelineMutation({ organizationId, ...input });
     togglePipeline();
   },
 };

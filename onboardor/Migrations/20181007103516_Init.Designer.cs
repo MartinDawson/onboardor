@@ -10,8 +10,8 @@ using Onboardor.Data;
 namespace onboardor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181005211613_IssueNumber")]
-    partial class IssueNumber
+    [Migration("20181007103516_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -221,11 +221,9 @@ namespace onboardor.Migrations
 
             modelBuilder.Entity("onboardor.Components.dashboard.OnboardingStep", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("Id");
 
-                    b.Property<string>("Description");
+                    b.Property<bool>("IsClosed");
 
                     b.Property<int>("IssueNumber");
 

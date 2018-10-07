@@ -219,9 +219,9 @@ namespace onboardor.Migrations
 
             modelBuilder.Entity("onboardor.Components.dashboard.OnboardingStep", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("Id");
+
+                    b.Property<bool>("IsClosed");
 
                     b.Property<int>("IssueNumber");
 

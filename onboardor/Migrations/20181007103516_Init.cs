@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace onboardor.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,7 +54,6 @@ namespace onboardor.Migrations
                     Id = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     AvatarUrl = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
                     IsBeingOnboarded = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false)
                 },
@@ -232,10 +231,10 @@ namespace onboardor.Migrations
                 name: "OnboardingSteps",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<int>(nullable: false),
+                    IssueNumber = table.Column<int>(nullable: false),
+                    IsClosed = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
                     OnboardingPipelineId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

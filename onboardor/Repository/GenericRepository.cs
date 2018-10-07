@@ -11,6 +11,7 @@ namespace Onboardor.Repository
     {
         IQueryable<T> GetAll();
         T Get(int id);
+        void Reload(T entity);
         IQueryable<T> Include(params Expression<Func<T, object>>[] paths);
         void Add(T item);
         void Update(T entity);
@@ -82,6 +83,11 @@ namespace Onboardor.Repository
         public virtual void Attach(T entity)
         {
             Context.Set<T>().Attach(entity);
+        }
+
+        public virtual void Reload(T entity)
+        {
+            Context.Entry(entity).Reload();
         }
 
         public virtual void Update(T entity)

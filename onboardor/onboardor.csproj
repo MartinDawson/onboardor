@@ -22,6 +22,8 @@
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="3.0.1" />
     <PackageReference Include="MailChimp.Net.V3" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.WebHooks.Receivers" Version="1.0.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.WebHooks.Receivers.GitHub" Version="1.0.0-preview2-final" />
     <PackageReference Include="Octokit" Version="0.30.0" />
   </ItemGroup>
   <ItemGroup>

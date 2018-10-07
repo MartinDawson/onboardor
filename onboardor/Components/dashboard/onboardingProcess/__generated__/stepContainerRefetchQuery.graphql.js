@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash da7f255c67da1208b8dea8a2ba6a58ef
+ * @relayHash 2fe732a593756a18e6df17b8efa4bde5
  */
 
 /* eslint-disable */
@@ -10,36 +10,31 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type onboardingProcessContainer_organization$ref = any;
-export type RemoveOnboardingPipelineInput = {
-  clientMutationId?: ?string,
-  id: number,
-};
-export type removePipelineMutationVariables = {|
-  input: RemoveOnboardingPipelineInput
+export type stepContainerRefetchQueryVariables = {|
+  id: string
 |};
-export type removePipelineMutationResponse = {|
-  +removePipeline: ?{|
-    +organization: {|
-      +$fragmentRefs: onboardingProcessContainer_organization$ref
-    |}
+export type stepContainerRefetchQueryResponse = {|
+  +node: ?{|
+    +$fragmentRefs: onboardingProcessContainer_organization$ref
   |}
 |};
-export type removePipelineMutation = {|
-  variables: removePipelineMutationVariables,
-  response: removePipelineMutationResponse,
+export type stepContainerRefetchQuery = {|
+  variables: stepContainerRefetchQueryVariables,
+  response: stepContainerRefetchQueryResponse,
 |};
 */
 
 
 /*
-mutation removePipelineMutation(
-  $input: RemoveOnboardingPipelineInput!
+query stepContainerRefetchQuery(
+  $id: ID!
 ) {
-  removePipeline(input: $input) {
-    organization {
+  node(id: $id) {
+    __typename
+    ... on Organization {
       ...onboardingProcessContainer_organization
-      id
     }
+    id
   }
 }
 
@@ -84,30 +79,30 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "RemoveOnboardingPipelineInput!",
+    "name": "id",
+    "type": "ID!",
     "defaultValue": null
   }
 ],
 v1 = [
   {
     "kind": "Variable",
-    "name": "input",
-    "variableName": "input",
-    "type": "RemoveOnboardingPipelineInput!"
+    "name": "id",
+    "variableName": "id",
+    "type": "ID!"
   }
 ],
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "id",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "id",
+  "name": "name",
   "args": null,
   "storageKey": null
 },
@@ -120,7 +115,7 @@ v4 = {
   "concreteType": "OnboardingStep",
   "plural": true,
   "selections": [
-    v3,
+    v2,
     {
       "kind": "ScalarField",
       "alias": null,
@@ -135,7 +130,7 @@ v4 = {
       "args": null,
       "storageKey": null
     },
-    v2,
+    v3,
     {
       "kind": "ScalarField",
       "alias": null,
@@ -152,43 +147,38 @@ v4 = {
       "concreteType": "Organization",
       "plural": false,
       "selections": [
-        v3,
-        v2
+        v2,
+        v3
       ]
     }
   ]
 };
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "removePipelineMutation",
+  "operationKind": "query",
+  "name": "stepContainerRefetchQuery",
   "id": null,
-  "text": "mutation removePipelineMutation(\n  $input: RemoveOnboardingPipelineInput!\n) {\n  removePipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
+  "text": "query stepContainerRefetchQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "removePipelineMutation",
-    "type": "Mutation",
+    "name": "stepContainerRefetchQuery",
+    "type": "Query",
     "metadata": null,
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "removePipeline",
+        "name": "node",
         "storageKey": null,
         "args": v1,
-        "concreteType": "RemoveOnboardingPipelinePayload",
+        "concreteType": null,
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
-            "alias": null,
-            "name": "organization",
-            "storageKey": null,
-            "args": null,
-            "concreteType": "Organization",
-            "plural": false,
+            "kind": "InlineFragment",
+            "type": "Organization",
             "selections": [
               {
                 "kind": "FragmentSpread",
@@ -203,26 +193,29 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "removePipelineMutation",
+    "name": "stepContainerRefetchQuery",
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "removePipeline",
+        "name": "node",
         "storageKey": null,
         "args": v1,
-        "concreteType": "RemoveOnboardingPipelinePayload",
+        "concreteType": null,
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
+            "kind": "ScalarField",
             "alias": null,
-            "name": "organization",
-            "storageKey": null,
+            "name": "__typename",
             "args": null,
-            "concreteType": "Organization",
-            "plural": false,
+            "storageKey": null
+          },
+          v2,
+          {
+            "kind": "InlineFragment",
+            "type": "Organization",
             "selections": [
               {
                 "kind": "ScalarField",
@@ -231,7 +224,7 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              v2,
+              v3,
               v4,
               {
                 "kind": "LinkedField",
@@ -242,7 +235,7 @@ return {
                 "concreteType": "OnboardingPipeline",
                 "plural": true,
                 "selections": [
-                  v3,
+                  v2,
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -250,11 +243,10 @@ return {
                     "args": null,
                     "storageKey": null
                   },
-                  v2,
+                  v3,
                   v4
                 ]
-              },
-              v3
+              }
             ]
           }
         ]
@@ -264,5 +256,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '5ce3742dad9ca02bb0860eb96d99e003';
+(node/*: any*/).hash = 'a6102ba4f4912d189008652e3c121c3d';
 module.exports = node;

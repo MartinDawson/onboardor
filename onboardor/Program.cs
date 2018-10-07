@@ -17,10 +17,7 @@ namespace Onboardor
         {
             SetEbConfig();
 
-            var webHost = CreateWebHostBuilder(args).Build().SeedData();
-
-            webHost.Wait();
-            webHost.Result.Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         private static void SetEbConfig()

@@ -69,14 +69,13 @@ const Pipeline = ({
   editPipeline,
   removePipeline,
   removingNameConfirmValue,
-  onboardingPipelineId,
   name,
   addStep,
   isAddingStep,
   toggleStep,
   onboardingSteps,
 }: IProps) => (
-  <PipelineColumn key={onboardingPipelineId} p={16}>
+  <PipelineColumn p={16}>
     <Box pb={16}>
       <Flex alignItems="center">
         {isEditingPipeline ? (
@@ -124,10 +123,9 @@ const Pipeline = ({
         )}
       </Flex>
     </Box>
-    {onboardingSteps.map((step, i) => (
+    {onboardingSteps.filter((step) => !step.isClosed).map((step) => (
       <Step
         key={step.id}
-        form={`step_${i}`}
         step={step}
       />
     ))}
