@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 95fef3088d88d2514bf835dc1a3e9b6c
+ * @relayHash 977ea2dedac285a7610ade3cedb89df0
  */
 
 /* eslint-disable */
@@ -10,31 +10,38 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type onboardingProcessContainer_organization$ref = any;
-export type onboardingProcessContainerQueryVariables = {|
-  id: string
+export type AddOnboardingProcessInput = {
+  clientMutationId?: ?string,
+  organizationId: number,
+  name: string,
+  pipelineIds: $ReadOnlyArray<?number>,
+};
+export type addOnboardingProcessMutationVariables = {|
+  input: AddOnboardingProcessInput
 |};
-export type onboardingProcessContainerQueryResponse = {|
-  +node: ?{|
-    +$fragmentRefs: onboardingProcessContainer_organization$ref
+export type addOnboardingProcessMutationResponse = {|
+  +addProcess: ?{|
+    +organization: {|
+      +$fragmentRefs: onboardingProcessContainer_organization$ref
+    |}
   |}
 |};
-export type onboardingProcessContainerQuery = {|
-  variables: onboardingProcessContainerQueryVariables,
-  response: onboardingProcessContainerQueryResponse,
+export type addOnboardingProcessMutation = {|
+  variables: addOnboardingProcessMutationVariables,
+  response: addOnboardingProcessMutationResponse,
 |};
 */
 
 
 /*
-query onboardingProcessContainerQuery(
-  $id: ID!
+mutation addOnboardingProcessMutation(
+  $input: AddOnboardingProcessInput!
 ) {
-  node(id: $id) {
-    __typename
-    ... on Organization {
+  addProcess(input: $input) {
+    organization {
       ...onboardingProcessContainer_organization
+      id
     }
-    id
   }
 }
 
@@ -89,36 +96,36 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "id",
-    "type": "ID!",
+    "name": "input",
+    "type": "AddOnboardingProcessInput!",
     "defaultValue": null
   }
 ],
 v1 = [
   {
     "kind": "Variable",
-    "name": "id",
-    "variableName": "id",
-    "type": "ID!"
+    "name": "input",
+    "variableName": "input",
+    "type": "AddOnboardingProcessInput!"
   }
 ],
 v2 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "id",
-  "args": null,
-  "storageKey": null
-},
-v3 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "name",
   "args": null,
   "storageKey": null
 },
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
 v4 = [
-  v2,
-  v3
+  v3,
+  v2
 ],
 v5 = {
   "kind": "LinkedField",
@@ -129,7 +136,7 @@ v5 = {
   "concreteType": "OnboardingStep",
   "plural": true,
   "selections": [
-    v2,
+    v3,
     {
       "kind": "ScalarField",
       "alias": null,
@@ -144,7 +151,7 @@ v5 = {
       "args": null,
       "storageKey": null
     },
-    v3,
+    v2,
     {
       "kind": "ScalarField",
       "alias": null,
@@ -166,30 +173,35 @@ v5 = {
 };
 return {
   "kind": "Request",
-  "operationKind": "query",
-  "name": "onboardingProcessContainerQuery",
+  "operationKind": "mutation",
+  "name": "addOnboardingProcessMutation",
   "id": null,
-  "text": "query onboardingProcessContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingProcesses {\n    id\n    ...savedOnboardingProcessContainer_process\n  }\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment savedOnboardingProcessContainer_process on OnboardingProcess {\n  id\n  name\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
+  "text": "mutation addOnboardingProcessMutation(\n  $input: AddOnboardingProcessInput!\n) {\n  addProcess(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingProcesses {\n    id\n    ...savedOnboardingProcessContainer_process\n  }\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment savedOnboardingProcessContainer_process on OnboardingProcess {\n  id\n  name\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "onboardingProcessContainerQuery",
-    "type": "Query",
+    "name": "addOnboardingProcessMutation",
+    "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "node",
+        "name": "addProcess",
         "storageKey": null,
         "args": v1,
-        "concreteType": null,
+        "concreteType": "AddOnboardingProcessPayload",
         "plural": false,
         "selections": [
           {
-            "kind": "InlineFragment",
-            "type": "Organization",
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "organization",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "Organization",
+            "plural": false,
             "selections": [
               {
                 "kind": "FragmentSpread",
@@ -204,29 +216,26 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "onboardingProcessContainerQuery",
+    "name": "addOnboardingProcessMutation",
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "node",
+        "name": "addProcess",
         "storageKey": null,
         "args": v1,
-        "concreteType": null,
+        "concreteType": "AddOnboardingProcessPayload",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
+            "kind": "LinkedField",
             "alias": null,
-            "name": "__typename",
+            "name": "organization",
+            "storageKey": null,
             "args": null,
-            "storageKey": null
-          },
-          v2,
-          {
-            "kind": "InlineFragment",
-            "type": "Organization",
+            "concreteType": "Organization",
+            "plural": false,
             "selections": [
               {
                 "kind": "ScalarField",
@@ -235,7 +244,7 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              v3,
+              v2,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -256,7 +265,7 @@ return {
                 "concreteType": "OnboardingPipeline",
                 "plural": true,
                 "selections": [
-                  v2,
+                  v3,
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -264,10 +273,11 @@ return {
                     "args": null,
                     "storageKey": null
                   },
-                  v3,
+                  v2,
                   v5
                 ]
-              }
+              },
+              v3
             ]
           }
         ]
@@ -277,5 +287,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd8d9e14894ca528f012d82867d89a36a';
+(node/*: any*/).hash = 'ac9f18fb485e452dcc2baaab5de03ea7';
 module.exports = node;

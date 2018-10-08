@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2fe732a593756a18e6df17b8efa4bde5
+ * @relayHash ed6d05b925bc38539583fdd4d0e8f26f
  */
 
 /* eslint-disable */
@@ -41,6 +41,10 @@ query stepContainerRefetchQuery(
 fragment onboardingProcessContainer_organization on Organization {
   organizationId
   name
+  onboardingProcesses {
+    id
+    ...savedOnboardingProcessContainer_process
+  }
   onboardingSteps {
     id
     isClosed
@@ -48,8 +52,14 @@ fragment onboardingProcessContainer_organization on Organization {
   }
   onboardingPipelines {
     id
+    onboardingPipelineId
     ...pipelineContainer_pipeline
   }
+}
+
+fragment savedOnboardingProcessContainer_process on OnboardingProcess {
+  id
+  name
 }
 
 fragment stepContainer_step on OnboardingStep {
@@ -106,7 +116,11 @@ v3 = {
   "args": null,
   "storageKey": null
 },
-v4 = {
+v4 = [
+  v2,
+  v3
+],
+v5 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "onboardingSteps",
@@ -146,10 +160,7 @@ v4 = {
       "args": null,
       "concreteType": "Organization",
       "plural": false,
-      "selections": [
-        v2,
-        v3
-      ]
+      "selections": v4
     }
   ]
 };
@@ -158,7 +169,7 @@ return {
   "operationKind": "query",
   "name": "stepContainerRefetchQuery",
   "id": null,
-  "text": "query stepContainerRefetchQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
+  "text": "query stepContainerRefetchQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingProcesses {\n    id\n    ...savedOnboardingProcessContainer_process\n  }\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment savedOnboardingProcessContainer_process on OnboardingProcess {\n  id\n  name\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -225,7 +236,17 @@ return {
                 "storageKey": null
               },
               v3,
-              v4,
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "onboardingProcesses",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "OnboardingProcess",
+                "plural": true,
+                "selections": v4
+              },
+              v5,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -244,7 +265,7 @@ return {
                     "storageKey": null
                   },
                   v3,
-                  v4
+                  v5
                 ]
               }
             ]

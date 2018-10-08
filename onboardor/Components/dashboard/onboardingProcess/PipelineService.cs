@@ -16,9 +16,19 @@ namespace onboardor.Components.dashboard
             _repository = repository;
         }
 
+        public IEnumerable<OnboardingPipeline> GetPipelines()
+        {
+            return _repository.GetAll()
+                .Include(x => x.OnboardingSteps)
+                .Include(x => x.Organization);
+        }
+
         public OnboardingPipeline GetPipeline(int pipelineId)
         {
-            return _repository.GetAll().Include(x => x.OnboardingSteps).Include(x => x.Organization).SingleOrDefault(x => x.Id == pipelineId);
+            return _repository.GetAll()
+                .Include(x => x.OnboardingSteps)
+                .Include(x => x.Organization)
+                .SingleOrDefault(x => x.Id == pipelineId);
         }
 
         public void Remove(OnboardingPipeline pipeline)

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 7074659116c61801d82b583f4426146f
+ * @relayHash 6487f3deb76294a9b407426ac3632ecf
  */
 
 /* eslint-disable */
@@ -47,6 +47,10 @@ mutation editPipelineMutation(
 fragment onboardingProcessContainer_organization on Organization {
   organizationId
   name
+  onboardingProcesses {
+    id
+    ...savedOnboardingProcessContainer_process
+  }
   onboardingSteps {
     id
     isClosed
@@ -54,8 +58,14 @@ fragment onboardingProcessContainer_organization on Organization {
   }
   onboardingPipelines {
     id
+    onboardingPipelineId
     ...pipelineContainer_pipeline
   }
+}
+
+fragment savedOnboardingProcessContainer_process on OnboardingProcess {
+  id
+  name
 }
 
 fragment stepContainer_step on OnboardingStep {
@@ -112,7 +122,11 @@ v3 = {
   "args": null,
   "storageKey": null
 },
-v4 = {
+v4 = [
+  v3,
+  v2
+],
+v5 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "onboardingSteps",
@@ -152,10 +166,7 @@ v4 = {
       "args": null,
       "concreteType": "Organization",
       "plural": false,
-      "selections": [
-        v3,
-        v2
-      ]
+      "selections": v4
     }
   ]
 };
@@ -164,7 +175,7 @@ return {
   "operationKind": "mutation",
   "name": "editPipelineMutation",
   "id": null,
-  "text": "mutation editPipelineMutation(\n  $input: EditOnboardingPipelineInput!\n) {\n  editPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
+  "text": "mutation editPipelineMutation(\n  $input: EditOnboardingPipelineInput!\n) {\n  editPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingProcesses {\n    id\n    ...savedOnboardingProcessContainer_process\n  }\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment savedOnboardingProcessContainer_process on OnboardingProcess {\n  id\n  name\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -233,7 +244,17 @@ return {
                 "storageKey": null
               },
               v2,
-              v4,
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "onboardingProcesses",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "OnboardingProcess",
+                "plural": true,
+                "selections": v4
+              },
+              v5,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -252,7 +273,7 @@ return {
                     "storageKey": null
                   },
                   v2,
-                  v4
+                  v5
                 ]
               },
               v3

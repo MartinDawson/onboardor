@@ -28,6 +28,7 @@ namespace onboardor.Components.dashboard
             Id(x => x.Id);
             Field(x => x.Name);
             Field(x => x.AvatarUrl);
+            Field<NonNullGraphType<ListGraphType<OnboardingProcessPayload>>>("onboardingProcesses");
             Field<NonNullGraphType<ListGraphType<OnboardingStepPayload>>>("onboardingSteps", resolve: context => _organizationService.GetStepsForOrganization(context.Source.Id));
             Field<NonNullGraphType<ListGraphType<OnboardingPipelinePayload>>>("onboardingPipelines");
             Field<NonNullGraphType<ListGraphType<MemberPayload>>>("members", resolve: context => context.Source.Members.Select(m => m.Member));

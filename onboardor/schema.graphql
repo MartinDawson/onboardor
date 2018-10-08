@@ -1,5 +1,5 @@
-# source: https://localhost:49891/graphql
-# timestamp: Sat Oct 06 2018 16:17:08 GMT+0200 (W. Europe Daylight Time)
+# source: http://localhost:49891/graphql
+# timestamp: Tue Oct 09 2018 00:20:32 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
@@ -8,6 +8,18 @@ input AddOnboardingPipelineInput {
 }
 
 type AddOnboardingPipelinePayload {
+  clientMutationId: String
+  organization: Organization!
+}
+
+input AddOnboardingProcessInput {
+  clientMutationId: String = null
+  organizationId: Int!
+  name: String!
+  pipelineIds: [Int]!
+}
+
+type AddOnboardingProcessPayload {
   clientMutationId: String
   organization: Organization!
 }
@@ -81,6 +93,7 @@ type Member implements Node {
 
 type Mutation {
   addPipeline(input: AddOnboardingPipelineInput!): AddOnboardingPipelinePayload
+  addProcess(input: AddOnboardingProcessInput!): AddOnboardingProcessPayload
   addStep(input: AddOnboardingStepInput!): AddOnboardingStepPayload
   createOnboardingProcess(input: CreateOnboardingProcessInput!): CreateOnboardingProcessPayload
   editPipeline(input: EditOnboardingPipelineInput!): EditOnboardingPipelinePayload
@@ -107,6 +120,17 @@ type OnboardingPipeline implements Node {
   onboardingSteps: [OnboardingStep]!
 }
 
+type OnboardingProcess implements Node {
+  """The Global Id of the OnboardingProcess"""
+  id: ID!
+  name: String!
+  onboardingPipelines: [OnboardingPipeline]!
+
+  """The Id of the OnboardingProcess"""
+  onboardingProcessId: Int!
+  organization: Organization!
+}
+
 type OnboardingStep implements Node {
   """The Global Id of the OnboardingStep"""
   id: ID!
@@ -127,6 +151,7 @@ type Organization implements Node {
   members: [Member]!
   name: String!
   onboardingPipelines: [OnboardingPipeline]!
+  onboardingProcesses: [OnboardingProcess]!
   onboardingSteps: [OnboardingStep]!
 
   """The Id of the Organization"""

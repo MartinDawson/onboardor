@@ -25,7 +25,7 @@ const IconButton = styled(ButtonTransparent)`
   padding: 5px;
 `;
 
-export interface IPipline {
+export interface IPipeline {
   id: string;
   onboardingPipelineId: number;
   name: string;
@@ -97,7 +97,7 @@ const Pipeline = ({
                 <Pencil />
               </IconButton>
               <PortalWithState closeOnEsc={true} closeOnOutsideClick={true}>
-              {({ openPortal, closePortal, portal }) => (
+                {({ openPortal, closePortal, portal }) => (
                   <React.Fragment>
                     <IconButton onClick={openPortal}>
                       <Cross />

@@ -20,6 +20,7 @@ namespace Onboardor.Components.GraphQl
             Mutation<AddOnboardingStepInput, AddOnboardingStepPayload>("addStep");
             Mutation<EditOnboardingStepInput, EditOnboardingStepPayload>("editStep");
             Mutation<RemoveOnboardingStepInput, RemoveOnboardingStepPayload>("removeStep");
+            Mutation<AddOnboardingProcessInput, AddOnboardingProcessPayload>("addProcess");
             Mutation<AddOnboardingPipelineInput, AddOnboardingPipelinePayload>("addPipeline");
             Mutation<EditOnboardingPipelineInput, EditOnboardingPipelinePayload>("editPipeline");
             Mutation<RemoveOnboardingPipelineInput, RemoveOnboardingPipelinePayload>("removePipeline");

@@ -7,6 +7,7 @@ namespace onboardor.Components.dashboard
 {
     public interface IPipelineService
     {
+        IEnumerable<OnboardingPipeline> GetPipelines();
         OnboardingPipeline GetPipeline(int pipelineId);
         void Update(OnboardingPipeline newPipeline);
         void Remove(OnboardingPipeline pipeline);

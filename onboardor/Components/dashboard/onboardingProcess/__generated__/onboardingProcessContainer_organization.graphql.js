@@ -9,12 +9,17 @@
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
 type pipelineContainer_pipeline$ref = any;
+type savedOnboardingProcessContainer_process$ref = any;
 type stepContainer_step$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type onboardingProcessContainer_organization$ref: FragmentReference;
 export type onboardingProcessContainer_organization = {|
   +organizationId: number,
   +name: string,
+  +onboardingProcesses: $ReadOnlyArray<?{|
+    +id: string,
+    +$fragmentRefs: savedOnboardingProcessContainer_process$ref,
+  |}>,
   +onboardingSteps: $ReadOnlyArray<?{|
     +id: string,
     +isClosed: boolean,
@@ -22,6 +27,7 @@ export type onboardingProcessContainer_organization = {|
   |}>,
   +onboardingPipelines: $ReadOnlyArray<?{|
     +id: string,
+    +onboardingPipelineId: number,
     +$fragmentRefs: pipelineContainer_pipeline$ref,
   |}>,
   +$refType: onboardingProcessContainer_organization$ref,
@@ -61,6 +67,23 @@ return {
     {
       "kind": "LinkedField",
       "alias": null,
+      "name": "onboardingProcesses",
+      "storageKey": null,
+      "args": null,
+      "concreteType": "OnboardingProcess",
+      "plural": true,
+      "selections": [
+        v0,
+        {
+          "kind": "FragmentSpread",
+          "name": "savedOnboardingProcessContainer_process",
+          "args": null
+        }
+      ]
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
       "name": "onboardingSteps",
       "storageKey": null,
       "args": null,
@@ -93,6 +116,13 @@ return {
       "selections": [
         v0,
         {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "onboardingPipelineId",
+          "args": null,
+          "storageKey": null
+        },
+        {
           "kind": "FragmentSpread",
           "name": "pipelineContainer_pipeline",
           "args": null
@@ -103,5 +133,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '0bb6ed6d5b253772de00b76111f0aa4a';
+(node/*: any*/).hash = '78e6692f532a64fc173c78a843991e7d';
 module.exports = node;

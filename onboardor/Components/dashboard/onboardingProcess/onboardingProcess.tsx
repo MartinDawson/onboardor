@@ -1,20 +1,17 @@
 import React from "react";
-import { Container, Text, Row } from "rebass";
+import { Container, Row, Text, Modal } from "rebass";
 import { IOrganization } from "../organization/organization";
 import styled from "styled-components";
-import { InjectedFormProps } from "redux-form";
 import EmptyPipeline from "./emptyPipelineContainer";
 import ClosedPipeline from "./closedPipeline";
 import Pipeline from "./pipelineContainer";
+import Button from "../../shared/button/button";
+import SavedOnboardingProcess from "./savedOnboardingProcessContainer";
+import { PortalWithState } from "react-portal";
+import AddOnboardingProcessForm from "./AddOnboardingProcessForm";
 
-interface IProps extends InjectedFormProps {
+interface IProps {
   organization: IOrganization;
-  addPipeline: () => void;
-  removePipeline: (id: number) => void;
-  editPipeline: (id: number) => void;
-  togglePipeline: () => void;
-  isAddingPipeline: boolean;
-  removingNameConfirmValue: string;
 }
 
 const PipelineRow = styled(Row)`
@@ -32,6 +29,39 @@ const OnboardingProcess = ({
         {organization.name}
       </Text> on-boarding process
     </Text>
+    <Text fontSize={14}>
+      Once you have configured your onboarding process be sure to save it so it can be
+      re-used between team members.
+    </Text>
+    <PortalWithState closeOnEsc={true} closeOnOutsideClick={true}>
+      {({ openPortal, closePortal, portal }) => (
+        <React.Fragment>
+          <Button onClick={openPortal}>
+            Save Onboarding process
+          </Button>
+          {portal(
+            <Modal top="30%">
+              <AddOnboardingProcessForm
+                organization={organization}
+                cancelOnClick={closePortal}
+              />
+            </Modal>
+          )}
+        </React.Fragment>
+      )}
+    </PortalWithState>
+    {organization.onboardingProcesses.length > 0 ? (
+      <Text fontSize={16}>
+        Your saved onboarding processes:
+      </Text>)
+      : null
+    }
+    {organization.onboardingProcesses.map((process) => (
+      <SavedOnboardingProcess
+        key={process.id}
+        process={process}
+      />
+    ))}
     <PipelineRow>
       {organization.onboardingPipelines.map((pipeline, i) =>
         <Pipeline
