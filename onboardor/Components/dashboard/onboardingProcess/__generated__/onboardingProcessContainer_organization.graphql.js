@@ -9,16 +9,20 @@
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
 type pipelineContainer_pipeline$ref = any;
-type savedOnboardingProcessContainer_process$ref = any;
 type stepContainer_step$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type onboardingProcessContainer_organization$ref: FragmentReference;
 export type onboardingProcessContainer_organization = {|
   +organizationId: number,
   +name: string,
+  +members: $ReadOnlyArray<?{|
+    +id: string,
+    +avatarUrl: string,
+    +name: string,
+  |}>,
   +onboardingProcesses: $ReadOnlyArray<?{|
     +id: string,
-    +$fragmentRefs: savedOnboardingProcessContainer_process$ref,
+    +name: string,
   |}>,
   +onboardingSteps: $ReadOnlyArray<?{|
     +id: string,
@@ -39,6 +43,13 @@ const node/*: ConcreteFragment*/ = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
+},
+v1 = {
+  "kind": "ScalarField",
+  "alias": null,
   "name": "id",
   "args": null,
   "storageKey": null
@@ -57,12 +68,26 @@ return {
       "args": null,
       "storageKey": null
     },
+    v0,
     {
-      "kind": "ScalarField",
+      "kind": "LinkedField",
       "alias": null,
-      "name": "name",
+      "name": "members",
+      "storageKey": null,
       "args": null,
-      "storageKey": null
+      "concreteType": "Member",
+      "plural": true,
+      "selections": [
+        v1,
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "avatarUrl",
+          "args": null,
+          "storageKey": null
+        },
+        v0
+      ]
     },
     {
       "kind": "LinkedField",
@@ -73,12 +98,8 @@ return {
       "concreteType": "OnboardingProcess",
       "plural": true,
       "selections": [
-        v0,
-        {
-          "kind": "FragmentSpread",
-          "name": "savedOnboardingProcessContainer_process",
-          "args": null
-        }
+        v1,
+        v0
       ]
     },
     {
@@ -90,7 +111,7 @@ return {
       "concreteType": "OnboardingStep",
       "plural": true,
       "selections": [
-        v0,
+        v1,
         {
           "kind": "ScalarField",
           "alias": null,
@@ -114,7 +135,7 @@ return {
       "concreteType": "OnboardingPipeline",
       "plural": true,
       "selections": [
-        v0,
+        v1,
         {
           "kind": "ScalarField",
           "alias": null,
@@ -133,5 +154,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '78e6692f532a64fc173c78a843991e7d';
+(node/*: any*/).hash = 'ced76917fb88eda9e8e7ef388ae6ed38';
 module.exports = node;

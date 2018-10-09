@@ -4,6 +4,7 @@ import { IPipeline } from "./pipeline";
 
 export interface IProcess {
   id: number;
+  onboardingProcessId: number;
   name: string;
   organization: IOrganization[];
   onboardingPipelines: IPipeline;

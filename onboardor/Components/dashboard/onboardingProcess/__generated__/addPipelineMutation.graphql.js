@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 4c620cb2325a037f7ab873f3e85c45b5
+ * @relayHash 2103cca0b81d576c6c3f9d6b218d1151
  */
 
 /* eslint-disable */
@@ -47,9 +47,14 @@ mutation addPipelineMutation(
 fragment onboardingProcessContainer_organization on Organization {
   organizationId
   name
+  members {
+    id
+    avatarUrl
+    name
+  }
   onboardingProcesses {
     id
-    ...savedOnboardingProcessContainer_process
+    name
   }
   onboardingSteps {
     id
@@ -61,11 +66,6 @@ fragment onboardingProcessContainer_organization on Organization {
     onboardingPipelineId
     ...pipelineContainer_pipeline
   }
-}
-
-fragment savedOnboardingProcessContainer_process on OnboardingProcess {
-  id
-  name
 }
 
 fragment stepContainer_step on OnboardingStep {
@@ -175,7 +175,7 @@ return {
   "operationKind": "mutation",
   "name": "addPipelineMutation",
   "id": null,
-  "text": "mutation addPipelineMutation(\n  $input: AddOnboardingPipelineInput!\n) {\n  addPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  onboardingProcesses {\n    id\n    ...savedOnboardingProcessContainer_process\n  }\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment savedOnboardingProcessContainer_process on OnboardingProcess {\n  id\n  name\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
+  "text": "mutation addPipelineMutation(\n  $input: AddOnboardingPipelineInput!\n) {\n  addPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  members {\n    id\n    avatarUrl\n    name\n  }\n  onboardingProcesses {\n    id\n    name\n  }\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -244,6 +244,26 @@ return {
                 "storageKey": null
               },
               v2,
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "members",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "Member",
+                "plural": true,
+                "selections": [
+                  v3,
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "avatarUrl",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  v2
+                ]
+              },
               {
                 "kind": "LinkedField",
                 "alias": null,

@@ -10,7 +10,6 @@ import { IOrganization } from "../organization/organization";
 const addOnboardingProcessValidator = createFieldValidator(["required"]);
 
 interface IAddOnboardingProcessFormProps extends InjectedFormProps {
-  addOnboardingProcess: () => void;
   cancelOnClick: () => void;
 }
 
@@ -23,7 +22,7 @@ interface IAddOnboardinProcessParams {
 }
 
 const handlers = {
-  addOnboardingProcess: ({ organization }: IProps) =>
+  onSubmit: ({ organization }: IProps) =>
     ({ name }: IAddOnboardinProcessParams) => {
     addOnboardingProcessMutation({
       organizationId: organization.organizationId,
@@ -34,11 +33,10 @@ const handlers = {
 };
 
 const AddOnboardingProcessForm = ({
-  addOnboardingProcess,
   handleSubmit,
   cancelOnClick,
 }: IAddOnboardingProcessFormProps) => (
-  <form onSubmit={handleSubmit(addOnboardingProcess)} action="">
+  <form onSubmit={handleSubmit}>
     <Field
       component={FieldInput}
       name="name"
@@ -52,8 +50,8 @@ const AddOnboardingProcessForm = ({
 );
 
 export default compose(
+  withHandlers(handlers),
   reduxForm({
     form: "AddOnboardingProcess",
   }),
-  withHandlers(handlers),
 )(AddOnboardingProcessForm);
