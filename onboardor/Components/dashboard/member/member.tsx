@@ -1,5 +1,6 @@
 import React from "react";
 import { Image } from "rebass";
+import { IProcess } from "../onboardingProcess/savedOnboardingProcess";
 
 interface IProps extends IMember {
   member: IMember;
@@ -7,6 +8,8 @@ interface IProps extends IMember {
 
 export interface IMember {
   id: number;
+  memberId: number;
+  onboardingProcess: IProcess;
   name: string;
   avatarUrl: string;
 }

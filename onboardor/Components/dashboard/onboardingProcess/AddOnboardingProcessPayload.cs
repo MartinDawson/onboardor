@@ -46,7 +46,15 @@ namespace onboardor.Components.dashboard.onboardingProcess
             {
                 Name = name,
                 Organization = organization,
-                OnboardingPipelines = pipelines
+                OnboardingPipelines = pipelines.Select(pipeline => new OnboardingPipeline {
+                    Name = pipeline.Name,
+                    OnboardingSteps = pipeline.OnboardingSteps.Select(step => new OnboardingStep {
+                        IsClosed = step.IsClosed,
+                        IssueNumber = step.IssueNumber,
+                        Name = step.Name
+                    }).ToList(),
+                    Organization = pipeline.Organization
+                }).ToList()
             };
 
             _processService.Add(process);

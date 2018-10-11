@@ -21,6 +21,11 @@ namespace onboardor.Components.dashboard
             _repository.Add(member);
         }
 
+        public void Update(Member member)
+        {
+            _repository.Update(member);
+        }
+
         public void SetOnboarding(int memberId, bool isBeingOnboarded)
         {
             var member = _repository.Get(memberId);
@@ -32,7 +37,10 @@ namespace onboardor.Components.dashboard
 
         public Member GetMember(int memberId)
         {
-            return _repository.GetAll().Include(x => x.Organizations).SingleOrDefault(x => x.Id == memberId);
+            return _repository.GetAll()
+                .Include(x => x.Organizations)
+                .Include(x => x.OnboardingProcess)
+                .SingleOrDefault(x => x.Id == memberId);
         }
     }
 }

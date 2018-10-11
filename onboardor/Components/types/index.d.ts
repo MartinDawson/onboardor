@@ -61,7 +61,7 @@ export interface IRoute {
     _error: string[]
   };
   match: IMatch;
-  props?: {
+  props: {
     [key: string]: any
     params?: IUrlParameter
     location: ILocation

@@ -4,7 +4,6 @@ import { Flex } from "grid-styled";
 import { IOrganization } from "../organization/organization";
 import styled from "styled-components";
 import EmptyPipeline from "./emptyPipelineContainer";
-import ClosedPipeline from "./closedPipeline";
 import Pipeline from "./pipelineContainer";
 import Button from "../../shared/button/button";
 import SavedOnboardingProcess from "./savedOnboardingProcess";
@@ -12,6 +11,8 @@ import { PortalWithState } from "react-portal";
 import AddOnboardingProcessForm from "./AddOnboardingProcessForm";
 import { cardMargin, nameMargin, SelectCard } from "../../select/styles";
 import SelectOnboardingProcessForm from "./SelectOnboardingProcessForm";
+import Step from "./step";
+import ClosedPipeline from "./closedPipeline";
 
 interface IProps {
   organization: IOrganization;
@@ -30,7 +31,7 @@ const OnboardingProcess = ({
     <Text mt={20} mb={40} fontSize={20}>
       <Text is="span" display="inline" fontWeight="bold">
         {organization.name}
-      </Text> on-boarding process
+      </Text> on-boarding template
     </Text>
     <Text fontSize={14}>
       Select a team member to start onboarding
@@ -55,6 +56,7 @@ const OnboardingProcess = ({
                       begin onboarding this team member.
                     </Text>
                     <SelectOnboardingProcessForm
+                      member={member}
                       processes={organization.onboardingProcesses}
                       cancelOnClick={closePortal}
                     />

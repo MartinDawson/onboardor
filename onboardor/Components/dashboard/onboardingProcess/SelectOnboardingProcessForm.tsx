@@ -4,28 +4,45 @@ import { IProcess } from "./savedOnboardingProcess";
 import React from "react";
 import Button from "../../shared/button/button";
 import ProcessesSelectInput from "../../shared/inputs/processesSelectInput";
+import { IMember } from "../member/member";
+import addOnboardingProcessToMemberMutation from "./addOnboardingProcessToMemberMutation";
+import { IRoute } from "../../types";
 
-const handlers = {
-  onSubmit: () => ({ processes }) => {
-debugger
-  },
-};
-
-interface ISelectOnboardingProcessFormProps extends InjectedFormProps {
+interface IProps extends InjectedFormProps {
   processes: IProcess[];
+  member: IMember;
   cancelOnClick: () => void;
 }
+
+interface IOnSubmitParams {
+  process: {
+    label: string;
+    value: number;
+  };
+}
+
+const handlers = {
+  onSubmit: ({ member, route }: IProps) => ({ process }: IOnSubmitParams) => {
+    addOnboardingProcessToMemberMutation({
+      memberId: member.memberId,
+      processId: process.value,
+    });
+  },
+};
 
 const SelectOnboardingProcessForm = ({
   processes,
   handleSubmit,
   cancelOnClick,
-}: ISelectOnboardingProcessFormProps) => (
+}: IProps) => (
   <form onSubmit={handleSubmit}>
     <Field
-      name="processes"
+      name="process"
       component={ProcessesSelectInput}
-      options={processes.map((process) => ({ label: process.name, value: process.id }))}
+      options={processes.map((process) => ({
+        label: process.name,
+        value: process.onboardingProcessId,
+      }))}
     />
     <Button mt={10} mr={10}>Confirm</Button>
     <Button type="button" onClick={cancelOnClick}>Cancel</Button>

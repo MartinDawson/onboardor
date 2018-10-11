@@ -6,8 +6,8 @@ export interface IProcess {
   id: number;
   onboardingProcessId: number;
   name: string;
-  organization: IOrganization[];
-  onboardingPipelines: IPipeline;
+  organization: IOrganization;
+  onboardingPipelines: IPipeline[];
 }
 
 interface IProps {

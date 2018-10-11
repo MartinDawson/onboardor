@@ -17,12 +17,17 @@ export type onboardingProcessContainer_organization = {|
   +name: string,
   +members: $ReadOnlyArray<?{|
     +id: string,
+    +memberId: number,
     +avatarUrl: string,
     +name: string,
   |}>,
   +onboardingProcesses: $ReadOnlyArray<?{|
     +id: string,
+    +onboardingProcessId: number,
     +name: string,
+    +organization: {|
+      +id: string
+    |},
   |}>,
   +onboardingSteps: $ReadOnlyArray<?{|
     +id: string,
@@ -82,6 +87,13 @@ return {
         {
           "kind": "ScalarField",
           "alias": null,
+          "name": "memberId",
+          "args": null,
+          "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
           "name": "avatarUrl",
           "args": null,
           "storageKey": null
@@ -99,7 +111,26 @@ return {
       "plural": true,
       "selections": [
         v1,
-        v0
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "onboardingProcessId",
+          "args": null,
+          "storageKey": null
+        },
+        v0,
+        {
+          "kind": "LinkedField",
+          "alias": null,
+          "name": "organization",
+          "storageKey": null,
+          "args": null,
+          "concreteType": "Organization",
+          "plural": false,
+          "selections": [
+            v1
+          ]
+        }
       ]
     },
     {
@@ -154,5 +185,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'ced76917fb88eda9e8e7ef388ae6ed38';
+(node/*: any*/).hash = '9bd1811c2dccb3dae2e3e6c459ee554d';
 module.exports = node;

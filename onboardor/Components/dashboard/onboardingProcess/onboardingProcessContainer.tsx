@@ -5,10 +5,10 @@ import { fragment } from "relay-compose";
 
 const query = graphql`
   query onboardingProcessContainerQuery(
-    $id: ID!
+    $organizationId: ID!
   ) {
     node(
-      id: $id
+      id: $organizationId
     ) {
       ...on Organization {
         ...onboardingProcessContainer_organization
@@ -23,12 +23,17 @@ const fragments = graphql`
     name
     members {
       id
+      memberId
       avatarUrl
       name
     }
     onboardingProcesses {
       id
+      onboardingProcessId
       name
+      organization {
+        id
+      }
     }
     onboardingSteps {
       id

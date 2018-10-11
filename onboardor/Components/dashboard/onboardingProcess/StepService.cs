@@ -18,7 +18,9 @@ namespace onboardor.Components.dashboard
 
         public OnboardingStep GetStep(int stepId)
         {
-            return _repository.GetAll().Include(x => x.OnboardingPipeline).SingleOrDefault(x => x.Id == stepId);
+            return _repository.GetAll()
+                .Include(x => x.OnboardingPipeline)
+                .SingleOrDefault(x => x.Id == stepId);
         }
 
         public void Remove(OnboardingStep step)

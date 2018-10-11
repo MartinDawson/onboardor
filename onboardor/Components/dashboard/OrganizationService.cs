@@ -50,6 +50,7 @@ namespace onboardor.Components.dashboard
         public List<Organization> GetOrganizations(int userId)
         {
             var member = _membersRepository.GetAll()
+                .Include(x => x.OnboardingProcess)
                 .Include(x => x.Organizations)
                 .ThenInclude(x => x.Organization)
                 .ThenInclude(x => x.OnboardingProcesses)

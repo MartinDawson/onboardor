@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash bf525d140978c9869d8d640e67eda6c9
+ * @relayHash 7ecb1082975dbf44ed2e4f787500f217
  */
 
 /* eslint-disable */
@@ -48,12 +48,17 @@ fragment onboardingProcessContainer_organization on Organization {
   name
   members {
     id
+    memberId
     avatarUrl
     name
   }
   onboardingProcesses {
     id
+    onboardingProcessId
     name
+    organization {
+      id
+    }
   }
   onboardingSteps {
     id
@@ -121,11 +126,7 @@ v3 = {
   "args": null,
   "storageKey": null
 },
-v4 = [
-  v3,
-  v2
-],
-v5 = {
+v4 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "onboardingSteps",
@@ -165,7 +166,10 @@ v5 = {
       "args": null,
       "concreteType": "Organization",
       "plural": false,
-      "selections": v4
+      "selections": [
+        v3,
+        v2
+      ]
     }
   ]
 };
@@ -174,7 +178,7 @@ return {
   "operationKind": "mutation",
   "name": "removePipelineMutation",
   "id": null,
-  "text": "mutation removePipelineMutation(\n  $input: RemoveOnboardingPipelineInput!\n) {\n  removePipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  members {\n    id\n    avatarUrl\n    name\n  }\n  onboardingProcesses {\n    id\n    name\n  }\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
+  "text": "mutation removePipelineMutation(\n  $input: RemoveOnboardingPipelineInput!\n) {\n  removePipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -256,6 +260,13 @@ return {
                   {
                     "kind": "ScalarField",
                     "alias": null,
+                    "name": "memberId",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
                     "name": "avatarUrl",
                     "args": null,
                     "storageKey": null
@@ -271,9 +282,31 @@ return {
                 "args": null,
                 "concreteType": "OnboardingProcess",
                 "plural": true,
-                "selections": v4
+                "selections": [
+                  v3,
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "onboardingProcessId",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  v2,
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "organization",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "Organization",
+                    "plural": false,
+                    "selections": [
+                      v3
+                    ]
+                  }
+                ]
               },
-              v5,
+              v4,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -292,7 +325,7 @@ return {
                     "storageKey": null
                   },
                   v2,
-                  v5
+                  v4
                 ]
               },
               v3

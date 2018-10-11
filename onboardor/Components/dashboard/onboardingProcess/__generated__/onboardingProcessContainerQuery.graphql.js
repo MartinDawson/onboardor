@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 6568a40214828a96d724412d0386dcea
+ * @relayHash 3ac9fd7f4935954c41435b520bb0c26d
  */
 
 /* eslint-disable */
@@ -11,7 +11,7 @@
 import type { ConcreteRequest } from 'relay-runtime';
 type onboardingProcessContainer_organization$ref = any;
 export type onboardingProcessContainerQueryVariables = {|
-  id: string
+  organizationId: string
 |};
 export type onboardingProcessContainerQueryResponse = {|
   +node: ?{|
@@ -27,9 +27,9 @@ export type onboardingProcessContainerQuery = {|
 
 /*
 query onboardingProcessContainerQuery(
-  $id: ID!
+  $organizationId: ID!
 ) {
-  node(id: $id) {
+  node(id: $organizationId) {
     __typename
     ... on Organization {
       ...onboardingProcessContainer_organization
@@ -43,12 +43,17 @@ fragment onboardingProcessContainer_organization on Organization {
   name
   members {
     id
+    memberId
     avatarUrl
     name
   }
   onboardingProcesses {
     id
+    onboardingProcessId
     name
+    organization {
+      id
+    }
   }
   onboardingSteps {
     id
@@ -89,7 +94,7 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "id",
+    "name": "organizationId",
     "type": "ID!",
     "defaultValue": null
   }
@@ -98,7 +103,7 @@ v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "id",
+    "variableName": "organizationId",
     "type": "ID!"
   }
 ],
@@ -116,11 +121,7 @@ v3 = {
   "args": null,
   "storageKey": null
 },
-v4 = [
-  v2,
-  v3
-],
-v5 = {
+v4 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "onboardingSteps",
@@ -160,7 +161,10 @@ v5 = {
       "args": null,
       "concreteType": "Organization",
       "plural": false,
-      "selections": v4
+      "selections": [
+        v2,
+        v3
+      ]
     }
   ]
 };
@@ -169,7 +173,7 @@ return {
   "operationKind": "query",
   "name": "onboardingProcessContainerQuery",
   "id": null,
-  "text": "query onboardingProcessContainerQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  members {\n    id\n    avatarUrl\n    name\n  }\n  onboardingProcesses {\n    id\n    name\n  }\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
+  "text": "query onboardingProcessContainerQuery(\n  $organizationId: ID!\n) {\n  node(id: $organizationId) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -249,6 +253,13 @@ return {
                   {
                     "kind": "ScalarField",
                     "alias": null,
+                    "name": "memberId",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
                     "name": "avatarUrl",
                     "args": null,
                     "storageKey": null
@@ -264,9 +275,31 @@ return {
                 "args": null,
                 "concreteType": "OnboardingProcess",
                 "plural": true,
-                "selections": v4
+                "selections": [
+                  v2,
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "onboardingProcessId",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  v3,
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "organization",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "Organization",
+                    "plural": false,
+                    "selections": [
+                      v2
+                    ]
+                  }
+                ]
               },
-              v5,
+              v4,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -285,7 +318,7 @@ return {
                     "storageKey": null
                   },
                   v3,
-                  v5
+                  v4
                 ]
               }
             ]
@@ -297,5 +330,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd8d9e14894ca528f012d82867d89a36a';
+(node/*: any*/).hash = '7bae48027c84c85be4a1b7e5326bd0ea';
 module.exports = node;

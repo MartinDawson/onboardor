@@ -1,5 +1,5 @@
 # source: http://localhost:49891/graphql
-# timestamp: Tue Oct 09 2018 00:20:32 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Wed Oct 10 2018 23:37:14 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
@@ -22,6 +22,17 @@ input AddOnboardingProcessInput {
 type AddOnboardingProcessPayload {
   clientMutationId: String
   organization: Organization!
+}
+
+input AddOnboardingProcessToMemberInput {
+  clientMutationId: String = null
+  memberId: Int!
+  processId: Int!
+}
+
+type AddOnboardingProcessToMemberPayload {
+  clientMutationId: String
+  member: Member!
 }
 
 input AddOnboardingStepInput {
@@ -88,10 +99,14 @@ type Member implements Node {
   """The Id of the Member"""
   memberId: Int!
   name: String!
+
+  """The process that the member is being onboarded by"""
+  onboardingProcess: OnboardingProcess!
   organizations: [Organization]!
 }
 
 type Mutation {
+  addOnboardingProcessToMember(input: AddOnboardingProcessToMemberInput!): AddOnboardingProcessToMemberPayload
   addPipeline(input: AddOnboardingPipelineInput!): AddOnboardingPipelinePayload
   addProcess(input: AddOnboardingProcessInput!): AddOnboardingProcessPayload
   addStep(input: AddOnboardingStepInput!): AddOnboardingStepPayload

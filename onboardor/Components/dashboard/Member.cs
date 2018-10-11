@@ -20,6 +20,7 @@ namespace onboardor.Components.dashboard
         public bool IsBeingOnboarded { get; set; }
         [Required]
         public DateTimeOffset CreatedAt { get; set; }
+        public OnboardingProcess OnboardingProcess { get; set; }
         public ICollection<OrganizationMember> Organizations { get; set; } = new List<OrganizationMember>();
     }
 }
