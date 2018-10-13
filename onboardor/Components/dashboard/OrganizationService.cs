@@ -68,6 +68,8 @@ namespace onboardor.Components.dashboard
             return _repository.GetAll()
                 .Include(x => x.OnboardingProcesses)
                 .Include(x => x.OnboardingPipelines)
+                .ThenInclude(x => x.OnboardingProcess)
+                .Include(x => x.OnboardingPipelines)
                 .ThenInclude(x => x.OnboardingSteps)
                 .Include(x => x.Members)
                 .ThenInclude(x => x.Member)

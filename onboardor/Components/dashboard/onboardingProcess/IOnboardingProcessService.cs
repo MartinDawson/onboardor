@@ -9,5 +9,6 @@ namespace onboardor.Components.dashboard
     {
         OnboardingProcess GetProcess(int processId);
         void Add(OnboardingProcess process);
+        List<OnboardingStep> GetClosedSteps(int processId);
     }
 }

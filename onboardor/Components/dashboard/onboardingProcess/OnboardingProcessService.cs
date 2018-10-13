@@ -10,10 +10,14 @@ namespace onboardor.Components.dashboard
     public class OnboardingProcessService : IOnboardingProcessService
     {
         private IRepository<OnboardingProcess> _repository;
+        private IRepository<OnboardingStep> _stepRepository;
 
-        public OnboardingProcessService(IRepository<OnboardingProcess> repository)
+        public OnboardingProcessService(
+            IRepository<OnboardingProcess> repository,
+            IRepository<OnboardingStep> stepRepository)
         {
             _repository = repository;
+            _stepRepository = stepRepository;
         }
 
         public OnboardingProcess GetProcess(int processId)
@@ -23,6 +27,20 @@ namespace onboardor.Components.dashboard
                 .Include(x => x.OnboardingPipelines)
                 .ThenInclude(x => x.OnboardingSteps)
                 .SingleOrDefault(x => x.Id == processId);
+        }
+
+        public List<OnboardingStep> GetClosedSteps(int processId)
+        {
+            var process = _repository.GetAll().Single(x => x.Id == processId);
+
+            var steps = process.OnboardingPipelines.SelectMany(x => x.OnboardingSteps.Where(z => z.IsClosed));
+
+            foreach (var step in steps)
+            {
+                _stepRepository.Reload(step);
+            }
+
+            return steps.ToList();
         }
 
         public void Add(OnboardingProcess process)

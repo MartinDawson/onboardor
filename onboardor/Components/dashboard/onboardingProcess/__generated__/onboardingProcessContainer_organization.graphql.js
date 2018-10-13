@@ -9,7 +9,6 @@
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
 type pipelineContainer_pipeline$ref = any;
-type stepContainer_step$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type onboardingProcessContainer_organization$ref: FragmentReference;
 export type onboardingProcessContainer_organization = {|
@@ -29,14 +28,12 @@ export type onboardingProcessContainer_organization = {|
       +id: string
     |},
   |}>,
-  +onboardingSteps: $ReadOnlyArray<?{|
-    +id: string,
-    +isClosed: boolean,
-    +$fragmentRefs: stepContainer_step$ref,
-  |}>,
   +onboardingPipelines: $ReadOnlyArray<?{|
     +id: string,
     +onboardingPipelineId: number,
+    +onboardingProcess: ?{|
+      +id: string
+    |},
     +$fragmentRefs: pipelineContainer_pipeline$ref,
   |}>,
   +$refType: onboardingProcessContainer_organization$ref,
@@ -58,7 +55,10 @@ v1 = {
   "name": "id",
   "args": null,
   "storageKey": null
-};
+},
+v2 = [
+  v1
+];
 return {
   "kind": "Fragment",
   "name": "onboardingProcessContainer_organization",
@@ -127,33 +127,7 @@ return {
           "args": null,
           "concreteType": "Organization",
           "plural": false,
-          "selections": [
-            v1
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "onboardingSteps",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "OnboardingStep",
-      "plural": true,
-      "selections": [
-        v1,
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "isClosed",
-          "args": null,
-          "storageKey": null
-        },
-        {
-          "kind": "FragmentSpread",
-          "name": "stepContainer_step",
-          "args": null
+          "selections": v2
         }
       ]
     },
@@ -175,6 +149,16 @@ return {
           "storageKey": null
         },
         {
+          "kind": "LinkedField",
+          "alias": null,
+          "name": "onboardingProcess",
+          "storageKey": null,
+          "args": null,
+          "concreteType": "OnboardingProcess",
+          "plural": false,
+          "selections": v2
+        },
+        {
           "kind": "FragmentSpread",
           "name": "pipelineContainer_pipeline",
           "args": null
@@ -185,5 +169,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '9bd1811c2dccb3dae2e3e6c459ee554d';
+(node/*: any*/).hash = '9e697241d303d0de888537e687fbaa0a';
 module.exports = node;

@@ -104,7 +104,7 @@ const OnboardingProcess = ({
       ))}
     </Box>
     <PipelineRow>
-      {organization.onboardingPipelines.map((pipeline, i) =>
+      {organization.onboardingPipelines.filter((pipeline) => !pipeline.onboardingProcess).map((pipeline, i) =>
         <Pipeline
           key={pipeline.id}
           form={`pipeline_${i}`}
@@ -112,7 +112,6 @@ const OnboardingProcess = ({
           organizationName={organization.name}
         />
       )}
-      <ClosedPipeline onboardingSteps={organization.onboardingSteps} />
       <EmptyPipeline organizationId={organization.organizationId} />
     </PipelineRow>
   </Container>

@@ -1,13 +1,16 @@
 ﻿using DotNetEnv;
+using GraphQL;
 using GraphQL.Relay.Types;
 using GraphQL.Types;
 using MailChimp.Net;
 using MailChimp.Net.Interfaces;
 using MailChimp.Net.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Octokit;
 using onboardor.Components.dashboard;
 using onboardor.Components.shared;
+using Onboardor.Components.graphQl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +39,7 @@ namespace onboardor.Components.dashboard.onBoardingCreator
 
         private async Task<OnboardingStep> GetOnboardingStep(Organization organization, Member member, OnboardingStep step)
         {
-            var existingIssue = await _client.Issue.Get(organization.Name, Constants.RepositoryName, step.Id);
+            var existingIssue = await _client.Issue.Get(organization.Name, Constants.RepositoryName, step.IssueNumber);
 
             var newIssue = new NewIssue(step.Name)
             {
@@ -46,7 +49,7 @@ namespace onboardor.Components.dashboard.onBoardingCreator
             newIssue.Assignees.Add(member.Name);
 
             var issue = await _client.Issue.Create(
-                member.OnboardingProcess.Organization.Name,
+                organization.Name,
                 Constants.RepositoryName,
                 newIssue);
 
@@ -65,19 +68,25 @@ namespace onboardor.Components.dashboard.onBoardingCreator
             var memberId = inputs.Get<int>("memberId");
             var processId = inputs.Get<int>("processId");
             var member = _memberService.GetMember(memberId);
-
-            member.OnboardingProcess = _processService.GetProcess(processId);
+            var userContext = context.UserContext.As<Context>();
             var newPipelines = new List<OnboardingPipeline>();
+            var token = userContext.HttpContext.Session.GetString("OAuthToken");
 
-            foreach (var pipeline in member.OnboardingProcess.OnboardingPipelines)
+            if (token == null) throw new NullReferenceException("OAuthToken is null");
+
+            _client.Credentials = new Credentials(token);
+
+            var process = _processService.GetProcess(processId);
+
+            foreach (var pipeline in process.OnboardingPipelines)
             {
                 var newOnboardingSteps = new List<OnboardingStep>();
 
                 foreach (var step in pipeline.OnboardingSteps)
                 {
-                    var newStep = await GetOnboardingStep(member.OnboardingProcess.Organization, member, step);
+                    var newStep = await GetOnboardingStep(process.Organization, member, step);
 
-                    newOnboardingSteps.Add(step);
+                    newOnboardingSteps.Add(newStep);
                 }
                 
                 newPipelines.Add(new OnboardingPipeline
@@ -87,6 +96,13 @@ namespace onboardor.Components.dashboard.onBoardingCreator
                     Organization = pipeline.Organization,
                 });
             }
+
+            member.OnboardingProcess = new OnboardingProcess
+            {
+                Name = process.Name,
+                OnboardingPipelines = newPipelines,
+                Organization = process.Organization
+            };
 
             _memberService.Update(member);
 

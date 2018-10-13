@@ -9,6 +9,7 @@
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
 type pipelineContainer_pipeline$ref = any;
+type stepContainer_step$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type memberOnboardingProcessContainer_member$ref: FragmentReference;
 export type memberOnboardingProcessContainer_member = {|
@@ -19,8 +20,13 @@ export type memberOnboardingProcessContainer_member = {|
       +id: string,
       +$fragmentRefs: pipelineContainer_pipeline$ref,
     |}>,
+    +closedSteps: $ReadOnlyArray<?{|
+      +id: string,
+      +$fragmentRefs: stepContainer_step$ref,
+    |}>,
     +organization: {|
-      +name: string
+      +organizationId: number,
+      +name: string,
     |},
   |},
   +$refType: memberOnboardingProcessContainer_member$ref,
@@ -33,6 +39,13 @@ var v0 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "name",
+  "args": null,
+  "storageKey": null
+},
+v1 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
   "args": null,
   "storageKey": null
 };
@@ -63,16 +76,27 @@ return {
           "concreteType": "OnboardingPipeline",
           "plural": true,
           "selections": [
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "id",
-              "args": null,
-              "storageKey": null
-            },
+            v1,
             {
               "kind": "FragmentSpread",
               "name": "pipelineContainer_pipeline",
+              "args": null
+            }
+          ]
+        },
+        {
+          "kind": "LinkedField",
+          "alias": null,
+          "name": "closedSteps",
+          "storageKey": null,
+          "args": null,
+          "concreteType": "OnboardingStep",
+          "plural": true,
+          "selections": [
+            v1,
+            {
+              "kind": "FragmentSpread",
+              "name": "stepContainer_step",
               "args": null
             }
           ]
@@ -86,6 +110,13 @@ return {
           "concreteType": "Organization",
           "plural": false,
           "selections": [
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "organizationId",
+              "args": null,
+              "storageKey": null
+            },
             v0
           ]
         }
@@ -95,5 +126,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'f88fa4b4bd957bfa36564db42e132d18';
+(node/*: any*/).hash = '30f91eb329eb5b50327a66f2cc437ffb';
 module.exports = node;

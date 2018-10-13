@@ -35,14 +35,12 @@ const fragments = graphql`
         id
       }
     }
-    onboardingSteps {
-      id
-      isClosed
-      ...stepContainer_step
-    }
     onboardingPipelines {
       id
       onboardingPipelineId
+      onboardingProcess {
+        id
+      }
       ...pipelineContainer_pipeline
     }
   }

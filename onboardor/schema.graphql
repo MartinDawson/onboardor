@@ -1,5 +1,5 @@
 # source: http://localhost:49891/graphql
-# timestamp: Wed Oct 10 2018 23:37:14 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Sat Oct 13 2018 13:11:32 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
@@ -40,7 +40,6 @@ input AddOnboardingStepInput {
   pipelineId: Int!
   organizationName: String!
   name: String!
-  description: String = null
 }
 
 type AddOnboardingStepPayload {
@@ -132,10 +131,13 @@ type OnboardingPipeline implements Node {
 
   """The Id of the OnboardingPipeline"""
   onboardingPipelineId: Int!
+  onboardingProcess: OnboardingProcess
   onboardingSteps: [OnboardingStep]!
 }
 
 type OnboardingProcess implements Node {
+  closedSteps: [OnboardingStep]!
+
   """The Global Id of the OnboardingProcess"""
   id: ID!
   name: String!

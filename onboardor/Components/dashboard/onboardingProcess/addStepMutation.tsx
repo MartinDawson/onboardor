@@ -17,16 +17,14 @@ interface IMutationInput {
   pipelineId: number;
   organizationName: string;
   name: string;
-  description?: string;
 }
 
-export default ({ pipelineId, organizationName, name, description }: IMutationInput) => {
+export default ({ pipelineId, organizationName, name }: IMutationInput) => {
   const variables = {
     input: {
       pipelineId,
       organizationName,
       name,
-      description,
     },
   };
 

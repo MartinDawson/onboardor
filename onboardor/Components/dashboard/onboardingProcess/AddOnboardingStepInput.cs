@@ -16,7 +16,6 @@ namespace onboardor.Components.dashboard.onboardingProcess
             Field<NonNullGraphType<IntGraphType>>("pipelineId");
             Field<NonNullGraphType<StringGraphType>>("organizationName");
             Field<NonNullGraphType<StringGraphType>>("name");
-            Field<StringGraphType>("description");
         }
     }
 }

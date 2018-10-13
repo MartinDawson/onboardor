@@ -26,7 +26,12 @@ const fragments = graphql`
         id
         ...pipelineContainer_pipeline
       }
+      closedSteps {
+        id
+        ...stepContainer_step
+      }
       organization {
+        organizationId
         name
       }
     }

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash c186c77894d26e0c1bf4e6d1f036f8c0
+ * @relayHash 27c7b04a27e49f77ab3c660a8f039cc3
  */
 
 /* eslint-disable */
@@ -15,7 +15,6 @@ export type AddOnboardingStepInput = {
   pipelineId: number,
   organizationName: string,
   name: string,
-  description?: ?string,
 };
 export type addStepMutationVariables = {|
   input: AddOnboardingStepInput

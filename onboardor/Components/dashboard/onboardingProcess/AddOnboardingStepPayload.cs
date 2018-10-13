@@ -38,7 +38,6 @@ namespace onboardor.Components.dashboard.onboardingProcess
             var pipelineId = inputs.Get<int>("pipelineId");
             var organizationName = inputs.Get<string>("organizationName");
             var name = inputs.Get<string>("name");
-            var description = inputs.Get<string>("description");
             var pipeline = _pipelineService.GetPipeline(pipelineId);
             var userContext = context.UserContext.As<Context>();
             var token = userContext.HttpContext.Session.GetString("OAuthToken");
@@ -47,10 +46,7 @@ namespace onboardor.Components.dashboard.onboardingProcess
 
             _client.Credentials = new Credentials(token);
 
-            var newIssue = new NewIssue(name)
-            {
-                Body = description,
-            };
+            var newIssue = new NewIssue(name);
 
             var issue = await _client.Issue.Create(organizationName, Constants.RepositoryName, newIssue);
 

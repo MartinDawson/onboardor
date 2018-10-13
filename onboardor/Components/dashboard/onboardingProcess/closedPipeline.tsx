@@ -6,11 +6,11 @@ import Step from "./stepContainer";
 import { IStep } from "./step";
 
 interface IProps {
-  onboardingSteps: IStep[];
+  closedSteps: IStep[];
 }
 
 const ClosedPipeline = ({
-  onboardingSteps,
+  closedSteps,
 }: IProps) => (
   <PipelineColumn p={16}>
     <Box pb={16}>
@@ -18,10 +18,10 @@ const ClosedPipeline = ({
         <Text fontWeight="bold" fontSize={18}>Closed</Text>
       </Flex>
     </Box>
-    {onboardingSteps.filter((step) => step.isClosed).map((step) => (
+    {closedSteps.map((closedStep) => (
       <Step
-        key={step.id}
-        step={step}
+        key={closedStep.id}
+        step={closedStep}
       />
     ))}
   </PipelineColumn>

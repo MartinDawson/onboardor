@@ -19,6 +19,7 @@ namespace onboardor.Components.dashboard
         public IEnumerable<OnboardingPipeline> GetPipelines()
         {
             return _repository.GetAll()
+                .Include(x => x.OnboardingProcess)
                 .Include(x => x.OnboardingSteps)
                 .Include(x => x.Organization);
         }
@@ -26,6 +27,7 @@ namespace onboardor.Components.dashboard
         public OnboardingPipeline GetPipeline(int pipelineId)
         {
             return _repository.GetAll()
+                .Include(x => x.OnboardingProcess)
                 .Include(x => x.OnboardingSteps)
                 .Include(x => x.Organization)
                 .SingleOrDefault(x => x.Id == pipelineId);

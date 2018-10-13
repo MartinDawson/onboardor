@@ -34,7 +34,7 @@ const MemberOnboardingProcess = ({
           organizationName={member.onboardingProcess.organization.name}
         />
       )}
-      <ClosedPipeline onboardingSteps={member.onboardingProcess.organization.onboardingSteps} />
+      <ClosedPipeline closedSteps={member.onboardingProcess.closedSteps} />
       <EmptyPipeline organizationId={member.onboardingProcess.organization.organizationId} />
     </PipelineRow>
   </Container>

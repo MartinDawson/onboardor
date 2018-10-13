@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d4547dc04766673fda4aace6a882be7f
+ * @relayHash 4a3f655d848a2c32711de5ab1042127b
  */
 
 /* eslint-disable */
@@ -46,7 +46,12 @@ fragment memberOnboardingProcessContainer_member on Member {
       id
       ...pipelineContainer_pipeline
     }
+    closedSteps {
+      id
+      ...stepContainer_step
+    }
     organization {
+      organizationId
       name
       id
     }
@@ -107,13 +112,47 @@ v3 = {
   "name": "name",
   "args": null,
   "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "isClosed",
+  "args": null,
+  "storageKey": null
+},
+v5 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "onboardingStepId",
+  "args": null,
+  "storageKey": null
+},
+v6 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "issueNumber",
+  "args": null,
+  "storageKey": null
+},
+v7 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "organization",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "Organization",
+  "plural": false,
+  "selections": [
+    v2,
+    v3
+  ]
 };
 return {
   "kind": "Request",
   "operationKind": "query",
   "name": "memberOnboardingProcessContainerQuery",
   "id": null,
-  "text": "query memberOnboardingProcessContainerQuery(\n  $memberId: ID!\n) {\n  node(id: $memberId) {\n    __typename\n    ... on Member {\n      ...memberOnboardingProcessContainer_member\n    }\n    id\n  }\n}\n\nfragment memberOnboardingProcessContainer_member on Member {\n  name\n  onboardingProcess {\n    name\n    onboardingPipelines {\n      id\n      ...pipelineContainer_pipeline\n    }\n    organization {\n      name\n      id\n    }\n    id\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n",
+  "text": "query memberOnboardingProcessContainerQuery(\n  $memberId: ID!\n) {\n  node(id: $memberId) {\n    __typename\n    ... on Member {\n      ...memberOnboardingProcessContainer_member\n    }\n    id\n  }\n}\n\nfragment memberOnboardingProcessContainer_member on Member {\n  name\n  onboardingProcess {\n    name\n    onboardingPipelines {\n      id\n      ...pipelineContainer_pipeline\n    }\n    closedSteps {\n      id\n      ...stepContainer_step\n    }\n    organization {\n      organizationId\n      name\n      id\n    }\n    id\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -211,43 +250,30 @@ return {
                         "plural": true,
                         "selections": [
                           v2,
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "name": "isClosed",
-                            "args": null,
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "name": "onboardingStepId",
-                            "args": null,
-                            "storageKey": null
-                          },
+                          v4,
+                          v5,
                           v3,
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "name": "issueNumber",
-                            "args": null,
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "LinkedField",
-                            "alias": null,
-                            "name": "organization",
-                            "storageKey": null,
-                            "args": null,
-                            "concreteType": "Organization",
-                            "plural": false,
-                            "selections": [
-                              v2,
-                              v3
-                            ]
-                          }
+                          v6,
+                          v7
                         ]
                       }
+                    ]
+                  },
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "closedSteps",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "OnboardingStep",
+                    "plural": true,
+                    "selections": [
+                      v2,
+                      v5,
+                      v3,
+                      v6,
+                      v4,
+                      v7
                     ]
                   },
                   {
@@ -259,6 +285,13 @@ return {
                     "concreteType": "Organization",
                     "plural": false,
                     "selections": [
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "name": "organizationId",
+                        "args": null,
+                        "storageKey": null
+                      },
                       v3,
                       v2
                     ]

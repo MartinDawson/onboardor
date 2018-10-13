@@ -12,6 +12,7 @@ import { PortalWithState } from "react-portal";
 import createFieldValidator from "../../shared/inputs/createFieldValidator";
 import Step from "./stepContainer";
 import { IStep } from "./step";
+import { IProcess } from "./savedOnboardingProcess";
 
 export const PipelineColumn = styled(Column)`
   background-color: #F4F4F4;
@@ -30,6 +31,7 @@ export interface IPipeline {
   onboardingPipelineId: number;
   name: string;
   onboardingSteps: IStep[];
+  onboardingProcess: IProcess;
 }
 
 export interface IEditPipelineInput {
