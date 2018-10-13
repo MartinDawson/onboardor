@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import editPipelineMutation from "./editPipelineMutation";
 import Pipeline, { IEditPipelineInput, IAddOnboardingStepInput } from "./pipeline";
 import addStepMutation from "./addStepMutation";
+import { IMember } from "../member/member";
 
 const fragments = graphql`
   fragment pipelineContainer_pipeline on OnboardingPipeline {
@@ -28,6 +29,7 @@ interface IProps {
   form: string;
   togglePipeline: () => void;
   toggleStep: () => void;
+  member?: IMember;
 }
 
 interface IState {
@@ -54,11 +56,17 @@ const handlers = {
     });
     togglePipeline();
   },
-  addStep: ({ onboardingPipelineId, toggleStep, organizationName }: IProps) => (input: IAddOnboardingStepInput) => {
+  addStep: ({
+    onboardingPipelineId,
+    toggleStep,
+    member,
+    organizationName
+  }: IProps) => (input: IAddOnboardingStepInput) => {
     addStepMutation({
       organizationName,
       pipelineId: onboardingPipelineId,
       name: input.onboardingStepName,
+      memberId: member ? member.memberId : undefined,
     });
     toggleStep();
   },

@@ -22,11 +22,15 @@ namespace onboardor.Components.dashboard.onboardingProcess
     public class AddOnboardingStepPayload : MutationPayloadGraphType<object, Task<object>>
     {
         private readonly IPipelineService _pipelineService;
+        private readonly IMemberService _memberService;
         private GitHubClient _client = new GitHubClient(new ProductHeaderValue(Env.GetString("APP_NAME")));
 
-        public AddOnboardingStepPayload(IPipelineService pipelineService)
+        public AddOnboardingStepPayload(
+            IPipelineService pipelineService,
+            IMemberService memberService)
         {
             _pipelineService = pipelineService;
+            _memberService = memberService;
 
             Name = nameof(AddOnboardingStepPayload);
 
@@ -36,6 +40,7 @@ namespace onboardor.Components.dashboard.onboardingProcess
         public override async Task<object> MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context)
         {
             var pipelineId = inputs.Get<int>("pipelineId");
+            var memberId = inputs.Get<int?>("memberId");
             var organizationName = inputs.Get<string>("organizationName");
             var name = inputs.Get<string>("name");
             var pipeline = _pipelineService.GetPipeline(pipelineId);
@@ -48,6 +53,13 @@ namespace onboardor.Components.dashboard.onboardingProcess
 
             var newIssue = new NewIssue(name);
 
+            if (memberId.HasValue)
+            {
+                var member = _memberService.GetMember(memberId.Value);
+
+                newIssue.Assignees.Add(member.Name);
+            }
+       
             var issue = await _client.Issue.Create(organizationName, Constants.RepositoryName, newIssue);
 
             pipeline.OnboardingSteps.Add(new OnboardingStep

@@ -4,13 +4,16 @@ import { Flex } from "grid-styled";
 import { PipelineColumn } from "./pipeline";
 import Step from "./stepContainer";
 import { IStep } from "./step";
+import { IMember } from "../member/member";
 
 interface IProps {
   closedSteps: IStep[];
+  member: IMember;
 }
 
 const ClosedPipeline = ({
   closedSteps,
+  member,
 }: IProps) => (
   <PipelineColumn p={16}>
     <Box pb={16}>
@@ -22,6 +25,7 @@ const ClosedPipeline = ({
       <Step
         key={closedStep.id}
         step={closedStep}
+        member={member}
       />
     ))}
   </PipelineColumn>

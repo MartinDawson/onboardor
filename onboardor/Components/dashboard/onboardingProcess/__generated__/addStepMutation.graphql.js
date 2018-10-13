@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 27c7b04a27e49f77ab3c660a8f039cc3
+ * @relayHash 8877d86da7077a0ee0b4ab4b0a952575
  */
 
 /* eslint-disable */
@@ -13,6 +13,7 @@ type pipelineContainer_pipeline$ref = any;
 export type AddOnboardingStepInput = {
   clientMutationId?: ?string,
   pipelineId: number,
+  memberId?: ?number,
   organizationName: string,
   name: string,
 };

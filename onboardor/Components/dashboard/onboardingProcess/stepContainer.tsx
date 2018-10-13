@@ -3,6 +3,7 @@ import { compose, flattenProp, withHandlers, withProps, withState } from "recomp
 import { graphql, RelayRefetchProp } from "react-relay";
 import { refetchContainer } from "relay-compose";
 import { IOrganization } from "../organization/organization";
+import { IMember } from "../member/member";
 
 const fragments = graphql`
   fragment stepContainer_step on OnboardingStep {
@@ -19,13 +20,21 @@ const fragments = graphql`
 
 const refetchQuery = graphql`
   query stepContainerRefetchQuery(
-    $id: ID!
+    $organizationId: ID!
+    $memberId: ID!
   ) {
-    node(
-      id: $id
+    organizationNode: node(
+      id: $organizationId
     ) {
       ...on Organization {
         ...onboardingProcessContainer_organization
+      }
+    }
+    memberNode: node(
+      id: $memberId
+    ) {
+      ...on Member {
+        ...memberOnboardingProcessContainer_member
       }
     }
   }
@@ -37,6 +46,7 @@ interface IProps {
   setIssueContent: (issueContent: Element | null, callback: () => void) => void;
   issueUrl: string;
   relay: RelayRefetchProp;
+  member?: IMember;
 }
 
 const createProps = ({
@@ -57,8 +67,11 @@ const handlers = {
 
     setIssueContent(issueContent, () => openPortal());
   },
-  closeModal: ({ relay, organization }: IProps) => (closePortal: () => void) => {
-    relay.refetch({ id: organization.id });
+  closeModal: ({ relay, organization, member }: IProps) => (closePortal: () => void) => {
+    relay.refetch({
+      organizationId: organization.id,
+      memberId: member ? member.id : 0,
+    });
     closePortal();
   },
 };

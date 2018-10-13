@@ -13,6 +13,7 @@ import createFieldValidator from "../../shared/inputs/createFieldValidator";
 import Step from "./stepContainer";
 import { IStep } from "./step";
 import { IProcess } from "./savedOnboardingProcess";
+import { IMember } from "../member/member";
 
 export const PipelineColumn = styled(Column)`
   background-color: #F4F4F4;
@@ -59,6 +60,7 @@ interface IProps extends InjectedFormProps<FormData> {
   addStep: () => void;
   toggleStep: () => void;
   isAddingStep: boolean;
+  member?: IMember;
 }
 
 const editPipelineValidator = createFieldValidator(["required"]);
@@ -76,6 +78,7 @@ const Pipeline = ({
   isAddingStep,
   toggleStep,
   onboardingSteps,
+  member,
 }: IProps) => (
   <PipelineColumn p={16}>
     <Box pb={16}>
@@ -129,6 +132,7 @@ const Pipeline = ({
       <Step
         key={step.id}
         step={step}
+        member={member}
       />
     ))}
     {isAddingStep ? (

@@ -33,14 +33,14 @@ namespace onboardor.Components.dashboard
         {
             var process = _repository.GetAll().Single(x => x.Id == processId);
 
-            var steps = process.OnboardingPipelines.SelectMany(x => x.OnboardingSteps.Where(z => z.IsClosed));
+            var steps = process.OnboardingPipelines.SelectMany(x => x.OnboardingSteps);
 
             foreach (var step in steps)
             {
                 _stepRepository.Reload(step);
             }
 
-            return steps.ToList();
+            return steps.Where(z => z.IsClosed).ToList();
         }
 
         public void Add(OnboardingProcess process)

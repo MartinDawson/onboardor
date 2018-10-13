@@ -1,14 +1,16 @@
 # source: http://localhost:49891/graphql
-# timestamp: Sat Oct 13 2018 13:11:32 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Sat Oct 13 2018 17:35:27 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
   organizationId: Int!
+  memberId: Int = null
   name: String!
 }
 
 type AddOnboardingPipelinePayload {
   clientMutationId: String
+  member: Member
   organization: Organization!
 }
 
@@ -38,6 +40,7 @@ type AddOnboardingProcessToMemberPayload {
 input AddOnboardingStepInput {
   clientMutationId: String = null
   pipelineId: Int!
+  memberId: Int = null
   organizationName: String!
   name: String!
 }

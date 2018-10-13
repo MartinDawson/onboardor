@@ -14,6 +14,7 @@ namespace onboardor.Components.dashboard.onboardingProcess
             Name = nameof(AddOnboardingPipelineInput);
 
             Field<NonNullGraphType<IntGraphType>>("organizationId");
+            Field<IntGraphType>("memberId");
             Field<NonNullGraphType<StringGraphType>>("name");
         }
     }

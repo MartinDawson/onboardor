@@ -57,7 +57,7 @@ namespace onboardor.Components.dashboard.onBoardingCreator
             {
                 Id = issue.Id,
                 IsClosed = step.IsClosed,
-                IssueNumber = step.IssueNumber,
+                IssueNumber = issue.Number,
                 Name = step.Name,
                 OnboardingPipeline = step.OnboardingPipeline,
             };

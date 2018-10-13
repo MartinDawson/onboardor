@@ -19,8 +19,11 @@ const query = graphql`
 
 const fragments = graphql`
   fragment memberOnboardingProcessContainer_member on Member {
+    memberId
+    id
     name
     onboardingProcess {
+      onboardingProcessId
       name
       onboardingPipelines {
         id

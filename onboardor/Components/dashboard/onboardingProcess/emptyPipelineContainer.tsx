@@ -9,6 +9,7 @@ interface IState {
 
 interface IProps {
   organizationId: number;
+  memberId?: number;
   togglePipeline: () => void;
 }
 
@@ -17,8 +18,12 @@ interface IAddPipelineInput {
 }
 
 const handlers = {
-  addPipeline: ({ organizationId, togglePipeline }: IProps) => (input: IAddPipelineInput) => {
-    addPipelineMutation({ organizationId, ...input });
+  addPipeline: ({ organizationId, memberId, togglePipeline }: IProps) => (input: IAddPipelineInput) => {
+    addPipelineMutation({
+      organizationId,
+      memberId,
+      ...input,
+    });
     togglePipeline();
   },
 };

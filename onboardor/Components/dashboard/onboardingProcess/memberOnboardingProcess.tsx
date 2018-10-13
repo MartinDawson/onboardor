@@ -32,10 +32,17 @@ const MemberOnboardingProcess = ({
           form={`pipeline_${i}`}
           pipeline={pipeline}
           organizationName={member.onboardingProcess.organization.name}
+          member={member}
         />
       )}
-      <ClosedPipeline closedSteps={member.onboardingProcess.closedSteps} />
-      <EmptyPipeline organizationId={member.onboardingProcess.organization.organizationId} />
+      <ClosedPipeline
+        closedSteps={member.onboardingProcess.closedSteps}
+        member={member}
+      />
+      <EmptyPipeline
+        organizationId={member.onboardingProcess.organization.organizationId}
+        memberId={member.memberId}
+      />
     </PipelineRow>
   </Container>
 );

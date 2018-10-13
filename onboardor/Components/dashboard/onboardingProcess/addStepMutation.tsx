@@ -15,14 +15,16 @@ const mutation = graphql`
 
 interface IMutationInput {
   pipelineId: number;
+  memberId?: number;
   organizationName: string;
   name: string;
 }
 
-export default ({ pipelineId, organizationName, name }: IMutationInput) => {
+export default ({ pipelineId, memberId, organizationName, name }: IMutationInput) => {
   const variables = {
     input: {
       pipelineId,
+      memberId,
       organizationName,
       name,
     },

@@ -59,7 +59,7 @@ namespace onboardor.Components.dashboard.onboardingProcess
                 Id = issue.Id,
                 IsClosed = step.IsClosed,
                 IssueNumber = issue.Number,
-                Name = issue.Title,
+                Name = step.Name,
                 OnboardingPipeline = step.OnboardingPipeline,
             };
         }

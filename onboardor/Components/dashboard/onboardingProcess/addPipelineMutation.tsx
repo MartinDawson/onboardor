@@ -9,19 +9,24 @@ const mutation = graphql`
       organization {
         ...onboardingProcessContainer_organization
       }
+      member {
+        ...memberOnboardingProcessContainer_member
+      }
     }
   }
 `;
 
 export interface IMutationInput {
   organizationId: number;
+  memberId?: number;
   name: string;
 }
 
-export default ({ organizationId, name }: IMutationInput) => {
+export default ({ organizationId, memberId, name }: IMutationInput) => {
   const variables = {
     input: {
       organizationId,
+      memberId,
       name,
     },
   };
