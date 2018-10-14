@@ -21,7 +21,7 @@ interface IProps {
 const PipelineRow = styled(Row)`
   margin-left: -5px;
   margin-right: -5px;
-  height: 700px;
+  min-height: 200px;
 `;
 
 const OnboardingProcess = ({
@@ -35,43 +35,9 @@ const OnboardingProcess = ({
       </Text> on-boarding template
     </Text>
     <Text fontSize={14}>
-      Select a team member to start onboarding
-    </Text>
-    <PortalWithState closeOnEsc={true}>
-      {({ openPortal, closePortal, portal }) => (
-        <React.Fragment>
-          <Flex flexWrap="wrap">
-            {organization.members.map((member) => (
-              <React.Fragment key={member.id}>
-                <SelectCard
-                  m={cardMargin}
-                  onClick={() => memberOnClick(member, openPortal)}
-                >
-                  <BackgroundImage width={200} src={member.avatarUrl} ratio={1} />
-                  <Subhead textAlign="center" mt={nameMargin}>{member.name}</Subhead>
-                </SelectCard>
-                {portal(
-                  <Modal top="30%">
-                    <Text mb={20}>
-                      Select one of your saved onboarding processes to
-                      begin onboarding this team member.
-                    </Text>
-                    <SelectOnboardingProcessForm
-                      member={member}
-                      processes={organization.onboardingProcesses}
-                      cancelOnClick={closePortal}
-                    />
-                  </Modal>
-                )}
-              </React.Fragment>
-            ))}
-          </Flex>
-        </React.Fragment>
-      )}
-    </PortalWithState>
-    <Text fontSize={14}>
-      Once you have configured your onboarding process be sure to save it so it can be
-      re-used between team members.
+      Create your organizations onboarding process.
+      Once created, be sure to save it so you can re-use templates
+      between team members.
     </Text>
     <PortalWithState closeOnEsc={true} closeOnOutsideClick={true}>
       {({ openPortal, closePortal, portal }) => (
@@ -90,6 +56,17 @@ const OnboardingProcess = ({
         </React.Fragment>
       )}
     </PortalWithState>
+    <PipelineRow>
+      {organization.onboardingPipelines.filter((pipeline) => !pipeline.onboardingProcess).map((pipeline, i) =>
+        <Pipeline
+          key={pipeline.id}
+          form={`pipeline_${i}`}
+          pipeline={pipeline}
+          organization={organization}
+        />
+      )}
+      <EmptyPipeline organizationId={organization.organizationId} />
+    </PipelineRow>
     <Box my={20}>
       {organization.onboardingProcesses.length > 0 ? (
         <Text fontSize={16}>
@@ -104,17 +81,39 @@ const OnboardingProcess = ({
         />
       ))}
     </Box>
-    <PipelineRow>
-      {organization.onboardingPipelines.filter((pipeline) => !pipeline.onboardingProcess).map((pipeline, i) =>
-        <Pipeline
-          key={pipeline.id}
-          form={`pipeline_${i}`}
-          pipeline={pipeline}
-          organization={organization}
-        />
-      )}
-      <EmptyPipeline organizationId={organization.organizationId} />
-    </PipelineRow>
+    <Text fontSize={14}>
+      Select a team member to start onboarding
+    </Text>
+    <Flex flexWrap="wrap">
+      {organization.members.map((member) => (
+        <PortalWithState closeOnEsc={true}>
+          {({ openPortal, closePortal, portal }) => (
+            <React.Fragment key={member.id}>
+              <SelectCard
+                m={cardMargin}
+                onClick={() => memberOnClick(member, openPortal)}
+              >
+                <BackgroundImage width={200} src={member.avatarUrl} ratio={1} />
+                <Subhead textAlign="center" mt={nameMargin}>{member.name}</Subhead>
+              </SelectCard>
+              {portal(
+                <Modal top="30%">
+                  <Text mb={20}>
+                    Select one of your saved onboarding processes to
+                    begin onboarding this team member.
+                  </Text>
+                  <SelectOnboardingProcessForm
+                    member={member}
+                    processes={organization.onboardingProcesses}
+                    cancelOnClick={closePortal}
+                  />
+                </Modal>
+              )}
+            </React.Fragment>
+          )}
+        </PortalWithState>
+      ))}
+    </Flex>
   </Container>
 );
 

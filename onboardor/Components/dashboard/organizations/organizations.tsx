@@ -2,7 +2,7 @@ import { Link } from "found";
 import { Flex } from "grid-styled";
 import React from "react";
 import { BackgroundImage, Subhead, Text } from "rebass";
-import { nameMargin, SelectCard } from "../../select/styles";
+import { nameMargin, SelectCard, cardMargin } from "../../select/styles";
 import { IRoute } from "../../types";
 import { IOrganization } from "../organization/organization";
 
@@ -16,7 +16,7 @@ const Organizations = ({
 }: IProps) => (
   <div>
     <Text my={30}>
-      Choose an organization
+      Choose an organization to start your onboarding
     </Text>
 
     <Flex flexWrap="wrap">

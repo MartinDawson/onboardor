@@ -94,7 +94,6 @@ namespace onboardor.Components.dashboard.onboardingProcess
                 {
                     Name = pipeline.Name,
                     OnboardingSteps = newOnboardingSteps,
-                    Organization = pipeline.Organization,
                 });
             }
             var process = new OnboardingProcess

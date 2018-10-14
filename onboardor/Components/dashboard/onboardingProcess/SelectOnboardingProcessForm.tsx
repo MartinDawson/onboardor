@@ -6,7 +6,6 @@ import Button from "../../shared/button/button";
 import ProcessesSelectInput from "../../shared/inputs/processesSelectInput";
 import { IMember } from "../member/member";
 import addOnboardingProcessToMemberMutation from "./addOnboardingProcessToMemberMutation";
-import { IRoute } from "../../types";
 
 interface IProps extends InjectedFormProps {
   processes: IProcess[];
@@ -22,7 +21,7 @@ interface IOnSubmitParams {
 }
 
 const handlers = {
-  onSubmit: ({ member, route }: IProps) => ({ process }: IOnSubmitParams) => {
+  onSubmit: ({ member }: IProps) => ({ process }: IOnSubmitParams) => {
     addOnboardingProcessToMemberMutation({
       memberId: member.memberId,
       processId: process.value,
