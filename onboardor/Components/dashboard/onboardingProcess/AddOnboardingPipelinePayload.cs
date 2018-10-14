@@ -29,7 +29,6 @@ namespace onboardor.Components.dashboard.onboardingProcess
             Name = nameof(AddOnboardingPipelinePayload);
 
             Field<NonNullGraphType<OrganizationPayload>>("organization");
-            Field<MemberPayload>("member");
         }
 
         public override object MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context)
@@ -42,11 +41,10 @@ namespace onboardor.Components.dashboard.onboardingProcess
             {
                 Name = name,
             };
-            Member member = null;
 
             if (memberId.HasValue)
             {
-                member = _memberService.GetMember(memberId.Value);
+                var member = _memberService.GetMember(memberId.Value);
 
                 pipeline.OnboardingProcess = member.OnboardingProcess;
             }
@@ -58,7 +56,6 @@ namespace onboardor.Components.dashboard.onboardingProcess
             return new
             {
                 organization,
-                member,
             };
         }
     }

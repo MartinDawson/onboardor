@@ -15,6 +15,7 @@ namespace onboardor.Components.dashboard
 
             Id(x => x.Id);
             Field(x => x.Name);
+            Field<OrganizationPayload>("organization");
             Field<OnboardingProcessPayload>("onboardingProcess");
             Field<NonNullGraphType<ListGraphType<OnboardingStepPayload>>>("onboardingSteps");
         }

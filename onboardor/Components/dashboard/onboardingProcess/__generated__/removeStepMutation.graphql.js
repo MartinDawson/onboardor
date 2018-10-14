@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash b7240e215a2ed0cbe0446a78189b82d2
+ * @relayHash 238182f9347beae9e524e0a54c5f19ce
  */
 
 /* eslint-disable */
@@ -59,10 +59,6 @@ fragment stepContainer_step on OnboardingStep {
   name
   issueNumber
   isClosed
-  organization {
-    id
-    name
-  }
 }
 */
 
@@ -102,7 +98,7 @@ return {
   "operationKind": "mutation",
   "name": "removeStepMutation",
   "id": null,
-  "text": "mutation removeStepMutation(\n  $input: RemoveOnboardingStepInput!\n) {\n  removeStep(input: $input) {\n    pipeline {\n      ...pipelineContainer_pipeline\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n",
+  "text": "mutation removeStepMutation(\n  $input: RemoveOnboardingStepInput!\n) {\n  removeStep(input: $input) {\n    pipeline {\n      ...pipelineContainer_pipeline\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -203,19 +199,6 @@ return {
                     "name": "issueNumber",
                     "args": null,
                     "storageKey": null
-                  },
-                  {
-                    "kind": "LinkedField",
-                    "alias": null,
-                    "name": "organization",
-                    "storageKey": null,
-                    "args": null,
-                    "concreteType": "Organization",
-                    "plural": false,
-                    "selections": [
-                      v2,
-                      v3
-                    ]
                   }
                 ]
               }

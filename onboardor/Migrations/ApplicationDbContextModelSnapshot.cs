@@ -351,7 +351,7 @@ namespace onboardor.Migrations
 
             modelBuilder.Entity("onboardor.Components.dashboard.OnboardingPipeline", b =>
                 {
-                    b.HasOne("onboardor.Components.dashboard.OnboardingProcess")
+                    b.HasOne("onboardor.Components.dashboard.OnboardingProcess", "OnboardingProcess")
                         .WithMany("OnboardingPipelines")
                         .HasForeignKey("OnboardingProcessId");
 

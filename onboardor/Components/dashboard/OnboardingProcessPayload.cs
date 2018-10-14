@@ -27,7 +27,7 @@ namespace onboardor.Components.dashboard
 
             Id(x => x.Id);
             Field(x => x.Name);
-            Field<NonNullGraphType<OrganizationPayload>>("organization");
+            Field<OrganizationPayload>("organization");
             Field<NonNullGraphType<ListGraphType<OnboardingPipelinePayload>>>("onboardingPipelines");
             Field<NonNullGraphType<ListGraphType<OnboardingStepPayload>>>("closedSteps", resolve: context => _processService.GetClosedSteps(context.Source.Id));
         }

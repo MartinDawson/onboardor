@@ -5,15 +5,18 @@ import { PipelineColumn } from "./pipeline";
 import Step from "./stepContainer";
 import { IStep } from "./step";
 import { IMember } from "../member/member";
+import { IOrganization } from "../organization/organization";
 
 interface IProps {
   closedSteps: IStep[];
   member: IMember;
+  organization: IOrganization;
 }
 
 const ClosedPipeline = ({
   closedSteps,
   member,
+  organization,
 }: IProps) => (
   <PipelineColumn p={16}>
     <Box pb={16}>
@@ -26,6 +29,7 @@ const ClosedPipeline = ({
         key={closedStep.id}
         step={closedStep}
         member={member}
+        organization={organization}
       />
     ))}
   </PipelineColumn>

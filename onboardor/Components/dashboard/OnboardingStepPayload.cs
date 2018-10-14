@@ -23,7 +23,6 @@ namespace onboardor.Components.dashboard
             Field(x => x.IsClosed);
             Field(x => x.IssueNumber);
             Field(x => x.Name);
-            Field<OrganizationPayload>("organization", resolve: context => context.Source.OnboardingPipeline.Organization);
         }
 
         public override OnboardingStep GetById(string id)

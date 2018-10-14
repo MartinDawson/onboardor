@@ -11,11 +11,11 @@ import { PortalWithState } from "react-portal";
 import AddOnboardingProcessForm from "./AddOnboardingProcessForm";
 import { cardMargin, nameMargin, SelectCard } from "../../select/styles";
 import SelectOnboardingProcessForm from "./SelectOnboardingProcessForm";
-import Step from "./step";
-import ClosedPipeline from "./closedPipeline";
+import { IMember } from "../member/member";
 
 interface IProps {
   organization: IOrganization;
+  memberOnClick: (member: IMember, openPortal: () => void) => void;
 }
 
 const PipelineRow = styled(Row)`
@@ -26,6 +26,7 @@ const PipelineRow = styled(Row)`
 
 const OnboardingProcess = ({
   organization,
+  memberOnClick,
 }: IProps) => (
   <Container maxWidth="100%">
     <Text mt={20} mb={40} fontSize={20}>
@@ -44,7 +45,7 @@ const OnboardingProcess = ({
               <React.Fragment key={member.id}>
                 <SelectCard
                   m={cardMargin}
-                  onClick={openPortal}
+                  onClick={() => memberOnClick(member, openPortal)}
                 >
                   <BackgroundImage width={200} src={member.avatarUrl} ratio={1} />
                   <Subhead textAlign="center" mt={nameMargin}>{member.name}</Subhead>
@@ -109,7 +110,7 @@ const OnboardingProcess = ({
           key={pipeline.id}
           form={`pipeline_${i}`}
           pipeline={pipeline}
-          organizationName={organization.name}
+          organization={organization}
         />
       )}
       <EmptyPipeline organizationId={organization.organizationId} />

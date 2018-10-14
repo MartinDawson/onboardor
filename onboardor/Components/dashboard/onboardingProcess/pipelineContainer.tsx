@@ -8,6 +8,7 @@ import editPipelineMutation from "./editPipelineMutation";
 import Pipeline, { IEditPipelineInput, IAddOnboardingStepInput } from "./pipeline";
 import addStepMutation from "./addStepMutation";
 import { IMember } from "../member/member";
+import { IOrganization } from "../organization/organization";
 
 const fragments = graphql`
   fragment pipelineContainer_pipeline on OnboardingPipeline {
@@ -23,7 +24,7 @@ const fragments = graphql`
 `;
 
 interface IProps {
-  organizationName: string;
+  organization: IOrganization;
   onboardingPipelineId: number;
   name: string;
   form: string;
@@ -47,12 +48,16 @@ const stateHandlers = {
 };
 
 const handlers = {
-  removePipeline: ({ onboardingPipelineId }: IProps) => () =>
-    removePipelineMutation({ id: onboardingPipelineId }),
-  editPipeline: ({ onboardingPipelineId, togglePipeline }: IProps) => (input: IEditPipelineInput) => {
+  removePipeline: ({ onboardingPipelineId, member }: IProps) => () =>
+    removePipelineMutation({
+      id: onboardingPipelineId,
+      memberId: member ? member.memberId : undefined,
+    }),
+  editPipeline: ({ onboardingPipelineId, togglePipeline, member }: IProps) => (input: IEditPipelineInput) => {
     editPipelineMutation({
       id: onboardingPipelineId,
       name: input.pipelineName,
+      memberId: member ? member.memberId : undefined,
     });
     togglePipeline();
   },
@@ -60,10 +65,10 @@ const handlers = {
     onboardingPipelineId,
     toggleStep,
     member,
-    organizationName
+    organization
   }: IProps) => (input: IAddOnboardingStepInput) => {
     addStepMutation({
-      organizationName,
+      organizationName: organization.name,
       pipelineId: onboardingPipelineId,
       name: input.onboardingStepName,
       memberId: member ? member.memberId : undefined,

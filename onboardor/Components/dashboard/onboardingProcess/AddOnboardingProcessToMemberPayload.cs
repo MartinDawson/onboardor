@@ -93,7 +93,6 @@ namespace onboardor.Components.dashboard.onBoardingCreator
                 {
                     Name = pipeline.Name,
                     OnboardingSteps = newOnboardingSteps,
-                    Organization = pipeline.Organization,
                 });
             }
 
@@ -101,7 +100,6 @@ namespace onboardor.Components.dashboard.onBoardingCreator
             {
                 Name = process.Name,
                 OnboardingPipelines = newPipelines,
-                Organization = process.Organization
             };
 
             _memberService.Update(member);

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 8877d86da7077a0ee0b4ab4b0a952575
+ * @relayHash 340f2b1938057ea2214df062e32c6e5c
  */
 
 /* eslint-disable */
@@ -62,10 +62,6 @@ fragment stepContainer_step on OnboardingStep {
   name
   issueNumber
   isClosed
-  organization {
-    id
-    name
-  }
 }
 */
 
@@ -105,7 +101,7 @@ return {
   "operationKind": "mutation",
   "name": "addStepMutation",
   "id": null,
-  "text": "mutation addStepMutation(\n  $input: AddOnboardingStepInput!\n) {\n  addStep(input: $input) {\n    pipeline {\n      ...pipelineContainer_pipeline\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n  organization {\n    id\n    name\n  }\n}\n",
+  "text": "mutation addStepMutation(\n  $input: AddOnboardingStepInput!\n) {\n  addStep(input: $input) {\n    pipeline {\n      ...pipelineContainer_pipeline\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -206,19 +202,6 @@ return {
                     "name": "issueNumber",
                     "args": null,
                     "storageKey": null
-                  },
-                  {
-                    "kind": "LinkedField",
-                    "alias": null,
-                    "name": "organization",
-                    "storageKey": null,
-                    "args": null,
-                    "concreteType": "Organization",
-                    "plural": false,
-                    "selections": [
-                      v2,
-                      v3
-                    ]
                   }
                 ]
               }

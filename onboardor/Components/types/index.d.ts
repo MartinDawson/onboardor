@@ -53,10 +53,12 @@ export interface IMatch {
   location: ILocation;
 }
 
+export interface IRouter {
+  push: (pathname: string) => void
+}
+
 export interface IRoute {
-  router: {
-    push: (pathname: string) => void
-  };
+  router: IRouter;
   error: {
     _error: string[]
   };

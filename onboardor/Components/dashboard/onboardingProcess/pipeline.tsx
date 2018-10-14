@@ -79,6 +79,7 @@ const Pipeline = ({
   toggleStep,
   onboardingSteps,
   member,
+  organization,
 }: IProps) => (
   <PipelineColumn p={16}>
     <Box pb={16}>
@@ -133,6 +134,7 @@ const Pipeline = ({
         key={step.id}
         step={step}
         member={member}
+        organization={organization}
       />
     ))}
     {isAddingStep ? (

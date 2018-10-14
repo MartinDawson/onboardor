@@ -11,30 +11,20 @@ const fragments = graphql`
     name
     issueNumber
     isClosed
-    organization {
-      id
-      name
-    }
   }
 `;
 
 const refetchQuery = graphql`
   query stepContainerRefetchQuery(
+    $memberId: Int = null
     $organizationId: ID!
-    $memberId: ID!
   ) {
     organizationNode: node(
       id: $organizationId
     ) {
       ...on Organization {
         ...onboardingProcessContainer_organization
-      }
-    }
-    memberNode: node(
-      id: $memberId
-    ) {
-      ...on Member {
-        ...memberOnboardingProcessContainer_member
+        ...memberOnboardingProcessContainer_organization
       }
     }
   }
@@ -70,7 +60,7 @@ const handlers = {
   closeModal: ({ relay, organization, member }: IProps) => (closePortal: () => void) => {
     relay.refetch({
       organizationId: organization.id,
-      memberId: member ? member.id : 0,
+      memberId: member ? member.memberId : undefined,
     });
     closePortal();
   },

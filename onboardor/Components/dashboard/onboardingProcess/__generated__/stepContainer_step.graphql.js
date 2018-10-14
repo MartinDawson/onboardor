@@ -15,24 +15,12 @@ export type stepContainer_step = {|
   +name: string,
   +issueNumber: number,
   +isClosed: boolean,
-  +organization: ?{|
-    +id: string,
-    +name: string,
-  |},
   +$refType: stepContainer_step$ref,
 |};
 */
 
 
-const node/*: ConcreteFragment*/ = (function(){
-var v0 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "name",
-  "args": null,
-  "storageKey": null
-};
-return {
+const node/*: ConcreteFragment*/ = {
   "kind": "Fragment",
   "name": "stepContainer_step",
   "type": "OnboardingStep",
@@ -46,7 +34,13 @@ return {
       "args": null,
       "storageKey": null
     },
-    v0,
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "name",
+      "args": null,
+      "storageKey": null
+    },
     {
       "kind": "ScalarField",
       "alias": null,
@@ -60,29 +54,9 @@ return {
       "name": "isClosed",
       "args": null,
       "storageKey": null
-    },
-    {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "organization",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "Organization",
-      "plural": false,
-      "selections": [
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "id",
-          "args": null,
-          "storageKey": null
-        },
-        v0
-      ]
     }
   ]
 };
-})();
 // prettier-ignore
-(node/*: any*/).hash = '1db5fc63d6fb5d83a1fafaf093321bfe';
+(node/*: any*/).hash = 'f72823e089de71b4658fd811841eb61e';
 module.exports = node;

@@ -3,14 +3,13 @@ import { createMutation } from "relay-compose";
 
 const mutation = graphql`
   mutation addPipelineMutation(
+    $memberId: Int = null
     $input: AddOnboardingPipelineInput!
   ) {
     addPipeline(input: $input) {
       organization {
         ...onboardingProcessContainer_organization
-      }
-      member {
-        ...memberOnboardingProcessContainer_member
+        ...memberOnboardingProcessContainer_organization
       }
     }
   }
@@ -24,6 +23,7 @@ export interface IMutationInput {
 
 export default ({ organizationId, memberId, name }: IMutationInput) => {
   const variables = {
+    memberId,
     input: {
       organizationId,
       memberId,

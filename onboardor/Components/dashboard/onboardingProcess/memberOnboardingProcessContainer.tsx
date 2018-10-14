@@ -1,49 +1,56 @@
 import { graphql } from "react-relay";
-import { compose, renameProp } from "recompose";
+import { compose, renameProp, flattenProp } from "recompose";
 import MemberOnboardingProcess from "./memberOnboardingProcess";
 import { fragment } from "relay-compose";
 
 const query = graphql`
   query memberOnboardingProcessContainerQuery(
-    $memberId: ID!
+    $organizationId: ID!
+    $memberId: Int!
   ) {
     node(
-      id: $memberId
+      id: $organizationId
     ) {
-      ...on Member {
-        ...memberOnboardingProcessContainer_member
+      ...on Organization {
+        ...memberOnboardingProcessContainer_organization
       }
     }
   }
 `;
 
 const fragments = graphql`
-  fragment memberOnboardingProcessContainer_member on Member {
-    memberId
-    id
+  fragment memberOnboardingProcessContainer_organization on Organization {
     name
-    onboardingProcess {
-      onboardingProcessId
+    organizationId
+    id
+    member(id: $memberId) {
+      memberId
+      id
       name
-      onboardingPipelines {
-        id
-        ...pipelineContainer_pipeline
-      }
-      closedSteps {
-        id
-        ...stepContainer_step
-      }
-      organization {
-        organizationId
+      onboardingProcess {
+        onboardingProcessId
         name
+        onboardingPipelines {
+          id
+          ...pipelineContainer_pipeline
+        }
+        closedSteps {
+          id
+          ...stepContainer_step
+        }
+        organization {
+          organizationId
+          name
+        }
       }
     }
   }
 `;
 
 const Component = compose(
-  renameProp("node", "member"),
+  renameProp("node", "organization"),
   fragment(fragments),
+  flattenProp("organization"),
 )(MemberOnboardingProcess);
 
 export const routeConfig = {

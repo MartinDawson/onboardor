@@ -19,12 +19,15 @@ export type onboardingProcessContainer_organization = {|
     +memberId: number,
     +avatarUrl: string,
     +name: string,
+    +onboardingProcess: ?{|
+      +id: string
+    |},
   |}>,
   +onboardingProcesses: $ReadOnlyArray<?{|
     +id: string,
     +onboardingProcessId: number,
     +name: string,
-    +organization: {|
+    +organization: ?{|
       +id: string
     |},
   |}>,
@@ -58,7 +61,17 @@ v1 = {
 },
 v2 = [
   v1
-];
+],
+v3 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "onboardingProcess",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "OnboardingProcess",
+  "plural": false,
+  "selections": v2
+};
 return {
   "kind": "Fragment",
   "name": "onboardingProcessContainer_organization",
@@ -98,7 +111,8 @@ return {
           "args": null,
           "storageKey": null
         },
-        v0
+        v0,
+        v3
       ]
     },
     {
@@ -148,16 +162,7 @@ return {
           "args": null,
           "storageKey": null
         },
-        {
-          "kind": "LinkedField",
-          "alias": null,
-          "name": "onboardingProcess",
-          "storageKey": null,
-          "args": null,
-          "concreteType": "OnboardingProcess",
-          "plural": false,
-          "selections": v2
-        },
+        v3,
         {
           "kind": "FragmentSpread",
           "name": "pipelineContainer_pipeline",
@@ -169,5 +174,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '9e697241d303d0de888537e687fbaa0a';
+(node/*: any*/).hash = '76b59635f5993dd644d8376f2d12a1cb';
 module.exports = node;

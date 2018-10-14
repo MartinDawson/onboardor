@@ -1,5 +1,5 @@
 # source: http://localhost:49891/graphql
-# timestamp: Sat Oct 13 2018 17:35:27 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Sun Oct 14 2018 11:31:26 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
@@ -10,7 +10,6 @@ input AddOnboardingPipelineInput {
 
 type AddOnboardingPipelinePayload {
   clientMutationId: String
-  member: Member
   organization: Organization!
 }
 
@@ -103,7 +102,7 @@ type Member implements Node {
   name: String!
 
   """The process that the member is being onboarded by"""
-  onboardingProcess: OnboardingProcess!
+  onboardingProcess: OnboardingProcess
   organizations: [Organization]!
 }
 
@@ -136,6 +135,7 @@ type OnboardingPipeline implements Node {
   onboardingPipelineId: Int!
   onboardingProcess: OnboardingProcess
   onboardingSteps: [OnboardingStep]!
+  organization: Organization
 }
 
 type OnboardingProcess implements Node {
@@ -148,7 +148,7 @@ type OnboardingProcess implements Node {
 
   """The Id of the OnboardingProcess"""
   onboardingProcessId: Int!
-  organization: Organization!
+  organization: Organization
 }
 
 type OnboardingStep implements Node {
@@ -160,7 +160,6 @@ type OnboardingStep implements Node {
 
   """The Id of the OnboardingStep"""
   onboardingStepId: Int!
-  organization: Organization
 }
 
 type Organization implements Node {
@@ -168,6 +167,10 @@ type Organization implements Node {
 
   """The Global Id of the Organization"""
   id: ID!
+  member(
+    """The id of the member to get"""
+    id: Int = null
+  ): Member
   members: [Member]!
   name: String!
   onboardingPipelines: [OnboardingPipeline]!

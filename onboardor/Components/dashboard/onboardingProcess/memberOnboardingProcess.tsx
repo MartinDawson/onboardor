@@ -5,9 +5,11 @@ import EmptyPipeline from "./emptyPipelineContainer";
 import ClosedPipeline from "./closedPipeline";
 import Pipeline from "./pipelineContainer";
 import { IMember } from "../member/member";
+import { IOrganization } from "../organization/organization";
 
 interface IProps {
   member: IMember;
+  organization: IOrganization;
 }
 
 const PipelineRow = styled(Row)`
@@ -18,6 +20,7 @@ const PipelineRow = styled(Row)`
 
 const MemberOnboardingProcess = ({
   member,
+  organization,
 }: IProps) => (
   <Container maxWidth="100%">
     <Text mt={20} mb={40} fontSize={20}>
@@ -31,16 +34,17 @@ const MemberOnboardingProcess = ({
           key={pipeline.id}
           form={`pipeline_${i}`}
           pipeline={pipeline}
-          organizationName={member.onboardingProcess.organization.name}
+          organization={organization}
           member={member}
         />
       )}
       <ClosedPipeline
         closedSteps={member.onboardingProcess.closedSteps}
         member={member}
+        organization={organization}
       />
       <EmptyPipeline
-        organizationId={member.onboardingProcess.organization.organizationId}
+        organizationId={organization.organizationId}
         memberId={member.memberId}
       />
     </PipelineRow>

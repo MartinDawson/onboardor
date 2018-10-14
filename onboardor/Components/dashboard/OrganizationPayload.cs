@@ -31,6 +31,19 @@ namespace onboardor.Components.dashboard
             Field<NonNullGraphType<ListGraphType<OnboardingProcessPayload>>>("onboardingProcesses");
             Field<NonNullGraphType<ListGraphType<OnboardingStepPayload>>>("onboardingSteps", resolve: context => _organizationService.GetStepsForOrganization(context.Source.Id));
             Field<NonNullGraphType<ListGraphType<OnboardingPipelinePayload>>>("onboardingPipelines");
+            Field<MemberPayload>(
+                "member",
+                arguments: new QueryArguments(
+                    new QueryArgument<IntGraphType> { Name = "id", Description = "The id of the member to get" }
+                ),
+                resolve: context =>
+                {
+                    var id = context.GetArgument<int?>("id");
+
+                    if (id == null) return null;
+
+                    return context.Source.Members.Single(m => m.Member.Id == id).Member;
+                });
             Field<NonNullGraphType<ListGraphType<MemberPayload>>>("members", resolve: context => context.Source.Members.Select(m => m.Member));
         }
 

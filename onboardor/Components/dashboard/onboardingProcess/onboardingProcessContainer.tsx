@@ -1,7 +1,10 @@
 import { graphql } from "react-relay";
-import { compose, renameProp } from "recompose";
+import { compose, renameProp, withHandlers } from "recompose";
 import OnboardingProcess from "./onboardingProcess";
 import { fragment } from "relay-compose";
+import { withRouter } from "found";
+import { IRouter, IMatch } from "../../types";
+import { IMember } from "../member/member";
 
 const query = graphql`
   query onboardingProcessContainerQuery(
@@ -26,6 +29,9 @@ const fragments = graphql`
       memberId
       avatarUrl
       name
+      onboardingProcess {
+        id
+      }
     }
     onboardingProcesses {
       id
@@ -46,9 +52,26 @@ const fragments = graphql`
   }
 `;
 
+interface IProps {
+  router: IRouter;
+  match: IMatch;
+}
+
+const handlers = {
+  memberOnClick: ({ router, match }: IProps) => (member: IMember, openPortal: () => void) => {
+    if (member.onboardingProcess) {
+      router.push(`${match.location.pathname}/member/${member.memberId}`);
+    } else {
+      openPortal();
+    }
+  },
+};
+
 const Component = compose(
+  withRouter,
   renameProp("node", "organization"),
   fragment(fragments),
+  withHandlers(handlers),
 )(OnboardingProcess);
 
 export const routeConfig = {
