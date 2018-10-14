@@ -26,7 +26,7 @@ const EmptyPipeline = ({
         <Field
           component={FieldInput}
           name="name"
-          placeholder="Pipeline name"
+          placeholder="i.e First Day"
           validate={addPipelineValidator}
         />
         <Box mt={10}>

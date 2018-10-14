@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d1d8aac1235f1d51bd9710a3fe769aa9
+ * @relayHash b8a352c6168d99ca66d0f59bd73f6fe6
  */
 
 /* eslint-disable */
@@ -46,6 +46,7 @@ mutation addOnboardingProcessMutation(
 }
 
 fragment onboardingProcessContainer_organization on Organization {
+  id
   organizationId
   name
   members {
@@ -114,19 +115,19 @@ v1 = [
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "id",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "id",
+  "name": "name",
   "args": null,
   "storageKey": null
 },
 v4 = [
-  v3
+  v2
 ],
 v5 = {
   "kind": "LinkedField",
@@ -143,7 +144,7 @@ return {
   "operationKind": "mutation",
   "name": "addOnboardingProcessMutation",
   "id": null,
-  "text": "mutation addOnboardingProcessMutation(\n  $input: AddOnboardingProcessInput!\n) {\n  addProcess(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n    onboardingProcess {\n      id\n    }\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    onboardingProcess {\n      id\n    }\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
+  "text": "mutation addOnboardingProcessMutation(\n  $input: AddOnboardingProcessInput!\n) {\n  addProcess(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  id\n  organizationId\n  name\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n    onboardingProcess {\n      id\n    }\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    onboardingProcess {\n      id\n    }\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -204,6 +205,7 @@ return {
             "concreteType": "Organization",
             "plural": false,
             "selections": [
+              v2,
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -211,7 +213,7 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              v2,
+              v3,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -221,7 +223,7 @@ return {
                 "concreteType": "Member",
                 "plural": true,
                 "selections": [
-                  v3,
+                  v2,
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -236,7 +238,7 @@ return {
                     "args": null,
                     "storageKey": null
                   },
-                  v2,
+                  v3,
                   v5
                 ]
               },
@@ -249,7 +251,7 @@ return {
                 "concreteType": "OnboardingProcess",
                 "plural": true,
                 "selections": [
-                  v3,
+                  v2,
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -257,7 +259,7 @@ return {
                     "args": null,
                     "storageKey": null
                   },
-                  v2,
+                  v3,
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -279,7 +281,7 @@ return {
                 "concreteType": "OnboardingPipeline",
                 "plural": true,
                 "selections": [
-                  v3,
+                  v2,
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -288,7 +290,7 @@ return {
                     "storageKey": null
                   },
                   v5,
-                  v2,
+                  v3,
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -298,7 +300,7 @@ return {
                     "concreteType": "OnboardingStep",
                     "plural": true,
                     "selections": [
-                      v3,
+                      v2,
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -313,7 +315,7 @@ return {
                         "args": null,
                         "storageKey": null
                       },
-                      v2,
+                      v3,
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -324,8 +326,7 @@ return {
                     ]
                   }
                 ]
-              },
-              v3
+              }
             ]
           }
         ]

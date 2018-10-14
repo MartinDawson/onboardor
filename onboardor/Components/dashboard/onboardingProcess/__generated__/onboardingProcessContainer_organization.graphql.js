@@ -12,6 +12,7 @@ type pipelineContainer_pipeline$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type onboardingProcessContainer_organization$ref: FragmentReference;
 export type onboardingProcessContainer_organization = {|
+  +id: string,
   +organizationId: number,
   +name: string,
   +members: $ReadOnlyArray<?{|
@@ -48,19 +49,19 @@ const node/*: ConcreteFragment*/ = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "id",
   "args": null,
   "storageKey": null
 },
 v1 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "id",
+  "name": "name",
   "args": null,
   "storageKey": null
 },
 v2 = [
-  v1
+  v0
 ],
 v3 = {
   "kind": "LinkedField",
@@ -79,6 +80,7 @@ return {
   "metadata": null,
   "argumentDefinitions": [],
   "selections": [
+    v0,
     {
       "kind": "ScalarField",
       "alias": null,
@@ -86,7 +88,7 @@ return {
       "args": null,
       "storageKey": null
     },
-    v0,
+    v1,
     {
       "kind": "LinkedField",
       "alias": null,
@@ -96,7 +98,7 @@ return {
       "concreteType": "Member",
       "plural": true,
       "selections": [
-        v1,
+        v0,
         {
           "kind": "ScalarField",
           "alias": null,
@@ -111,7 +113,7 @@ return {
           "args": null,
           "storageKey": null
         },
-        v0,
+        v1,
         v3
       ]
     },
@@ -124,7 +126,7 @@ return {
       "concreteType": "OnboardingProcess",
       "plural": true,
       "selections": [
-        v1,
+        v0,
         {
           "kind": "ScalarField",
           "alias": null,
@@ -132,7 +134,7 @@ return {
           "args": null,
           "storageKey": null
         },
-        v0,
+        v1,
         {
           "kind": "LinkedField",
           "alias": null,
@@ -154,7 +156,7 @@ return {
       "concreteType": "OnboardingPipeline",
       "plural": true,
       "selections": [
-        v1,
+        v0,
         {
           "kind": "ScalarField",
           "alias": null,
@@ -174,5 +176,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '76b59635f5993dd644d8376f2d12a1cb';
+(node/*: any*/).hash = '8dba048ebbde110dccde76f050dcec1c';
 module.exports = node;

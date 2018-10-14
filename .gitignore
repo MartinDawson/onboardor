@@ -6,6 +6,7 @@
 # Config
 *.env
 appsettings.production.json
+appsettings.staging.json
 
 # User-specific files
 *.suo

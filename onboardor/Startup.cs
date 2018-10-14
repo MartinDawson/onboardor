@@ -63,8 +63,16 @@ namespace Onboardor
                 options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
                 options.HttpsPort = 443;
             });
-            services.AddDistributedMemoryCache();
+            services.AddDistributedSqlServerCache(options =>
+            {
+                options.ConnectionString = Env.GetString("DEFAULT_CONNECTION");
+                options.SchemaName = "dbo";
+                options.TableName = "Cache";
+                options.DefaultSlidingExpiration = TimeSpan.FromDays(1);
+            });
+
             services.AddSession();
+            services.AddMemoryCache();
 
             services.Configure<DataProtectionTokenProviderOptions>(options =>
             {
@@ -75,7 +83,6 @@ namespace Onboardor
                 .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddGitHubWebHooks();
-            services.AddMemoryCache();
 
             var builder = RegisterServices();
 
@@ -129,12 +136,14 @@ namespace Onboardor
             });
             app.UseStaticFiles();
             app.UseSession(new SessionOptions {
+                IdleTimeout = TimeSpan.FromHours(5),
                 Cookie = new CookieBuilder
                 {
                     Name = ".AspNetCore.Session",
                     SameSite = SameSiteMode.None,
                 }
             });
+
             app.UseGraphQLHttp<AppSchema>(new GraphQLHttpOptions
             {
                 ExposeExceptions = !env.IsProduction(),

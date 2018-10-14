@@ -25,6 +25,7 @@ namespace Onboardor.Data
                     {
                         await context.Database.MigrateAsync();
                         // await SeedMocks(context);
+                        // dotnet sql-cache create "Server=.;Database=onboardor;Trusted_Connection=True;Connection Timeout=30;" dbo Cache
                     }
                 }
             }

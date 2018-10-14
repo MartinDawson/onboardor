@@ -1,24 +1,17 @@
 import React from "react";
 import { Portal } from "react-portal";
 import styled from "styled-components";
+import { Link } from "found";
 
-const id = "onboardor-nav-link";
-
-const Anchor = styled.a`
+const Anchor = styled(Link)`
   cursor: pointer;
 `;
 
-interface IProps {
-  setupOnClick: () => void;
-}
-
-const OAuthNavLink = ({
-  setupOnClick,
-}: IProps) => (
+const OAuthNavLink = () => (
   <Portal node={document.getElementsByClassName("reponav")[0]}>
     <Anchor
-      id={id}
-      onClick={setupOnClick}
+      id="onboardor-nav-link"
+      to="/setup"
       className="reponav-item"
     >
       onboardor

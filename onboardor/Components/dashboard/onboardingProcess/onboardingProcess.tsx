@@ -86,9 +86,9 @@ const OnboardingProcess = ({
     </Text>
     <Flex flexWrap="wrap">
       {organization.members.map((member) => (
-        <PortalWithState closeOnEsc={true}>
+        <PortalWithState key={member.id} closeOnEsc={true}>
           {({ openPortal, closePortal, portal }) => (
-            <React.Fragment key={member.id}>
+            <React.Fragment>
               <SelectCard
                 m={cardMargin}
                 onClick={() => memberOnClick(member, openPortal)}

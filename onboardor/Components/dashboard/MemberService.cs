@@ -16,6 +16,11 @@ namespace onboardor.Components.dashboard
             _repository = repository;
         }
 
+        public void Remove(Member member)
+        {
+            _repository.Remove(member);
+        }
+
         public void Add(Member member)
         {
             _repository.Add(member);

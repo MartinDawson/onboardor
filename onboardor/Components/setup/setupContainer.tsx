@@ -1,16 +1,24 @@
-import React from "react";
 import { graphql } from "react-relay";
 
 import { IMatch, IRoute } from "../types";
-import Setup from "./setup";
 
-// const query = graphql`
-//   query setupContainerQuery {
-//     setup
-//   }
-// `;
+const query = graphql`
+  query setupContainerQuery(
+    $redirectUrl: String
+  ) {
+    setup(redirectUrl: $redirectUrl)
+  }
+`;
 
 export const routeConfig = {
- // query,
-  render: (route: IRoute): React.ReactNode => route.props && <Setup url={route.props.setup} />,
+  prepareVariables: () => ({
+    redirectUrl: `${window.location.origin}${window.location.pathname}%23/onboardor`
+  }),
+  query,
+  render: (route: IRoute) => {
+    if (route.props) {
+      window.location.href = route.props.setup;
+    }
+    return null;
+  },
 };

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1a705cfb18d96a297693cd3688b202cd
+ * @relayHash aef45cafec1c7e69cd91b661c14f4d34
  */
 
 /* eslint-disable */
@@ -50,6 +50,7 @@ mutation addPipelineMutation(
 }
 
 fragment onboardingProcessContainer_organization on Organization {
+  id
   organizationId
   name
   members {
@@ -153,21 +154,21 @@ v1 = [
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "organizationId",
+  "name": "id",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "organizationId",
   "args": null,
   "storageKey": null
 },
 v4 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "id",
+  "name": "name",
   "args": null,
   "storageKey": null
 },
@@ -179,7 +180,7 @@ v5 = {
   "storageKey": null
 },
 v6 = [
-  v4
+  v2
 ],
 v7 = {
   "kind": "LinkedField",
@@ -235,10 +236,10 @@ v13 = {
   "concreteType": "OnboardingStep",
   "plural": true,
   "selections": [
-    v4,
+    v2,
     v10,
     v11,
-    v3,
+    v4,
     v12
   ]
 };
@@ -247,7 +248,7 @@ return {
   "operationKind": "mutation",
   "name": "addPipelineMutation",
   "id": null,
-  "text": "mutation addPipelineMutation(\n  $memberId: Int\n  $input: AddOnboardingPipelineInput!\n) {\n  addPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      ...memberOnboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  organizationId\n  name\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n    onboardingProcess {\n      id\n    }\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    onboardingProcess {\n      id\n    }\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment memberOnboardingProcessContainer_organization on Organization {\n  name\n  organizationId\n  id\n  member(id: $memberId) {\n    memberId\n    id\n    name\n    onboardingProcess {\n      onboardingProcessId\n      name\n      onboardingPipelines {\n        id\n        ...pipelineContainer_pipeline\n      }\n      closedSteps {\n        id\n        ...stepContainer_step\n      }\n      organization {\n        organizationId\n        name\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
+  "text": "mutation addPipelineMutation(\n  $memberId: Int\n  $input: AddOnboardingPipelineInput!\n) {\n  addPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      ...memberOnboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  id\n  organizationId\n  name\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n    onboardingProcess {\n      id\n    }\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    onboardingProcess {\n      id\n    }\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment memberOnboardingProcessContainer_organization on Organization {\n  name\n  organizationId\n  id\n  member(id: $memberId) {\n    memberId\n    id\n    name\n    onboardingProcess {\n      onboardingProcessId\n      name\n      onboardingPipelines {\n        id\n        ...pipelineContainer_pipeline\n      }\n      closedSteps {\n        id\n        ...stepContainer_step\n      }\n      organization {\n        organizationId\n        name\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -315,6 +316,7 @@ return {
             "selections": [
               v2,
               v3,
+              v4,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -324,7 +326,7 @@ return {
                 "concreteType": "Member",
                 "plural": true,
                 "selections": [
-                  v4,
+                  v2,
                   v5,
                   {
                     "kind": "ScalarField",
@@ -333,7 +335,7 @@ return {
                     "args": null,
                     "storageKey": null
                   },
-                  v3,
+                  v4,
                   v7
                 ]
               },
@@ -346,9 +348,9 @@ return {
                 "concreteType": "OnboardingProcess",
                 "plural": true,
                 "selections": [
-                  v4,
+                  v2,
                   v8,
-                  v3,
+                  v4,
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -370,14 +372,13 @@ return {
                 "concreteType": "OnboardingPipeline",
                 "plural": true,
                 "selections": [
-                  v4,
+                  v2,
                   v9,
                   v7,
-                  v3,
+                  v4,
                   v13
                 ]
               },
-              v4,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -395,8 +396,8 @@ return {
                 "plural": false,
                 "selections": [
                   v5,
+                  v2,
                   v4,
-                  v3,
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -407,7 +408,7 @@ return {
                     "plural": false,
                     "selections": [
                       v8,
-                      v3,
+                      v4,
                       {
                         "kind": "LinkedField",
                         "alias": null,
@@ -417,9 +418,9 @@ return {
                         "concreteType": "OnboardingPipeline",
                         "plural": true,
                         "selections": [
-                          v4,
+                          v2,
                           v9,
-                          v3,
+                          v4,
                           v13
                         ]
                       },
@@ -432,9 +433,9 @@ return {
                         "concreteType": "OnboardingStep",
                         "plural": true,
                         "selections": [
-                          v4,
+                          v2,
                           v11,
-                          v3,
+                          v4,
                           v12,
                           v10
                         ]
@@ -448,12 +449,12 @@ return {
                         "concreteType": "Organization",
                         "plural": false,
                         "selections": [
-                          v2,
                           v3,
-                          v4
+                          v4,
+                          v2
                         ]
                       },
-                      v4
+                      v2
                     ]
                   }
                 ]

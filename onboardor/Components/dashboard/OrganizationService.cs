@@ -73,6 +73,9 @@ namespace onboardor.Components.dashboard
                 .ThenInclude(x => x.OnboardingSteps)
                 .Include(x => x.Members)
                 .ThenInclude(x => x.Member)
+                .ThenInclude(x => x.OnboardingProcess)
+                .ThenInclude(x => x.OnboardingPipelines)
+                .ThenInclude(x => x.OnboardingSteps)
                 .SingleOrDefault(x => x.Id == organizationId);
         }
     }

@@ -22,6 +22,7 @@ const query = graphql`
 
 const fragments = graphql`
   fragment onboardingProcessContainer_organization on Organization {
+    id
     organizationId
     name
     members {
