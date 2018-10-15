@@ -9,8 +9,6 @@
     <Content Remove="Pages\**" />
     <EmbeddedResource Remove="Pages\**" />
     <None Remove="Pages\**" />
-    <None Include="appsettings.Production.json" CopyToPublishDirectory="Always" />
-    <None Include="appsettings.staging.json" CopyToPublishDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />

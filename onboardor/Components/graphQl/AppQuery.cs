@@ -29,16 +29,13 @@ namespace Onboardor.Components.GraphQl
 
         private readonly IOrganizationService _organizationService;
         private readonly IMemberService _memberService;
-        private readonly IConfiguration _configuration;
 
         public AppQuery(ILoggerFactory loggerFactory,
             IOrganizationService organizationService,
-            IMemberService memberService,
-            IConfiguration configuration)
+            IMemberService memberService)
         {
             _organizationService = organizationService;
             _memberService = memberService;
-            _configuration = configuration;
 
             var logger = loggerFactory.CreateLogger<AppQuery>();
 
@@ -111,12 +108,7 @@ namespace Onboardor.Components.GraphQl
 
                     foreach (var organization in organizations)
                     {
-                        var secretKey = ConfigurationPath.Combine(
-                            WebHookConstants.ReceiverConfigurationSectionKey,
-                            "GitHub",
-                            WebHookConstants.SecretKeyConfigurationKeySectionKey,
-                            "default");
-
+                        var secretKey = Env.GetString("GITHUB_WEBHOOKS_SECRETKEY_DEFAULT");
                         var gitHubWebHookUrl = Env.GetString("GITHUB_WEBHOOK_URL", Env.GetString("APP_URL"));
 
                         var hooks = new Dictionary<string, string> {

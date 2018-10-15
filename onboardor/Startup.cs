@@ -14,6 +14,7 @@ using GraphQL.Server.Transports.AspNetCore;
 using Newtonsoft.Json;
 using Autofac;
 using System.Reflection;
+using onboardor.GitHub;
 using GraphQL.Types;
 using GraphQL;
 using GraphQL.Relay.Types;
@@ -82,7 +83,7 @@ namespace Onboardor
             services.AddMvc()
                 .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddGitHubWebHooks();
+                .SetGitHubWebHooks();
 
             var builder = RegisterServices();
 
