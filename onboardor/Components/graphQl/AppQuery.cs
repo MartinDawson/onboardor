@@ -52,7 +52,7 @@ namespace Onboardor.Components.GraphQl
 
                     var request = new OauthLoginRequest(Env.GetString("CLIENT_ID"))
                     {
-                        Scopes = { "repo", "admin:org_hook" },
+                        Scopes = { "repo" },
                         State = csrf,
                     };
 
@@ -136,17 +136,6 @@ namespace Onboardor.Components.GraphQl
                                 });
                         }
                         catch (ApiValidationException) { }
-
-                        try
-                        {
-                            await _client.Organization.Hook.Create(organization.Login,
-                                    new NewOrganizationHook("web", hooks)
-                                    {
-                                        Events = new List<string> { "organization" },
-                                        Active = true
-                                    });
-                        }
-                        catch (ApiValidationException) { }
                     }
 
                     var mappedOrganizations = organizations.Select(x => new Organization
@@ -177,6 +166,31 @@ namespace Onboardor.Components.GraphQl
                             }).ToList();
 
                             _organizationService.Add(organization);
+                        } else {
+                            //var members = await _client.Organization.Member.GetAll(existingOrganization.Name);
+                            //var membersToAdd = members.Where(x => existingOrganization.Members.All(z => z.Member.Id != x.Id));
+                            //var membersToRemove = existingOrganization.Members.Where(x => members.All(z => z.Id != x.Member.Id)).Select(x => x.Member);
+
+                            //foreach (var memberToAdd in membersToAdd)
+                            //{
+                            //    var member = new Member
+                            //    {
+                            //        Id = memberToAdd.Id,
+                            //        Name = memberToAdd.Login,
+                            //        AvatarUrl = memberToAdd.AvatarUrl,
+                            //    };
+
+                            //    member.Organizations = new List<OrganizationMember> {
+                            //        new OrganizationMember { Member = member, Organization = existingOrganization }
+                            //    };
+
+                            //    _memberService.Add(member);
+                            //}
+
+                            //foreach (var memberToRemove in membersToRemove)
+                            //{
+                            //    _memberService.Remove(memberToRemove);
+                            //}
                         }
                     }
 

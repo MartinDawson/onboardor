@@ -13,53 +13,11 @@ namespace onboardor.Controllers
     public class GitHubController : ControllerBase
     {
         private readonly IStepService _stepService;
-        private readonly IOrganizationService _organizationService;
-        private readonly IMemberService _memberService;
 
         public GitHubController(
-            IStepService stepService,
-            IOrganizationService organizationService,
-            IMemberService memberService)
+            IStepService stepService)
         {
             _stepService = stepService;
-            _organizationService = organizationService;
-            _memberService = memberService;
-        }
-
-        [GitHubWebHook(EventName = "organization")]
-        public IActionResult HandlerForOrganization(string id, JObject data)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var payload = data.ToObject<PayloadDTO>();
-            var memberDto = payload.MemberShip.User;
-            var organizationDto = payload.Organization;
-
-            if (payload.Action == "member_added")
-            {
-                var organization = _organizationService.GetOrganization(organizationDto.Id);
-                var member = new Member
-                {
-                    Id = memberDto.Id,
-                    Name = memberDto.Login,
-                    AvatarUrl = memberDto.AvatarUrl,
-                };
-
-                member.Organizations = new List<OrganizationMember> {
-                    new OrganizationMember { Member = member, Organization = organization }
-                };
-
-                _memberService.Add(member);
-            } else if (payload.Action == "member_removed") {
-                var member = _memberService.GetMember(memberDto.Id);
-
-                _memberService.Remove(member);
-            }
-
-            return Ok();
         }
 
         [GitHubWebHook(EventName = "issues")]
