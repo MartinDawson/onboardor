@@ -153,17 +153,31 @@ namespace Onboardor.Components.GraphQl
                         {
                             var members = await _client.Organization.Member.GetAll(organization.Name);
 
-                            organization.Members = members.Select(x => new OrganizationMember
+                            foreach (var member in members)
                             {
-                                Member = new Member
+                                var existingMember = _memberService.GetMember(member.Id);
+
+                                if (existingMember != null)
                                 {
-                                    Id = x.Id,
-                                    Name = x.Login,
-                                    AvatarUrl = x.AvatarUrl,
-                                    CreatedAt = x.CreatedAt
-                                },
-                                Organization = organization
-                            }).ToList();
+                                    organization.Members.Add(new OrganizationMember
+                                    {
+                                        Member = existingMember,
+                                        Organization = organization
+                                    });
+                                } else {
+                                    organization.Members.Add(new OrganizationMember
+                                    {
+                                        Member = new Member
+                                        {
+                                            Id = member.Id,
+                                            Name = member.Login,
+                                            AvatarUrl = member.AvatarUrl,
+                                            CreatedAt = member.CreatedAt
+                                        },
+                                        Organization = organization
+                                    });
+                                }
+                            }
 
                             _organizationService.Add(organization);
                         } else {
