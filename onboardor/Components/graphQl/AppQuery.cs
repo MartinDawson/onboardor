@@ -52,7 +52,7 @@ namespace Onboardor.Components.GraphQl
 
                     var request = new OauthLoginRequest(Env.GetString("CLIENT_ID"))
                     {
-                        Scopes = { "repo" },
+                        Scopes = { "admin:repo_hook", "repo"},
                         State = csrf,
                     };
 
@@ -126,16 +126,16 @@ namespace Onboardor.Components.GraphQl
                         }
                         catch (RepositoryExistsException) { }
 
-                        try
-                        {
-                            await _client.Repository.Hooks.Create(organization.Login, Constants.RepositoryName,
-                                new NewRepositoryHook("web", hooks)
-                                {
-                                    Events = new List<string> { "issues" },
-                                    Active = true
-                                });
-                        }
-                        catch (ApiValidationException) { }
+                        //try
+                        //{
+                        //    await _client.Repository.Hooks.Create(organization.Login, Constants.RepositoryName,
+                        //        new NewRepositoryHook("web", hooks)
+                        //        {
+                        //            Events = new List<string> { "issues" },
+                        //            Active = true
+                        //        });
+                        //}
+                        //catch (ApiValidationException) { }
                     }
 
                     var mappedOrganizations = organizations.Select(x => new Organization
