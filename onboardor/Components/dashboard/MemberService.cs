@@ -31,15 +31,6 @@ namespace onboardor.Components.dashboard
             _repository.Update(member);
         }
 
-        public void SetOnboarding(int memberId, bool isBeingOnboarded)
-        {
-            var member = _repository.Get(memberId);
-
-            member.IsBeingOnboarded = isBeingOnboarded;
-
-            _repository.Save();
-        }
-
         public Member GetMember(int memberId)
         {
             return _repository.GetAll()

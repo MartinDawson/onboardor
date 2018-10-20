@@ -8,6 +8,7 @@ import { routeConfig as organizationsRouteConfig } from "../../../../Components/
 import { routeConfig as onboardingProcessRouteConfig } from "../../../../Components/dashboard/onboardingProcess/onboardingProcessContainer";
 import { routeConfig as memberOnboardingProcessRouteConfig } from "../../../../Components/dashboard/onboardingProcess/memberOnboardingProcessContainer";
 import { routeConfig as primaryLayoutContainer } from "../../layouts/primaryLayout/primaryLayoutContainer";
+import { routeConfig as savedOnboardingProcessRouteConfig } from "../../../../Components/dashboard/onboardingProcess/savedOnboardingProcessContainer";
 
 export default makeRouteConfig(
   <Route path="/" {...primaryLayoutContainer}>
@@ -15,6 +16,7 @@ export default makeRouteConfig(
     <Route path="/onboardor" {...dashboardRouteConfig}>
       <Route {...organizationsRouteConfig} />
       <Route path="organization/:organizationId/onboardingProcess" {...onboardingProcessRouteConfig} />
+      <Route path="organization/:organizationId/onboardingProcess/savedProcess/:processId" {...savedOnboardingProcessRouteConfig} />
       <Route path="organization/:organizationId/onboardingProcess/member/:memberId" {...memberOnboardingProcessRouteConfig} />
     </Route>
   </Route>,

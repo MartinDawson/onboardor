@@ -4,6 +4,7 @@ import { graphql, RelayRefetchProp } from "react-relay";
 import { refetchContainer } from "relay-compose";
 import { IOrganization } from "../organization/organization";
 import { IMember } from "../member/member";
+import removeStepMutation from "./removeStepMutation";
 
 const fragments = graphql`
   fragment stepContainer_step on OnboardingStep {
@@ -37,6 +38,7 @@ interface IProps {
   issueUrl: string;
   relay: RelayRefetchProp;
   member?: IMember;
+  onboardingStepId: number;
 }
 
 const createProps = ({
@@ -56,6 +58,11 @@ const handlers = {
     const issueContent = htmlDocument.documentElement.getElementsByClassName("repository-content")[0];
 
     setIssueContent(issueContent, () => openPortal());
+  },
+  stepCrossOnClick: ({ onboardingStepId }: IProps) => (e) => {
+    removeStepMutation({
+      id: onboardingStepId,
+    });
   },
   closeModal: ({ relay, organization, member }: IProps) => (closePortal: () => void) => {
     relay.refetch({

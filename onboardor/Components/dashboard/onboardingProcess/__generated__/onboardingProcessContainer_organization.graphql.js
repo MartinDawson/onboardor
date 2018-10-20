@@ -15,6 +15,7 @@ export type onboardingProcessContainer_organization = {|
   +id: string,
   +organizationId: number,
   +name: string,
+  +avatarUrl: string,
   +members: $ReadOnlyArray<?{|
     +id: string,
     +memberId: number,
@@ -60,10 +61,17 @@ v1 = {
   "args": null,
   "storageKey": null
 },
-v2 = [
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "avatarUrl",
+  "args": null,
+  "storageKey": null
+},
+v3 = [
   v0
 ],
-v3 = {
+v4 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "onboardingProcess",
@@ -71,7 +79,7 @@ v3 = {
   "args": null,
   "concreteType": "OnboardingProcess",
   "plural": false,
-  "selections": v2
+  "selections": v3
 };
 return {
   "kind": "Fragment",
@@ -89,6 +97,7 @@ return {
       "storageKey": null
     },
     v1,
+    v2,
     {
       "kind": "LinkedField",
       "alias": null,
@@ -106,15 +115,9 @@ return {
           "args": null,
           "storageKey": null
         },
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "avatarUrl",
-          "args": null,
-          "storageKey": null
-        },
+        v2,
         v1,
-        v3
+        v4
       ]
     },
     {
@@ -143,7 +146,7 @@ return {
           "args": null,
           "concreteType": "Organization",
           "plural": false,
-          "selections": v2
+          "selections": v3
         }
       ]
     },
@@ -164,7 +167,7 @@ return {
           "args": null,
           "storageKey": null
         },
-        v3,
+        v4,
         {
           "kind": "FragmentSpread",
           "name": "pipelineContainer_pipeline",
@@ -176,5 +179,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '8dba048ebbde110dccde76f050dcec1c';
+(node/*: any*/).hash = '192e5525cdff638ab1a2a77e49cb1a16';
 module.exports = node;

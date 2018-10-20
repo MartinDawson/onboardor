@@ -28,6 +28,11 @@ namespace onboardor.Components.dashboard
             _repository.Add(organization);
         }
 
+        public void Remove(Organization organization)
+        {
+            _repository.Remove(organization);
+        }
+
         public void Update(Organization newOrganization)
         {
             _repository.Update(newOrganization);

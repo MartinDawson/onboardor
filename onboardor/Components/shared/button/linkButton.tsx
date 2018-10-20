@@ -1,5 +1,3 @@
-import React from "react";
-import { renameProp } from "recompose";
 import { compose } from "redux";
 
 import { Link } from "found";

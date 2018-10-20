@@ -9,6 +9,7 @@ namespace onboardor.Components.dashboard
     {
         List<OnboardingStep> GetStepsForOrganization(int organizationId);
         void Add(Organization organization);
+        void Remove(Organization organization);
         void Update(Organization newOrganization);
         Organization GetOrganization(int organizationId);
         List<Organization> GetOrganizations(int userId);

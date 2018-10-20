@@ -106,7 +106,7 @@ namespace Onboardor.Components.GraphQl
 
                     var organizations = await _client.Organization.GetAllForCurrent();
 
-                    foreach (var organization in organizations)
+                    foreach(var organization in organizations)
                     {
                         var secretKey = Env.GetString("GITHUB_WEBHOOKS_SECRETKEY_DEFAULT");
                         var gitHubWebHookUrl = Env.GetString("GITHUB_WEBHOOK_URL", Env.GetString("APP_URL"));
@@ -126,86 +126,85 @@ namespace Onboardor.Components.GraphQl
                         }
                         catch (RepositoryExistsException) { }
 
-                        //try
-                        //{
-                        //    await _client.Repository.Hooks.Create(organization.Login, Constants.RepositoryName,
-                        //        new NewRepositoryHook("web", hooks)
-                        //        {
-                        //            Events = new List<string> { "issues" },
-                        //            Active = true
-                        //        });
-                        //}
-                        //catch (ApiValidationException) { }
-                    }
+                        try
+                        {
+                            await _client.Repository.Hooks.Create(organization.Login, Constants.RepositoryName,
+                                new NewRepositoryHook("web", hooks)
+                                {
+                                    Events = new List<string> { "issues" },
+                                    Active = true
+                                });
+                        }
+                        catch (Exception ex) when (ex is ApiValidationException || ex is NotFoundException) { }
 
-                    var mappedOrganizations = organizations.Select(x => new Organization
-                    {
-                        Id = x.Id,
-                        Name = x.Login,
-                        AvatarUrl = x.AvatarUrl,
-                    }).ToList();
-
-                    foreach (var organization in mappedOrganizations)
-                    {
                         var existingOrganization = _organizationService.GetOrganization(organization.Id);
+
+                        Member GetMember(int id, string name, string avatarUrl)
+                        {
+                            return new Member
+                            {
+                                Id = id,
+                                Name = name,
+                                AvatarUrl = avatarUrl
+                            };
+                        }
 
                         if (existingOrganization == null)
                         {
-                            var members = await _client.Organization.Member.GetAll(organization.Name);
-
-                            foreach (var member in members)
+                            var users = await _client.Organization.Member.GetAll(organization.Login);
+                            var newOrganization = new Organization
                             {
-                                var existingMember = _memberService.GetMember(member.Id);
+                                Id = organization.Id,
+                                Name = organization.Login,
+                                AvatarUrl = organization.AvatarUrl,
+                            };
 
-                                if (existingMember != null)
+                            foreach(var user in users)
+                            {
+                                var existingMember = _memberService.GetMember(user.Id);
+
+                                newOrganization.Members.Add(new OrganizationMember
                                 {
-                                    organization.Members.Add(new OrganizationMember
-                                    {
-                                        Member = existingMember,
-                                        Organization = organization
-                                    });
-                                } else {
-                                    organization.Members.Add(new OrganizationMember
-                                    {
-                                        Member = new Member
-                                        {
-                                            Id = member.Id,
-                                            Name = member.Login,
-                                            AvatarUrl = member.AvatarUrl,
-                                            CreatedAt = member.CreatedAt
-                                        },
-                                        Organization = organization
-                                    });
-                                }
+                                    Member = existingMember ?? GetMember(user.Id, user.Login, user.AvatarUrl),
+                                    Organization = newOrganization
+                                });
                             }
 
-                            _organizationService.Add(organization);
-                        } else {
-                            //var members = await _client.Organization.Member.GetAll(existingOrganization.Name);
-                            //var membersToAdd = members.Where(x => existingOrganization.Members.All(z => z.Member.Id != x.Id));
-                            //var membersToRemove = existingOrganization.Members.Where(x => members.All(z => z.Id != x.Member.Id)).Select(x => x.Member);
-
-                            //foreach (var memberToAdd in membersToAdd)
-                            //{
-                            //    var member = new Member
-                            //    {
-                            //        Id = memberToAdd.Id,
-                            //        Name = memberToAdd.Login,
-                            //        AvatarUrl = memberToAdd.AvatarUrl,
-                            //    };
-
-                            //    member.Organizations = new List<OrganizationMember> {
-                            //        new OrganizationMember { Member = member, Organization = existingOrganization }
-                            //    };
-
-                            //    _memberService.Add(member);
-                            //}
-
-                            //foreach (var memberToRemove in membersToRemove)
-                            //{
-                            //    _memberService.Remove(memberToRemove);
-                            //}
+                            _organizationService.Add(newOrganization);
                         }
+                        else
+                        {
+                            var users = await _client.Organization.Member.GetAll(existingOrganization.Name);
+                            var usersToAdd = users.Where(x => existingOrganization.Members.All(z => z.Member.Id != x.Id));
+                            var membersToRemove = existingOrganization.Members.Where(x => users.All(z => z.Id != x.Member.Id)).Select(x => x.Member);
+
+                            foreach (var userToAdd in usersToAdd)
+                            {
+                                var member = GetMember(userToAdd.Id, userToAdd.Login, userToAdd.AvatarUrl);
+
+                                member.Organizations = new List<OrganizationMember> {
+                                    new OrganizationMember { Member = member, Organization = existingOrganization }
+                                };
+
+                                _memberService.Add(member);
+                            }
+
+                            foreach(var memberToRemove in membersToRemove)
+                            {
+                                _memberService.Remove(memberToRemove);
+                            }
+                        }
+                    }
+
+                    var currentUser = await _client.User.Current();
+                    var currentMember = _memberService.GetMember(currentUser.Id);
+
+                    var existingOrganizations = currentMember.Organizations;
+                    var organizationsToRemove = existingOrganizations.Where(x => organizations.All(z => z.Id != x.Organization.Id));
+
+                    foreach (var organizationToRemove in organizationsToRemove)
+                    {
+                        currentMember.Organizations.Remove(organizationToRemove);
                     }
 
                     return true;

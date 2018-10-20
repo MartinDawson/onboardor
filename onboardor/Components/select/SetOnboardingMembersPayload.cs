@@ -29,11 +29,6 @@ namespace onboardor.Components.select
         {
             var memberIds = inputs.Get("memberIds", new object[0]).Cast<int>().ToList();
 
-            foreach (var memberId in memberIds)
-            {
-                _memberService.SetOnboarding(memberId, true);
-            }
-
             return null;
         }
     }

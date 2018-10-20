@@ -1,5 +1,5 @@
 # source: http://localhost:49891/graphql
-# timestamp: Sun Oct 14 2018 17:25:48 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Sat Oct 20 2018 22:15:12 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
@@ -95,7 +95,6 @@ type Member implements Node {
 
   """The Global Id of the Member"""
   id: ID!
-  isBeingOnboarded: Boolean!
 
   """The Id of the Member"""
   memberId: Int!
@@ -173,6 +172,10 @@ type Organization implements Node {
   members: [Member]!
   name: String!
   onboardingPipelines: [OnboardingPipeline]!
+  onboardingProcess(
+    """The id of the process to get"""
+    id: Int = null
+  ): OnboardingProcess
   onboardingProcesses: [OnboardingProcess]!
   onboardingSteps: [OnboardingStep]!
 

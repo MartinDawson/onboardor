@@ -25,6 +25,7 @@ const fragments = graphql`
     id
     organizationId
     name
+    avatarUrl
     members {
       id
       memberId

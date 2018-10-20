@@ -44,6 +44,19 @@ namespace onboardor.Components.dashboard
 
                     return context.Source.Members.Single(m => m.Member.Id == id).Member;
                 });
+            Field<OnboardingProcessPayload>(
+                    "onboardingProcess",
+                    arguments: new QueryArguments(
+                        new QueryArgument<IntGraphType> { Name = "id", Description = "The id of the process to get" }
+                    ),
+                    resolve: context =>
+                    {
+                        var id = context.GetArgument<int?>("id");
+
+                        if (id == null) return null;
+
+                        return context.Source.OnboardingProcesses.Single(o => o.Id == id);
+                    });
             Field<NonNullGraphType<ListGraphType<MemberPayload>>>("members", resolve: context => context.Source.Members.Select(m => m.Member));
         }
 

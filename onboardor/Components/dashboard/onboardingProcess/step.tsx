@@ -8,7 +8,6 @@ import Cross from "../../../wwwroot/assets/cross.svg";
 
 const StepButton = styled(RebassButton)`
   width: 100%;
-  margin: 5px 0;
   padding: 7px;
   color: initial;
   background-color: white;
@@ -16,6 +15,12 @@ const StepButton = styled(RebassButton)`
   &:focus {
     box-shadow: 0 0 0 2px #efefef;
   }
+`;
+
+const StepButtonContainer = styled.div`
+  background-color: white;
+  display: flex;
+  margin: 5px 0;
 `;
 
 const IssueModal = styled(Modal)`
@@ -27,6 +32,10 @@ const IssueModal = styled(Modal)`
 
 const CloseSvg = styled(Cross)`
   fill: #404040;
+`;
+
+const IconButton = styled(ButtonTransparent)`
+  padding: 5px;
 `;
 
 const IssueHeader = styled(Box)`
@@ -51,6 +60,7 @@ interface IProps {
   organization: IOrganization;
   issueNumber: number;
   issueUrl: string;
+  stepCrossOnClick: () => void;
 }
 
 const Step = ({
@@ -61,17 +71,23 @@ const Step = ({
   issueNumber,
   issueUrl,
   closeModal,
+  stepCrossOnClick,
 }: IProps) => (
   <PortalWithState>
     {({ openPortal, portal, closePortal }) => (
       <React.Fragment>
-        <StepButton onClick={() => stepOnClick(openPortal)}>
-        <Box bg="white" px="8px" py="5px">
-          <Flex alignItems="center">
-            <Text>{name}</Text>
-          </Flex>
-        </Box>
-      </StepButton>
+        <StepButtonContainer>
+          <StepButton onClick={() => stepOnClick(openPortal)}>
+            <Box bg="white" px="8px" py="5px">
+              <Flex alignItems="center">
+                <Text>{name}</Text>
+              </Flex>
+            </Box>
+          </StepButton>
+          <IconButton ml="auto" onClick={stepCrossOnClick}>
+            <Cross />
+          </IconButton>
+        </StepButtonContainer>
       {portal(
         <React.Fragment>
           <IssueModal>

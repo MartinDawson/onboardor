@@ -1,20 +1,22 @@
 import React from "react";
-import { Container, Row, Text, Modal, Box, BackgroundImage, Subhead, } from "rebass";
+import { Container, Row, Text, Modal, Box, BackgroundImage, Subhead, Image } from "rebass";
 import { Flex } from "grid-styled";
 import { IOrganization } from "../organization/organization";
 import styled from "styled-components";
 import EmptyPipeline from "./emptyPipelineContainer";
 import Pipeline from "./pipelineContainer";
 import Button from "../../shared/button/button";
-import SavedOnboardingProcess from "./savedOnboardingProcess";
 import { PortalWithState } from "react-portal";
 import AddOnboardingProcessForm from "./AddOnboardingProcessForm";
 import { cardMargin, nameMargin, SelectCard } from "../../select/styles";
 import SelectOnboardingProcessForm from "./SelectOnboardingProcessForm";
 import { IMember } from "../member/member";
+import LinkButton from "../../shared/button/linkButton";
+import { IMatch } from "../../types";
 
 interface IProps {
   organization: IOrganization;
+  match: IMatch;
   memberOnClick: (member: IMember, openPortal: () => void) => void;
 }
 
@@ -24,20 +26,45 @@ const PipelineRow = styled(Row)`
   min-height: 200px;
 `;
 
+const OrganizationImage = styled(Image)`
+  width: 70px;
+  border-radius: 4px;
+`;
+
 const OnboardingProcess = ({
   organization,
   memberOnClick,
+  match,
 }: IProps) => (
   <Container maxWidth="100%">
-    <Text mt={20} mb={40} fontSize={20}>
-      <Text is="span" display="inline" fontWeight="bold">
-        {organization.name}
-      </Text> on-boarding template
+    <Flex justifyContent="center" alignItems="center" mt={20} mb={40}>
+      <OrganizationImage src={organization.avatarUrl} mr={20} />
+      <Text fontSize={20}>
+        <Text is="span" display="inline" fontWeight="bold">
+          {organization.name}
+        </Text> on-boarding template
+      </Text>
+    </Flex>
+    <Text fontSize={16} mb={10}>
+      <Text fontSize={20} fontWeight="bold">
+        Step 1.
+      </Text> Create your organizations onboarding template.
     </Text>
-    <Text fontSize={14}>
-      Create your organizations onboarding process.
-      Once created, be sure to save it so you can re-use templates
-      between team members.
+    <PipelineRow>
+      {organization.onboardingPipelines.filter((pipeline) => !pipeline.onboardingProcess).map((pipeline, i) =>
+        <Pipeline
+          key={pipeline.id}
+          form={`pipeline_${i}`}
+          pipeline={pipeline}
+          organization={organization}
+        />
+      )}
+      <EmptyPipeline organizationId={organization.organizationId} />
+    </PipelineRow>
+    <Text fontSize={16} mb={10}>
+      <Text fontSize={20} fontWeight="bold">
+        Step 2.
+      </Text> Save your onboarding template and give it a name.
     </Text>
     <PortalWithState closeOnEsc={true} closeOnOutsideClick={true}>
       {({ openPortal, closePortal, portal }) => (
@@ -56,33 +83,23 @@ const OnboardingProcess = ({
         </React.Fragment>
       )}
     </PortalWithState>
-    <PipelineRow>
-      {organization.onboardingPipelines.filter((pipeline) => !pipeline.onboardingProcess).map((pipeline, i) =>
-        <Pipeline
-          key={pipeline.id}
-          form={`pipeline_${i}`}
-          pipeline={pipeline}
-          organization={organization}
-        />
-      )}
-      <EmptyPipeline organizationId={organization.organizationId} />
-    </PipelineRow>
     <Box my={20}>
       {organization.onboardingProcesses.length > 0 ? (
-        <Text fontSize={16}>
+        <Text fontSize={20}>
           Your saved onboarding processes:
         </Text>)
         : null
       }
       {organization.onboardingProcesses.map((process) => (
-        <SavedOnboardingProcess
-          key={process.id}
-          process={process}
-        />
+        <LinkButton key={process.id} to={`${match.location.pathname}/savedProcess/${process.onboardingProcessId}`}>
+          <Text fontSize={17} fontWeight="bold">{process.name}</Text>
+        </LinkButton>
       ))}
     </Box>
-    <Text fontSize={14}>
-      Select a team member to start onboarding
+    <Text fontSize={16} mb={10}>
+      <Text fontSize={20} fontWeight="bold">
+        Step 3.
+      </Text> Select one of your team members and give them one of your templates to onboard them.
     </Text>
     <Flex flexWrap="wrap">
       {organization.members.map((member) => (
@@ -93,7 +110,7 @@ const OnboardingProcess = ({
                 m={cardMargin}
                 onClick={() => memberOnClick(member, openPortal)}
               >
-                <BackgroundImage width={200} src={member.avatarUrl} ratio={1} />
+                <BackgroundImage src={member.avatarUrl} ratio={1} />
                 <Subhead textAlign="center" mt={nameMargin}>{member.name}</Subhead>
               </SelectCard>
               {portal(
