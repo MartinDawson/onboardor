@@ -17,7 +17,7 @@ import { IMatch } from "../../types";
 interface IProps {
   organization: IOrganization;
   match: IMatch;
-  memberOnClick: (member: IMember, openPortal: () => void) => void;
+  onboardedMemberOnClick: (member: IMember) => void;
 }
 
 const PipelineRow = styled(Row)`
@@ -33,7 +33,7 @@ const OrganizationImage = styled(Image)`
 
 const OnboardingProcess = ({
   organization,
-  memberOnClick,
+  onboardedMemberOnClick,
   match,
 }: IProps) => (
   <Container maxWidth="100%">
@@ -46,9 +46,7 @@ const OnboardingProcess = ({
       </Text>
     </Flex>
     <Text fontSize={16} mb={10}>
-      <Text fontSize={20} fontWeight="bold">
-        Step 1.
-      </Text> Create your organizations onboarding template.
+      Create your organizations onboarding template.
     </Text>
     <PipelineRow>
       {organization.onboardingPipelines.filter((pipeline) => !pipeline.onboardingProcess).map((pipeline, i) =>
@@ -62,9 +60,7 @@ const OnboardingProcess = ({
       <EmptyPipeline organizationId={organization.organizationId} />
     </PipelineRow>
     <Text fontSize={16} mb={10}>
-      <Text fontSize={20} fontWeight="bold">
-        Step 2.
-      </Text> Save your onboarding template and give it a name.
+      Save your onboarding template and give it a name.
     </Text>
     <PortalWithState closeOnEsc={true} closeOnOutsideClick={true}>
       {({ openPortal, closePortal, portal }) => (
@@ -84,31 +80,49 @@ const OnboardingProcess = ({
       )}
     </PortalWithState>
     <Box my={20}>
-      {organization.onboardingProcesses.length > 0 ? (
-        <Text fontSize={20}>
-          Your saved onboarding processes:
-        </Text>)
-        : null
-      }
-      {organization.onboardingProcesses.map((process) => (
-        <LinkButton key={process.id} to={`${match.location.pathname}/savedProcess/${process.onboardingProcessId}`}>
-          <Text fontSize={17} fontWeight="bold">{process.name}</Text>
-        </LinkButton>
+      {organization.onboardingProcesses.map((process, i) => (
+        <React.Fragment key={process.id}>
+          {i === 0 && (
+            <Text fontSize={20}>
+              Your saved onboarding processes:
+            </Text>
+          )}
+          <LinkButton to={`${match.location.pathname}/savedProcess/${process.onboardingProcessId}`}>
+            <Text fontSize={17} fontWeight="bold">{process.name}</Text>
+          </LinkButton>
+        </React.Fragment>
       ))}
     </Box>
-    <Text fontSize={16} mb={10}>
-      <Text fontSize={20} fontWeight="bold">
-        Step 3.
-      </Text> Select one of your team members and give them one of your templates to onboard them.
-    </Text>
+    {organization.members.some((x) => x.isBeingOnboarded) && (
+      <Text fontSize={20}>
+        Your team members currently being onboarded:
+      </Text>
+    )}
     <Flex flexWrap="wrap">
-      {organization.members.map((member) => (
+      {organization.members.filter((x) => x.isBeingOnboarded).map((member) => (
+        <SelectCard
+          key={member.id}
+          m={cardMargin}
+          onClick={() => onboardedMemberOnClick(member)}
+        >
+          <BackgroundImage src={member.avatarUrl} ratio={1} />
+          <Subhead textAlign="center" mt={nameMargin}>{member.name}</Subhead>
+        </SelectCard>
+      ))}
+    </Flex>
+    {organization.members.some((x) => !x.isBeingOnboarded) && (
+      <Text fontSize={16} mb={10}>
+        Select one of your team members and give them one of your templates to onboard them.
+      </Text>
+    )}
+    <Flex flexWrap="wrap">
+      {organization.members.filter((x) => !x.isBeingOnboarded).map((member) => (
         <PortalWithState key={member.id} closeOnEsc={true}>
           {({ openPortal, closePortal, portal }) => (
             <React.Fragment>
               <SelectCard
                 m={cardMargin}
-                onClick={() => memberOnClick(member, openPortal)}
+                onClick={openPortal}
               >
                 <BackgroundImage src={member.avatarUrl} ratio={1} />
                 <Subhead textAlign="center" mt={nameMargin}>{member.name}</Subhead>

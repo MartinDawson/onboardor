@@ -31,6 +31,7 @@ const fragments = graphql`
       memberId
       avatarUrl
       name
+      isBeingOnboarded
       onboardingProcess {
         id
       }
@@ -60,13 +61,9 @@ interface IProps {
 }
 
 const handlers = {
-  memberOnClick: ({ router, match }: IProps) => (member: IMember, openPortal: () => void) => {
-    if (member.onboardingProcess) {
-      router.push(`${match.location.pathname}/member/${member.memberId}`);
-    } else {
-      openPortal();
-    }
-  },
+  onboardedMemberOnClick: ({ router, match }: IProps) => (member: IMember) => {
+    router.push(`${match.location.pathname}/member/${member.memberId}`);
+  }
 };
 
 const Component = compose(

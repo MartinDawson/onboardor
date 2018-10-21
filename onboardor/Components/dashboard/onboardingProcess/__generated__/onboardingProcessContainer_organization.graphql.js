@@ -21,6 +21,7 @@ export type onboardingProcessContainer_organization = {|
     +memberId: number,
     +avatarUrl: string,
     +name: string,
+    +isBeingOnboarded: boolean,
     +onboardingProcess: ?{|
       +id: string
     |},
@@ -117,6 +118,13 @@ return {
         },
         v2,
         v1,
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "isBeingOnboarded",
+          "args": null,
+          "storageKey": null
+        },
         v4
       ]
     },
@@ -179,5 +187,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '192e5525cdff638ab1a2a77e49cb1a16';
+(node/*: any*/).hash = 'baadea846709b590de55f4aa2752e688';
 module.exports = node;

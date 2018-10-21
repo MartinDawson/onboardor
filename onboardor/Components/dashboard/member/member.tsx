@@ -12,6 +12,7 @@ export interface IMember {
   onboardingProcess: IProcess;
   name: string;
   avatarUrl: string;
+  isBeingOnboarded: boolean;
 }
 
 const Member = ({

@@ -54,6 +54,7 @@ export interface IMatch {
 
 export interface IRouter {
   push: (pathname: string) => void
+  replace: (pathname: string) => void;
 }
 
 export interface IRoute {

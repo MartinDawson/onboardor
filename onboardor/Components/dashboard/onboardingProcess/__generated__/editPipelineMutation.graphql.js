@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 9ad2eeccefb21ffb1cfd99d55bbd8063
+ * @relayHash e9d1a855712f7a767e68abf632c02a53
  */
 
 /* eslint-disable */
@@ -58,6 +58,7 @@ fragment onboardingProcessContainer_organization on Organization {
     memberId
     avatarUrl
     name
+    isBeingOnboarded
     onboardingProcess {
       id
     }
@@ -255,7 +256,7 @@ return {
   "operationKind": "mutation",
   "name": "editPipelineMutation",
   "id": null,
-  "text": "mutation editPipelineMutation(\n  $memberId: Int\n  $input: EditOnboardingPipelineInput!\n) {\n  editPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      ...memberOnboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  id\n  organizationId\n  name\n  avatarUrl\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n    onboardingProcess {\n      id\n    }\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    onboardingProcess {\n      id\n    }\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment memberOnboardingProcessContainer_organization on Organization {\n  name\n  organizationId\n  id\n  member(id: $memberId) {\n    memberId\n    id\n    name\n    onboardingProcess {\n      onboardingProcessId\n      name\n      onboardingPipelines {\n        id\n        ...pipelineContainer_pipeline\n      }\n      closedSteps {\n        id\n        ...stepContainer_step\n      }\n      organization {\n        organizationId\n        name\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
+  "text": "mutation editPipelineMutation(\n  $memberId: Int\n  $input: EditOnboardingPipelineInput!\n) {\n  editPipeline(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      ...memberOnboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  id\n  organizationId\n  name\n  avatarUrl\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n    isBeingOnboarded\n    onboardingProcess {\n      id\n    }\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    onboardingProcess {\n      id\n    }\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment memberOnboardingProcessContainer_organization on Organization {\n  name\n  organizationId\n  id\n  member(id: $memberId) {\n    memberId\n    id\n    name\n    onboardingProcess {\n      onboardingProcessId\n      name\n      onboardingPipelines {\n        id\n        ...pipelineContainer_pipeline\n      }\n      closedSteps {\n        id\n        ...stepContainer_step\n      }\n      organization {\n        organizationId\n        name\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -338,6 +339,13 @@ return {
                   v6,
                   v5,
                   v4,
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "isBeingOnboarded",
+                    "args": null,
+                    "storageKey": null
+                  },
                   v8
                 ]
               },

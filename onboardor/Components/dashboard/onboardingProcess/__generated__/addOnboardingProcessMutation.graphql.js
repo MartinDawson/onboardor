@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 556bc4640cb80a255971307d66483244
+ * @relayHash 0cb50d95ac1abdc0cfc1158af12b7b4b
  */
 
 /* eslint-disable */
@@ -55,6 +55,7 @@ fragment onboardingProcessContainer_organization on Organization {
     memberId
     avatarUrl
     name
+    isBeingOnboarded
     onboardingProcess {
       id
     }
@@ -152,7 +153,7 @@ return {
   "operationKind": "mutation",
   "name": "addOnboardingProcessMutation",
   "id": null,
-  "text": "mutation addOnboardingProcessMutation(\n  $input: AddOnboardingProcessInput!\n) {\n  addProcess(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  id\n  organizationId\n  name\n  avatarUrl\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n    onboardingProcess {\n      id\n    }\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    onboardingProcess {\n      id\n    }\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
+  "text": "mutation addOnboardingProcessMutation(\n  $input: AddOnboardingProcessInput!\n) {\n  addProcess(input: $input) {\n    organization {\n      ...onboardingProcessContainer_organization\n      id\n    }\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  id\n  organizationId\n  name\n  avatarUrl\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n    isBeingOnboarded\n    onboardingProcess {\n      id\n    }\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    onboardingProcess {\n      id\n    }\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -242,6 +243,13 @@ return {
                   },
                   v4,
                   v3,
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "isBeingOnboarded",
+                    "args": null,
+                    "storageKey": null
+                  },
                   v6
                 ]
               },

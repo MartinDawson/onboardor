@@ -20,6 +20,7 @@ namespace onboardor.Components.dashboard
             Id(x => x.Id);
             Field(x => x.Name);
             Field(x => x.AvatarUrl);
+            Field<NonNullGraphType<BooleanGraphType>>("isBeingOnboarded", resolve: context => context.Source.OnboardingProcess != null);
             Field<OnboardingProcessPayload>("onboardingProcess",
                 description: "The process that the member is being onboarded by");
             Field<NonNullGraphType<ListGraphType<OrganizationPayload>>>("organizations", resolve: context => context.Source.Organizations.Select(o => o.Organization));
