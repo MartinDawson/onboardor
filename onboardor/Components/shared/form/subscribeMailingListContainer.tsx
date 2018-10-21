@@ -2,7 +2,7 @@ import { compose, withHandlers, withStateHandlers } from "recompose";
 import { reduxForm } from "redux-form";
 import ReCAPTCHA from "react-google-recaptcha";
 
-import SubscribeMailingList, { IProps } from "./subscribeMailingList";
+import SubscribeMailingList from "./subscribeMailingList";
 import subscribeMailingListMutation, { IMutationInput } from "./subscribeMailingListMutation";
 import logErrors from "../logErrors";
 
@@ -15,7 +15,7 @@ const stateHandlers = {
 const handlers = {
   onSubmit: () => async (input: IMutationInput) => {
     try {
-      return subscribeMailingListMutation(input);
+      await subscribeMailingListMutation(input);
     } catch (error) {
       logErrors(error);
 
@@ -24,7 +24,7 @@ const handlers = {
   },
 };
 
-export default compose<IProps, {}>(
+export default compose(
   withStateHandlers(null, stateHandlers),
   withHandlers(handlers),
   reduxForm({

@@ -15,9 +15,15 @@ export interface IProps extends InjectedFormProps, IStyleProps {
   onSubmit: (e: any) => void;
   setRecaptcha: () => ReCAPTCHA;
   recaptcha: ReCAPTCHA;
+  subscribeText?: string;
+  subscribeOnClick: () => void;
 }
 
-const SubmitSucceededMessage = () => <Text textAlign="center" fontSize={18} color="white">Thank you for subscribing. We will update you once we are live!</Text>;
+const SubmitSucceededMessage = () => (
+  <Text textAlign="center" fontSize={18} color="white">
+    Thank you for subscribing. We will never spam you.
+  </Text>
+);
 
 const emailValidator = createFieldValidator(["required", "email"]);
 
@@ -27,6 +33,8 @@ const SubscribeMailingList = ({
   setRecaptcha,
   recaptcha,
   submitSucceeded,
+  subscribeOnClick,
+  subscribeText = "Join List",
 }: IProps) => (
   <Box mx="auto">
     <Form
@@ -62,8 +70,9 @@ const SubscribeMailingList = ({
           fontSize={17}
           px={[20, 76]}
           style={{ textTransform: "uppercase", whiteSpace: "nowrap" }}
+          onClick={subscribeOnClick}
         >
-          Join List
+          {subscribeText}
         </Button>
       </Flex>
       <ReCAPTCHA

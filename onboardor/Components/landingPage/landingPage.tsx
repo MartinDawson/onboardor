@@ -44,9 +44,13 @@ const LandingPage = ({
     <Absolute style={{ width: "100%", height: "99%" }} zIndex={-1}><BackgroundBlue height="100%" width="100%" /></Absolute>
     <Absolute style={{ width: "100%", height: "99%" }} zIndex={-1}><BackgroundGrey height="100%" width="100%" /></Absolute>
     <Container pt={50} maxWidth={1100}>
-      <Text textAlign="center" mb={34} fontSize={[25, 30]} color="white">
-        Setup your teams on-boarding process directly through GitHub
+      <Text textAlign="center" mb={34} fontSize={24} color="white">
+        Enter your email to get the chrome extension
       </Text>
+      <SubscribeMailingList
+        subscribeText="Install Extension"
+        subscribeOnClick={() => window.open(`https://chrome.google.com/webstore/detail/onboardor/${process.env.EXTENSION_ID}`, "_blank")}
+      />
       <Box mt={34} mb={34}>
         <StepFlex>
           <Image
@@ -62,10 +66,6 @@ const LandingPage = ({
           </StepContainer>
         </StepFlex>
       </Box>
-      <SubscribeMailingList />
-      <Text textAlign="center" mt={20} mb={45} color={theme.colors.primary2}>
-        -Coming this September-
-      </Text>
     </Container>
   </Relative>
 );
