@@ -10,11 +10,15 @@ import { routeConfig as termsAndConditionsRouteConfig } from "../../footer/terms
 import { routeConfig as landingPageRouteConfig } from "../../landingPage/landingPageContainer";
 import { routeConfig as primaryLayoutRouteConfig } from "../../layouts/primaryLayout/primaryLayoutContainer";
 import { IMatch } from "../../types";
+import { routeConfig as setupCallbackRouteConfig } from "../../setup/setupCallbackContainer";
+import { routeConfig as setupRouteConfig } from "../../setup/setupContainer";
 
 export default makeRouteConfig(
   <Route path="/" {...primaryLayoutRouteConfig}>
     <Route {...landingPageRouteConfig} />
     <Redirect from="(.*/)" to={({ location }: IMatch) => location.pathname.slice(0, -1)} />
+    <Route path="setup" {...setupRouteConfig} />
+    <Route path="setupCallback" {...setupCallbackRouteConfig} />
     <Route path="error/:status" {...errorPageRouteConfig} />
     <Route path="termsAndConditions" {...termsAndConditionsRouteConfig} />
     <Route path="privacyPolicy" {...privacyPolicyRouteConfig} />
