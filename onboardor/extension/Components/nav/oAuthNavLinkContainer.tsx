@@ -1,22 +1,12 @@
 import OAuthNavLink from "./oAuthNavLink";
 import { compose, lifecycle, withProps, withStateHandlers } from "recompose";
-import { withRouter } from "found";
-import { IMatch } from "../../../Components/types";
 
-const id = "onboardor-nav-link";
-
-interface IProps {
-  match: IMatch;
-}
-
-interface IState {
-  selected: boolean;
-}
+const className = "onboardor-nav-link";
 
 const stateHandlers = {
-  updateSelected: () => (pathname: string) => {
-    if (pathname.includes("/onboardor")) {
-      const selectedItem = document.querySelector(`.reponav-item.selected:not([id='${id}'])`);
+  updateSelected: () => () => {
+    if (window.location.hash.includes("/onboardor")) {
+      const selectedItem = document.querySelector(`.reponav-item.selected:not(.${className})`);
 
       if (selectedItem) {
         selectedItem.classList.remove("selected");
@@ -30,19 +20,38 @@ const stateHandlers = {
 };
 
 export default compose(
-  withRouter,
   withStateHandlers({
     selected: false,
   }, stateHandlers),
   lifecycle({
     componentDidMount() {
-      this.props.updateSelected(this.props.match.location.pathname);
+      this.props.updateSelected();
+
+      const observer = new MutationObserver(() => {
+        if (!document.getElementsByClassName(className).length) {
+          this.forceUpdate();
+          this.props.updateSelected();
+        } else if (document.getElementsByClassName(className).length > 1) {
+          const elements = document.getElementsByClassName(className);
+
+          while (elements.length > 1) {
+              const parentNode = elements[0].parentNode!;
+
+              parentNode.removeChild(elements[0]);
+          }
+        }
+      });
+
+      observer.observe(document.body, {
+        subtree: true,
+        childList: true,
+      });
     },
-    componentWillReceiveProps(nextProps: IProps) {
-      this.props.updateSelected(nextProps.match.location.pathname);
+    componentWillReceiveProps() {
+      this.props.updateSelected();
     }
   }),
   withProps({
-    id,
+    className,
   }),
 )(OAuthNavLink);

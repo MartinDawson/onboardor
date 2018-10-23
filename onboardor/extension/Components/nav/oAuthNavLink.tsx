@@ -7,7 +7,7 @@ import classnames from "classnames";
 
 interface IAnchorProps extends IStyleProps {
   selected: boolean;
-  id: string;
+  className: string;
 }
 
 const Anchor = styled(Link)`
@@ -21,18 +21,25 @@ const Anchor = styled(Link)`
 
 const OAuthNavLink = ({
   selected,
-  id,
-}: IAnchorProps) => (
-  <Portal node={document.getElementsByClassName("reponav")[0]}>
-    <Anchor
-      id={id}
-      to="/onboardor/setup"
-      className={classnames("reponav-item", selected && "selected")}
-      selected={selected}
-    >
-      onboardor
-    </Anchor>
-  </Portal>
-);
+  className,
+}: IAnchorProps) => {
+  const node = document.getElementsByClassName("reponav")[0];
+
+  if (!node) {
+    return null;
+  }
+
+  return (
+    <Portal node={node}>
+      <Anchor
+        to="/onboardor/setup"
+        className={classnames("reponav-item", selected && "selected", className)}
+        selected={selected}
+      >
+        onboardor
+      </Anchor>
+    </Portal>
+  );
+};
 
 export default OAuthNavLink;
