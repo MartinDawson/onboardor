@@ -12,9 +12,9 @@ import { routeConfig as savedOnboardingProcessRouteConfig } from "../../../../Co
 
 export default makeRouteConfig(
   <Route path="/" {...primaryLayoutContainer}>
-    <Route path="/setup" {...setupRouteConfig} />
     <Route path="/onboardor" {...dashboardRouteConfig}>
       <Route {...organizationsRouteConfig} />
+      <Route path="/setup" {...setupRouteConfig} />
       <Route path="organization/:organizationId/onboardingProcess" {...onboardingProcessRouteConfig} />
       <Route path="organization/:organizationId/onboardingProcess/savedProcess/:processId" {...savedOnboardingProcessRouteConfig} />
       <Route path="organization/:organizationId/onboardingProcess/member/:memberId" {...memberOnboardingProcessRouteConfig} />

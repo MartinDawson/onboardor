@@ -4,7 +4,7 @@ import { withTheme } from "styled-components";
 
 import PrimaryLayoutErrorBoundary from "../../../../Components/layouts/primaryLayout/primaryLayoutErrorBoundary";
 import { ITheme } from "../../../../Components/types";
-import NavLink from "../../nav/oAuthNavLink";
+import NavLink from "../../nav/oAuthNavLinkContainer";
 
 interface IProps {
   children: React.ReactNode;
