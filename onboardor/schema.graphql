@@ -1,10 +1,10 @@
 # source: http://localhost:49891/graphql
-# timestamp: Sun Oct 21 2018 16:34:59 GMT+0200 (W. Europe Daylight Time)
+# timestamp: Sat Oct 27 2018 13:50:07 GMT+0200 (W. Europe Daylight Time)
 
 input AddOnboardingPipelineInput {
   clientMutationId: String = null
   organizationId: Int!
-  memberId: Int = null
+  processId: Int = null
   name: String!
 }
 
@@ -95,14 +95,13 @@ type Member implements Node {
 
   """The Global Id of the Member"""
   id: ID!
-  isBeingOnboarded: Boolean!
 
   """The Id of the Member"""
   memberId: Int!
   name: String!
 
-  """The process that the member is being onboarded by"""
-  onboardingProcess: OnboardingProcess
+  """The onboarding processes that the member is being onboarded by"""
+  onboardingProcesses: [OnboardingProcess]!
   organizations: [Organization]!
 }
 
@@ -217,7 +216,7 @@ type RemoveOnboardingPipelinePayload {
 
 input RemoveOnboardingProcessFromMemberInput {
   clientMutationId: String = null
-  memberId: Int!
+  processId: Int!
 }
 
 type RemoveOnboardingProcessFromMemberPayload {

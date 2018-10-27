@@ -13,6 +13,7 @@ namespace onboardor.Components.dashboard
         [Required]
         public string Name { get; set; }
         public Organization Organization { get; set; }
+        public Member Member { get; set; }
         public ICollection<OnboardingPipeline> OnboardingPipelines { get; set; } = new List<OnboardingPipeline>();
     }
 }

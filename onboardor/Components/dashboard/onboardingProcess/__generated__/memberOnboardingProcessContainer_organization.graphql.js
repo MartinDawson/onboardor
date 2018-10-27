@@ -20,7 +20,7 @@ export type memberOnboardingProcessContainer_organization = {|
     +memberId: number,
     +id: string,
     +name: string,
-    +onboardingProcess: ?{|
+    +onboardingProcesses: $ReadOnlyArray<?{|
       +onboardingProcessId: number,
       +name: string,
       +onboardingPipelines: $ReadOnlyArray<?{|
@@ -35,7 +35,7 @@ export type memberOnboardingProcessContainer_organization = {|
         +organizationId: number,
         +name: string,
       |},
-    |},
+    |}>,
   |},
   +$refType: memberOnboardingProcessContainer_organization$ref,
 |};
@@ -108,11 +108,11 @@ return {
         {
           "kind": "LinkedField",
           "alias": null,
-          "name": "onboardingProcess",
+          "name": "onboardingProcesses",
           "storageKey": null,
           "args": null,
           "concreteType": "OnboardingProcess",
-          "plural": false,
+          "plural": true,
           "selections": [
             {
               "kind": "ScalarField",
@@ -177,5 +177,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '7f91ccf42b6b4c2f1109a19c3ba297e1';
+(node/*: any*/).hash = '07b47b4c42218449c62af5d9f326d6eb';
 module.exports = node;

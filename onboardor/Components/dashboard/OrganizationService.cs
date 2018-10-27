@@ -55,7 +55,7 @@ namespace onboardor.Components.dashboard
         public List<Organization> GetOrganizations(int userId)
         {
             var member = _membersRepository.GetAll()
-                .Include(x => x.OnboardingProcess)
+                .Include(x => x.OnboardingProcesses)
                 .Include(x => x.Organizations)
                 .ThenInclude(x => x.Organization)
                 .ThenInclude(x => x.OnboardingProcesses)
@@ -78,7 +78,7 @@ namespace onboardor.Components.dashboard
                 .ThenInclude(x => x.OnboardingSteps)
                 .Include(x => x.Members)
                 .ThenInclude(x => x.Member)
-                .ThenInclude(x => x.OnboardingProcess)
+                .ThenInclude(x => x.OnboardingProcesses)
                 .ThenInclude(x => x.OnboardingPipelines)
                 .ThenInclude(x => x.OnboardingSteps)
                 .SingleOrDefault(x => x.Id == organizationId);

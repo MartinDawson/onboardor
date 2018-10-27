@@ -7,6 +7,7 @@ namespace onboardor.Components.dashboard
 {
     public interface IOnboardingProcessService
     {
+        void Update(OnboardingProcess process);
         OnboardingProcess GetProcess(int processId);
         void Add(OnboardingProcess process);
         List<OnboardingStep> GetClosedSteps(int processId);

@@ -31,9 +31,10 @@ const fragments = graphql`
       memberId
       avatarUrl
       name
-      isBeingOnboarded
-      onboardingProcess {
-        id
+      onboardingProcesses {
+        organization {
+          organizationId
+        }
       }
     }
     onboardingProcesses {

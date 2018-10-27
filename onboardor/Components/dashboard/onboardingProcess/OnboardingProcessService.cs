@@ -20,9 +20,15 @@ namespace onboardor.Components.dashboard
             _stepRepository = stepRepository;
         }
 
+        public void Update(OnboardingProcess process)
+        {
+            _repository.Update(process);
+        }
+
         public OnboardingProcess GetProcess(int processId)
         {
             return _repository.GetAll()
+                .Include(x => x.Member)
                 .Include(x => x.Organization)
                 .Include(x => x.OnboardingPipelines)
                 .ThenInclude(x => x.OnboardingSteps)

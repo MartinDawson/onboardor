@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 40ea7357f3671a15027435ad335d25cc
+ * @relayHash 7000f4830324f00c176e59a5bfa1e0a0
  */
 
 /* eslint-disable */
@@ -52,8 +52,11 @@ fragment onboardingProcessContainer_organization on Organization {
     memberId
     avatarUrl
     name
-    isBeingOnboarded
-    onboardingProcess {
+    onboardingProcesses {
+      organization {
+        organizationId
+        id
+      }
       id
     }
   }
@@ -83,7 +86,7 @@ fragment memberOnboardingProcessContainer_organization on Organization {
     memberId
     id
     name
-    onboardingProcess {
+    onboardingProcesses {
       onboardingProcessId
       name
       onboardingPipelines {
@@ -181,55 +184,45 @@ v6 = {
   "args": null,
   "storageKey": null
 },
-v7 = [
-  v2
-],
-v8 = {
-  "kind": "LinkedField",
-  "alias": null,
-  "name": "onboardingProcess",
-  "storageKey": null,
-  "args": null,
-  "concreteType": "OnboardingProcess",
-  "plural": false,
-  "selections": v7
-},
-v9 = {
+v7 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "onboardingProcessId",
   "args": null,
   "storageKey": null
 },
-v10 = {
+v8 = [
+  v2
+],
+v9 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "onboardingPipelineId",
   "args": null,
   "storageKey": null
 },
-v11 = {
+v10 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "isClosed",
   "args": null,
   "storageKey": null
 },
-v12 = {
+v11 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "onboardingStepId",
   "args": null,
   "storageKey": null
 },
-v13 = {
+v12 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "issueNumber",
   "args": null,
   "storageKey": null
 },
-v14 = {
+v13 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "onboardingSteps",
@@ -239,10 +232,10 @@ v14 = {
   "plural": true,
   "selections": [
     v2,
+    v10,
     v11,
-    v12,
     v4,
-    v13
+    v12
   ]
 };
 return {
@@ -250,7 +243,7 @@ return {
   "operationKind": "query",
   "name": "stepContainerRefetchQuery",
   "id": null,
-  "text": "query stepContainerRefetchQuery(\n  $memberId: Int\n  $organizationId: ID!\n) {\n  organizationNode: node(id: $organizationId) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n      ...memberOnboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  id\n  organizationId\n  name\n  avatarUrl\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n    isBeingOnboarded\n    onboardingProcess {\n      id\n    }\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    onboardingProcess {\n      id\n    }\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment memberOnboardingProcessContainer_organization on Organization {\n  name\n  organizationId\n  id\n  member(id: $memberId) {\n    memberId\n    id\n    name\n    onboardingProcess {\n      onboardingProcessId\n      name\n      onboardingPipelines {\n        id\n        ...pipelineContainer_pipeline\n      }\n      closedSteps {\n        id\n        ...stepContainer_step\n      }\n      organization {\n        organizationId\n        name\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
+  "text": "query stepContainerRefetchQuery(\n  $memberId: Int\n  $organizationId: ID!\n) {\n  organizationNode: node(id: $organizationId) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n      ...memberOnboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  id\n  organizationId\n  name\n  avatarUrl\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n    onboardingProcesses {\n      organization {\n        organizationId\n        id\n      }\n      id\n    }\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    onboardingProcess {\n      id\n    }\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment memberOnboardingProcessContainer_organization on Organization {\n  name\n  organizationId\n  id\n  member(id: $memberId) {\n    memberId\n    id\n    name\n    onboardingProcesses {\n      onboardingProcessId\n      name\n      onboardingPipelines {\n        id\n        ...pipelineContainer_pipeline\n      }\n      closedSteps {\n        id\n        ...stepContainer_step\n      }\n      organization {\n        organizationId\n        name\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -331,13 +324,30 @@ return {
                   v5,
                   v4,
                   {
-                    "kind": "ScalarField",
+                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "isBeingOnboarded",
+                    "name": "onboardingProcesses",
+                    "storageKey": null,
                     "args": null,
-                    "storageKey": null
-                  },
-                  v8
+                    "concreteType": "OnboardingProcess",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "kind": "LinkedField",
+                        "alias": null,
+                        "name": "organization",
+                        "storageKey": null,
+                        "args": null,
+                        "concreteType": "Organization",
+                        "plural": false,
+                        "selections": [
+                          v3,
+                          v2
+                        ]
+                      },
+                      v2
+                    ]
+                  }
                 ]
               },
               {
@@ -350,7 +360,7 @@ return {
                 "plural": true,
                 "selections": [
                   v2,
-                  v9,
+                  v7,
                   v4,
                   {
                     "kind": "LinkedField",
@@ -360,7 +370,7 @@ return {
                     "args": null,
                     "concreteType": "Organization",
                     "plural": false,
-                    "selections": v7
+                    "selections": v8
                   }
                 ]
               },
@@ -374,10 +384,19 @@ return {
                 "plural": true,
                 "selections": [
                   v2,
-                  v10,
-                  v8,
+                  v9,
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "onboardingProcess",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "OnboardingProcess",
+                    "plural": false,
+                    "selections": v8
+                  },
                   v4,
-                  v14
+                  v13
                 ]
               },
               {
@@ -402,13 +421,13 @@ return {
                   {
                     "kind": "LinkedField",
                     "alias": null,
-                    "name": "onboardingProcess",
+                    "name": "onboardingProcesses",
                     "storageKey": null,
                     "args": null,
                     "concreteType": "OnboardingProcess",
-                    "plural": false,
+                    "plural": true,
                     "selections": [
-                      v9,
+                      v7,
                       v4,
                       {
                         "kind": "LinkedField",
@@ -420,9 +439,9 @@ return {
                         "plural": true,
                         "selections": [
                           v2,
-                          v10,
+                          v9,
                           v4,
-                          v14
+                          v13
                         ]
                       },
                       {
@@ -435,10 +454,10 @@ return {
                         "plural": true,
                         "selections": [
                           v2,
-                          v12,
+                          v11,
                           v4,
-                          v13,
-                          v11
+                          v12,
+                          v10
                         ]
                       },
                       {

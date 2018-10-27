@@ -9,12 +9,12 @@ namespace onboardor.Components.dashboard.onboardingProcess
 {
     public class RemoveOnboardingProcessFromMemberPayload : MutationPayloadGraphType
     {
-        private readonly IMemberService _memberService;
+        private readonly IOnboardingProcessService _processService;
 
         public RemoveOnboardingProcessFromMemberPayload(
-            IMemberService memberService)
+            IOnboardingProcessService processService)
         {
-            _memberService = memberService;
+            _processService = processService;
 
             Name = nameof(RemoveOnboardingProcessFromMemberPayload);
 
@@ -23,16 +23,14 @@ namespace onboardor.Components.dashboard.onboardingProcess
 
         public override object MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context)
         {
-            var memberId = inputs.Get<int>("memberId");
-            var member = _memberService.GetMember(memberId);
+            var processId = inputs.Get<int>("processId");
+            var process = _processService.GetProcess(processId);
 
-            member.OnboardingProcess = null;
-
-            _memberService.Update(member);
+            _processService.Update(process);
 
             return new
             {
-                member
+                member = process.Member
             };
         }
     }

@@ -7,11 +7,13 @@ import Pipeline from "./pipelineContainer";
 import { IMember } from "../member/member";
 import { IOrganization } from "../organization/organization";
 import Button from "../../shared/button/button";
+import { IProcess } from "./savedOnboardingProcess";
 
 interface IProps {
   member: IMember;
   organization: IOrganization;
   removeProcessOnClick: () => void;
+  currentProcess: IProcess;
 }
 
 const PipelineRow = styled(Row)`
@@ -24,18 +26,19 @@ const MemberOnboardingProcess = ({
   member,
   organization,
   removeProcessOnClick,
-}: IProps) => {debugger; return (
+  currentProcess,
+}: IProps) => (
   <Container maxWidth="100%">
     <Text mt={20} mb={10} fontSize={20}>
       <Text is="span" display="inline" fontWeight="bold">
         {member.name}
-      </Text> on-boarded by {member.onboardingProcess.name}
+      </Text> on-boarded by {currentProcess.name}
     </Text>
     <Button mb={40} onClick={removeProcessOnClick}>
       Remove this process for {member.name}
     </Button>
     <PipelineRow>
-      {member.onboardingProcess.onboardingPipelines.map((pipeline, i) =>
+      {currentProcess.onboardingPipelines.map((pipeline, i) =>
         <Pipeline
           key={pipeline.id}
           form={`pipeline_${i}`}
@@ -45,7 +48,7 @@ const MemberOnboardingProcess = ({
         />
       )}
       <ClosedPipeline
-        closedSteps={member.onboardingProcess.closedSteps}
+        closedSteps={currentProcess.closedSteps}
         member={member}
         organization={organization}
       />
@@ -55,6 +58,6 @@ const MemberOnboardingProcess = ({
       />
     </PipelineRow>
   </Container>
-);}
+);
 
 export default MemberOnboardingProcess;

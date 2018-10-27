@@ -16,7 +16,7 @@ namespace onboardor.Components.dashboard
         public string Name { get; set; }
         [Required]
         public string AvatarUrl { get; set; }
-        public OnboardingProcess OnboardingProcess { get; set; }
+        public ICollection<OnboardingProcess> OnboardingProcesses { get; set; } = new List<OnboardingProcess>();
         public ICollection<OrganizationMember> Organizations { get; set; } = new List<OrganizationMember>();
     }
 }

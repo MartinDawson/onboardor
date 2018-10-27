@@ -35,7 +35,7 @@ namespace onboardor.Components.dashboard
         {
             return _repository.GetAll()
                 .Include(x => x.Organizations)
-                .Include(x => x.OnboardingProcess)
+                .Include(x => x.OnboardingProcesses)
                 .SingleOrDefault(x => x.Id == memberId);
         }
     }

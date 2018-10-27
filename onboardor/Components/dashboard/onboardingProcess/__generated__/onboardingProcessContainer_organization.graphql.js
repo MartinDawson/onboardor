@@ -21,10 +21,11 @@ export type onboardingProcessContainer_organization = {|
     +memberId: number,
     +avatarUrl: string,
     +name: string,
-    +isBeingOnboarded: boolean,
-    +onboardingProcess: ?{|
-      +id: string
-    |},
+    +onboardingProcesses: $ReadOnlyArray<?{|
+      +organization: ?{|
+        +organizationId: number
+      |}
+    |}>,
   |}>,
   +onboardingProcesses: $ReadOnlyArray<?{|
     +id: string,
@@ -58,30 +59,27 @@ var v0 = {
 v1 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "organizationId",
   "args": null,
   "storageKey": null
 },
 v2 = {
   "kind": "ScalarField",
   "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
   "name": "avatarUrl",
   "args": null,
   "storageKey": null
 },
-v3 = [
+v4 = [
   v0
-],
-v4 = {
-  "kind": "LinkedField",
-  "alias": null,
-  "name": "onboardingProcess",
-  "storageKey": null,
-  "args": null,
-  "concreteType": "OnboardingProcess",
-  "plural": false,
-  "selections": v3
-};
+];
 return {
   "kind": "Fragment",
   "name": "onboardingProcessContainer_organization",
@@ -90,15 +88,9 @@ return {
   "argumentDefinitions": [],
   "selections": [
     v0,
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "organizationId",
-      "args": null,
-      "storageKey": null
-    },
     v1,
     v2,
+    v3,
     {
       "kind": "LinkedField",
       "alias": null,
@@ -116,16 +108,31 @@ return {
           "args": null,
           "storageKey": null
         },
+        v3,
         v2,
-        v1,
         {
-          "kind": "ScalarField",
+          "kind": "LinkedField",
           "alias": null,
-          "name": "isBeingOnboarded",
+          "name": "onboardingProcesses",
+          "storageKey": null,
           "args": null,
-          "storageKey": null
-        },
-        v4
+          "concreteType": "OnboardingProcess",
+          "plural": true,
+          "selections": [
+            {
+              "kind": "LinkedField",
+              "alias": null,
+              "name": "organization",
+              "storageKey": null,
+              "args": null,
+              "concreteType": "Organization",
+              "plural": false,
+              "selections": [
+                v1
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -145,7 +152,7 @@ return {
           "args": null,
           "storageKey": null
         },
-        v1,
+        v2,
         {
           "kind": "LinkedField",
           "alias": null,
@@ -154,7 +161,7 @@ return {
           "args": null,
           "concreteType": "Organization",
           "plural": false,
-          "selections": v3
+          "selections": v4
         }
       ]
     },
@@ -175,7 +182,16 @@ return {
           "args": null,
           "storageKey": null
         },
-        v4,
+        {
+          "kind": "LinkedField",
+          "alias": null,
+          "name": "onboardingProcess",
+          "storageKey": null,
+          "args": null,
+          "concreteType": "OnboardingProcess",
+          "plural": false,
+          "selections": v4
+        },
         {
           "kind": "FragmentSpread",
           "name": "pipelineContainer_pipeline",
@@ -187,5 +203,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'baadea846709b590de55f4aa2752e688';
+(node/*: any*/).hash = '65dc10dd662dc0375b8b1402951c47a6';
 module.exports = node;

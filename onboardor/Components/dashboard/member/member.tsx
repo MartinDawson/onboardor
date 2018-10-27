@@ -9,10 +9,9 @@ interface IProps extends IMember {
 export interface IMember {
   id: number;
   memberId: number;
-  onboardingProcess: IProcess;
+  onboardingProcesses: IProcess[];
   name: string;
   avatarUrl: string;
-  isBeingOnboarded: boolean;
 }
 
 const Member = ({

@@ -1,11 +1,11 @@
 import { graphql } from "react-relay";
-import { compose, renameProp, flattenProp, withHandlers } from "recompose";
+import { compose, renameProp, flattenProp, withHandlers, withProps } from "recompose";
 import MemberOnboardingProcess from "./memberOnboardingProcess";
 import { fragment } from "relay-compose";
 import removeOnboardingProcessFromMemberMutation from "./removeOnboardingProcessFromMemberMutation";
-import Member, { IMember } from "../member/member";
+import { IMember } from "../member/member";
 import { IRouter } from "../../types";
-import { IOrganization } from "../organization/organization";
+import { IProcess } from "./savedOnboardingProcess";
 
 const query = graphql`
   query memberOnboardingProcessContainerQuery(
@@ -31,7 +31,7 @@ const fragments = graphql`
       memberId
       id
       name
-      onboardingProcess {
+      onboardingProcesses {
         onboardingProcessId
         name
         onboardingPipelines {
@@ -54,12 +54,18 @@ const fragments = graphql`
 interface IProps {
   member: IMember;
   router: IRouter;
+  currentProcess: IProcess;
+  organizationId: number;
 }
 
+const createProps = ({ member, organizationId }: IProps) => ({
+  currentProcess: member.onboardingProcesses.find((process) => process.organization.organizationId === organizationId)
+});
+
 const handlers = {
-  removeProcessOnClick: ({ member, router }: IProps) => async () => {
+  removeProcessOnClick: ({ currentProcess, router }: IProps) => async () => {
     await removeOnboardingProcessFromMemberMutation({
-      memberId: member.memberId,
+      processId: currentProcess.onboardingProcessId,
     });
 
     router.replace("/onboardor");
@@ -70,6 +76,7 @@ const Component = compose(
   renameProp("node", "organization"),
   fragment(fragments),
   flattenProp("organization"),
+  withProps(createProps),
   withHandlers(handlers),
 )(MemberOnboardingProcess);
 

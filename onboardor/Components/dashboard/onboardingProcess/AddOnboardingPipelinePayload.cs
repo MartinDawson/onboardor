@@ -18,13 +18,16 @@ namespace onboardor.Components.dashboard.onboardingProcess
     {
         private readonly IOrganizationService _organizationService;
         private readonly IMemberService _memberService;
+        private readonly IOnboardingProcessService _processService;
 
         public AddOnboardingPipelinePayload(
             IOrganizationService organizationService,
-            IMemberService memberService)
+            IMemberService memberService,
+            IOnboardingProcessService processService)
         {
             _organizationService = organizationService;
             _memberService = memberService;
+            _processService = processService;
 
             Name = nameof(AddOnboardingPipelinePayload);
 
@@ -34,7 +37,7 @@ namespace onboardor.Components.dashboard.onboardingProcess
         public override object MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context)
         {
             var organizationId = inputs.Get<int>("organizationId");
-            var memberId = inputs.Get<int?>("memberId");
+            var processId = inputs.Get<int?>("processId");
             var name = inputs.Get<string>("name");
             var organization = _organizationService.GetOrganization(organizationId);
             var pipeline = new OnboardingPipeline
@@ -42,11 +45,11 @@ namespace onboardor.Components.dashboard.onboardingProcess
                 Name = name,
             };
 
-            if (memberId.HasValue)
+            if (processId.HasValue)
             {
-                var member = _memberService.GetMember(memberId.Value);
+                var process = _processService.GetProcess(processId.Value);
 
-                pipeline.OnboardingProcess = member.OnboardingProcess;
+                pipeline.OnboardingProcess = process;
             }
 
             organization.OnboardingPipelines.Add(pipeline);

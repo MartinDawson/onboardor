@@ -96,11 +96,12 @@ namespace onboardor.Components.dashboard.onBoardingCreator
                 });
             }
 
-            member.OnboardingProcess = new OnboardingProcess
+            member.OnboardingProcesses.Add(new OnboardingProcess
             {
                 Name = process.Name,
                 OnboardingPipelines = newPipelines,
-            };
+                Organization = process.Organization
+            });
 
             _memberService.Update(member);
 

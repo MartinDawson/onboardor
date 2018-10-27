@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash a9e69edf439db5560b18707ae7f2dcec
+ * @relayHash dff501094d5305e5760daba5745e440e
  */
 
 /* eslint-disable */
@@ -48,7 +48,7 @@ fragment memberOnboardingProcessContainer_organization on Organization {
     memberId
     id
     name
-    onboardingProcess {
+    onboardingProcesses {
       onboardingProcessId
       name
       onboardingPipelines {
@@ -158,7 +158,7 @@ return {
   "operationKind": "query",
   "name": "memberOnboardingProcessContainerQuery",
   "id": null,
-  "text": "query memberOnboardingProcessContainerQuery(\n  $organizationId: ID!\n  $memberId: Int!\n) {\n  node(id: $organizationId) {\n    __typename\n    ... on Organization {\n      ...memberOnboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment memberOnboardingProcessContainer_organization on Organization {\n  name\n  organizationId\n  id\n  member(id: $memberId) {\n    memberId\n    id\n    name\n    onboardingProcess {\n      onboardingProcessId\n      name\n      onboardingPipelines {\n        id\n        ...pipelineContainer_pipeline\n      }\n      closedSteps {\n        id\n        ...stepContainer_step\n      }\n      organization {\n        organizationId\n        name\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
+  "text": "query memberOnboardingProcessContainerQuery(\n  $organizationId: ID!\n  $memberId: Int!\n) {\n  node(id: $organizationId) {\n    __typename\n    ... on Organization {\n      ...memberOnboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment memberOnboardingProcessContainer_organization on Organization {\n  name\n  organizationId\n  id\n  member(id: $memberId) {\n    memberId\n    id\n    name\n    onboardingProcesses {\n      onboardingProcessId\n      name\n      onboardingPipelines {\n        id\n        ...pipelineContainer_pipeline\n      }\n      closedSteps {\n        id\n        ...stepContainer_step\n      }\n      organization {\n        organizationId\n        name\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -247,11 +247,11 @@ return {
                   {
                     "kind": "LinkedField",
                     "alias": null,
-                    "name": "onboardingProcess",
+                    "name": "onboardingProcesses",
                     "storageKey": null,
                     "args": null,
                     "concreteType": "OnboardingProcess",
-                    "plural": false,
+                    "plural": true,
                     "selections": [
                       {
                         "kind": "ScalarField",

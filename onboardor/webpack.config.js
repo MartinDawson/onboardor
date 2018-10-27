@@ -19,7 +19,7 @@ const plugins = [
     },
   }),
   new HTMLPlugin({
-    title: 'Onboardor | For developers by developers.',
+    title: 'Onboardor | The onboarding extension for GitHub.',
     hash: true,
     favicon: path.resolve(__dirname, 'wwwroot/favicon.ico'),
     template: path.resolve(__dirname, 'Components/app/app.ejs'),

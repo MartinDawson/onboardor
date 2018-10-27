@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash aaa7c46df3f987cac9036e2254348092
+ * @relayHash 62f600f5a4671b595ee92fc4a87d35dd
  */
 
 /* eslint-disable */
@@ -11,7 +11,7 @@
 import type { ConcreteRequest } from 'relay-runtime';
 export type RemoveOnboardingProcessFromMemberInput = {
   clientMutationId?: ?string,
-  memberId: number,
+  processId: number,
 };
 export type removeOnboardingProcessFromMemberMutationVariables = {|
   input: RemoveOnboardingProcessFromMemberInput

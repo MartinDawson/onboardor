@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 61276b9a2ea4b1c5fade9f2d9d4b749a
+ * @relayHash 31496ec83159947809ebb3fe8ace8a84
  */
 
 /* eslint-disable */
@@ -48,8 +48,11 @@ fragment onboardingProcessContainer_organization on Organization {
     memberId
     avatarUrl
     name
-    isBeingOnboarded
-    onboardingProcess {
+    onboardingProcesses {
+      organization {
+        organizationId
+        id
+      }
       id
     }
   }
@@ -117,36 +120,33 @@ v2 = {
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "organizationId",
   "args": null,
   "storageKey": null
 },
 v4 = {
   "kind": "ScalarField",
   "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
+},
+v5 = {
+  "kind": "ScalarField",
+  "alias": null,
   "name": "avatarUrl",
   "args": null,
   "storageKey": null
 },
-v5 = [
+v6 = [
   v2
-],
-v6 = {
-  "kind": "LinkedField",
-  "alias": null,
-  "name": "onboardingProcess",
-  "storageKey": null,
-  "args": null,
-  "concreteType": "OnboardingProcess",
-  "plural": false,
-  "selections": v5
-};
+];
 return {
   "kind": "Request",
   "operationKind": "query",
   "name": "onboardingProcessContainerQuery",
   "id": null,
-  "text": "query onboardingProcessContainerQuery(\n  $organizationId: ID!\n) {\n  node(id: $organizationId) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  id\n  organizationId\n  name\n  avatarUrl\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n    isBeingOnboarded\n    onboardingProcess {\n      id\n    }\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    onboardingProcess {\n      id\n    }\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
+  "text": "query onboardingProcessContainerQuery(\n  $organizationId: ID!\n) {\n  node(id: $organizationId) {\n    __typename\n    ... on Organization {\n      ...onboardingProcessContainer_organization\n    }\n    id\n  }\n}\n\nfragment onboardingProcessContainer_organization on Organization {\n  id\n  organizationId\n  name\n  avatarUrl\n  members {\n    id\n    memberId\n    avatarUrl\n    name\n    onboardingProcesses {\n      organization {\n        organizationId\n        id\n      }\n      id\n    }\n  }\n  onboardingProcesses {\n    id\n    onboardingProcessId\n    name\n    organization {\n      id\n    }\n  }\n  onboardingPipelines {\n    id\n    onboardingPipelineId\n    onboardingProcess {\n      id\n    }\n    ...pipelineContainer_pipeline\n  }\n}\n\nfragment pipelineContainer_pipeline on OnboardingPipeline {\n  id\n  onboardingPipelineId\n  name\n  onboardingSteps {\n    id\n    isClosed\n    ...stepContainer_step\n  }\n}\n\nfragment stepContainer_step on OnboardingStep {\n  onboardingStepId\n  name\n  issueNumber\n  isClosed\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -205,15 +205,9 @@ return {
             "kind": "InlineFragment",
             "type": "Organization",
             "selections": [
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "organizationId",
-                "args": null,
-                "storageKey": null
-              },
               v3,
               v4,
+              v5,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -231,16 +225,33 @@ return {
                     "args": null,
                     "storageKey": null
                   },
+                  v5,
                   v4,
-                  v3,
                   {
-                    "kind": "ScalarField",
+                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "isBeingOnboarded",
+                    "name": "onboardingProcesses",
+                    "storageKey": null,
                     "args": null,
-                    "storageKey": null
-                  },
-                  v6
+                    "concreteType": "OnboardingProcess",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "kind": "LinkedField",
+                        "alias": null,
+                        "name": "organization",
+                        "storageKey": null,
+                        "args": null,
+                        "concreteType": "Organization",
+                        "plural": false,
+                        "selections": [
+                          v3,
+                          v2
+                        ]
+                      },
+                      v2
+                    ]
+                  }
                 ]
               },
               {
@@ -260,7 +271,7 @@ return {
                     "args": null,
                     "storageKey": null
                   },
-                  v3,
+                  v4,
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -269,7 +280,7 @@ return {
                     "args": null,
                     "concreteType": "Organization",
                     "plural": false,
-                    "selections": v5
+                    "selections": v6
                   }
                 ]
               },
@@ -290,8 +301,17 @@ return {
                     "args": null,
                     "storageKey": null
                   },
-                  v6,
-                  v3,
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "onboardingProcess",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "OnboardingProcess",
+                    "plural": false,
+                    "selections": v6
+                  },
+                  v4,
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -316,7 +336,7 @@ return {
                         "args": null,
                         "storageKey": null
                       },
-                      v3,
+                      v4,
                       {
                         "kind": "ScalarField",
                         "alias": null,

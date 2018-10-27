@@ -13,7 +13,7 @@ namespace onboardor.Components.dashboard.onboardingProcess
         {
             Name = nameof(RemoveOnboardingProcessFromMemberInput);
 
-            Field<NonNullGraphType<IntGraphType>>("memberId");
+            Field<NonNullGraphType<IntGraphType>>("processId");
         }
     }
 }
