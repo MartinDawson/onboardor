@@ -33,8 +33,8 @@ const SubscribeMailingList = ({
   setRecaptcha,
   recaptcha,
   submitSucceeded,
-  subscribeOnClick,
   subscribeText = "Join List",
+  submitSucceededMessage = <SubmitSucceededMessage />,
 }: IProps) => (
   <Box mx="auto">
     <Form
@@ -43,7 +43,7 @@ const SubscribeMailingList = ({
         e.preventDefault();
         recaptcha && recaptcha.execute();}
       }
-      submitSucceededMessage={<SubmitSucceededMessage />}
+      submitSucceededMessage={submitSucceededMessage}
     >
       <Flex justifyContent="center">
         <Relative>
@@ -70,7 +70,6 @@ const SubscribeMailingList = ({
           fontSize={17}
           px={[20, 76]}
           style={{ textTransform: "uppercase", whiteSpace: "nowrap" }}
-          onClick={subscribeOnClick}
         >
           {subscribeText}
         </Button>

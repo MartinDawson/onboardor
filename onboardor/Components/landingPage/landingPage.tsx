@@ -12,6 +12,7 @@ import Hide from "../shared/utilities/hide";
 import StepOne from "../../wwwroot/assets/step1.jpg";
 import StepTwo from "../../wwwroot/assets/step2.jpg";
 import StepThree from "../../wwwroot/assets/step3.jpg";
+import Button from "../shared/button/button";
 
 const GreenCheck = styled(Check)`
   margin-right: 10px;
@@ -40,6 +41,24 @@ const StepItem = ({ children, ...props }: { children: string}) => (
   </Box>
 );
 const DotLinesImage = ({ ...props }) => <DotLines {...props} width="66%" style={{ margin: "0 auto", display: "block", ...props.style }}  />;
+const GetStartedMailingList = () => (
+  <SubscribeMailingList
+    subscribeText="Get Started"
+    submitSucceededMessage={
+      <Flex justifyContent="center">
+        <Button
+          py={28}
+          px={76}
+          fontSize={17}
+          style={{ textTransform: "uppercase", whiteSpace: "nowrap" }}
+          onClick={() => window.open(`https://chrome.google.com/webstore/detail/onboardor/${process.env.EXTENSION_ID}`, "_blank")}
+        >
+          Install Extension
+        </Button>
+      </Flex>
+    }
+  />
+);
 
 const LandingPage = () => (
   <Relative>
@@ -50,12 +69,7 @@ const LandingPage = () => (
       <Text textAlign="center" mb={34} fontSize={24} color="white">
         Enter your email to get the chrome extension
       </Text>
-      <SubscribeMailingList
-        subscribeText="Install Extension"
-        subscribeOnClick={() =>
-          window.open(`https://chrome.google.com/webstore/detail/onboardor/${process.env.EXTENSION_ID}`, "_blank")
-        }
-      />
+      {<GetStartedMailingList />}
       <Text textAlign="center" fontSize={[40, 60]} mt={165}>
         How It Works
       </Text>
@@ -100,12 +114,7 @@ const LandingPage = () => (
           </StepContainer>
         </StepFlex>
       </Box>
-      <SubscribeMailingList
-        subscribeText="Install Extension"
-        subscribeOnClick={() =>
-          window.open(`https://chrome.google.com/webstore/detail/onboardor/${process.env.EXTENSION_ID}`, "_blank")
-        }
-      />
+      {<GetStartedMailingList />}
     </Container>
     <Absolute style={{ width: "100%", height: 300, bottom: "-4%" }} zIndex={-1}>
       <BackgroundBlue height="100%" width="100%" style={{ transform: "rotateX(180deg)" }} />
