@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "onboardor",
-  "description": "Onboard your new team members directly through GitHub using a Kanban board.",
-  "version": "0.8.8",
+  "description": "Onboard your new team members directly through GitHub.",
+  "version": "0.8.9",
   "content_scripts": [
     {
       "matches": [
