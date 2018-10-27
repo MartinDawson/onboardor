@@ -68,7 +68,7 @@ const LandingPage = () => (
             <StepNumber>1</StepNumber>
             <StepHeading>Install the chrome onboardor extension</StepHeading>
             <StepContent>
-              <StepItem>Do it all through GitHub. No external website.</StepItem>
+              <StepItem>Onboard new members through GitHub. No external software.</StepItem>
             </StepContent>
           </StepContainer>
         </StepFlex>
