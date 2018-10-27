@@ -7,7 +7,7 @@ import EmptyPipeline from "./emptyPipelineContainer";
 import Pipeline from "./pipelineContainer";
 import Button from "../../shared/button/button";
 import { PortalWithState } from "react-portal";
-import AddOnboardingProcessForm from "./addOnboardingProcessForm";
+import AddOnboardingProcessForm from "./AddOnboardingProcessForm";
 import { cardMargin, nameMargin, SelectCard } from "../../select/styles";
 import SelectOnboardingProcessForm from "./SelectOnboardingProcessForm";
 import { IMember } from "../member/member";

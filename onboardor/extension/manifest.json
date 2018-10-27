@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "onboardor",
   "description": "Onboard your new team members directly through GitHub.",
-  "version": "0.8.9",
+  "version": "0.8.10",
   "content_scripts": [
     {
       "matches": [
