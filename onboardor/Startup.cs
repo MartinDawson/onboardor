@@ -32,6 +32,7 @@ using onboardor.Components.dashboard;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Primitives;
 using AWS.Logger;
+using System.Net;
 
 namespace Onboardor
 {
@@ -71,7 +72,12 @@ namespace Onboardor
                 options.TableName = "Cache";
                 options.DefaultSlidingExpiration = TimeSpan.FromDays(1);
             });
-
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                options.KnownNetworks.Add(new IPNetwork(IPAddress.Parse("::ffff:100.64.0.0"), 106));
+            });
             services.AddSession();
             services.AddMemoryCache();
 
@@ -128,10 +134,6 @@ namespace Onboardor
                     HttpContext = c
                 };
             }
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.All,
-            });
             app.UseCookiePolicy(new CookiePolicyOptions
             {
                 MinimumSameSitePolicy = SameSiteMode.None
