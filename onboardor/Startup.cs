@@ -118,6 +118,7 @@ namespace Onboardor
                 }, (LogLevel)Env.GetInt("LOGGING_LOGLEVEL"));
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
             Context BuildUserContext(HttpContext c)
